@@ -27,6 +27,6 @@ void main(int argc, char *argv[]){
 	spring_sim = new SpringSimulator(model);
 	//spring_sim->debugPrint();
 	//model->debugPrint();
-	
+	//VERSIONKANRI
 	glutReady(argc, argv);
 }
