@@ -33,9 +33,7 @@ Model::Model(const char *filename)
 
 			double x, y, z;
 			datafile >> x >> y >> z; // (1)頂点座標をファイルから読み込む
-			Vertex *v = new Vertex(x, y, z);// (2)読みこんだ x, y, z 座標に基づいて新しい Vertexを生成する
-			v->setID(vertices.size());
-			this->vertices.push_back(v); // (3)生成した Vertexを Modelに追加する 
+			Vertex *v = createVertex(x, y, z);
 			vertices4index.push_back(v);
 
 		}
@@ -102,9 +100,6 @@ Model::Model(const char *filename)
 	normalizeVertices();
 	setAllHalfedgePair_hash();
 
-	faceVector = vector<Face*>(faces.begin(), faces.end());
-	halfedgeVector = vector<Halfedge*>(halfedges.begin(), halfedges.end());
-	vertexVector = vector<Vertex*>(vertices.begin(), vertices.end());
 	//cout << overlapRelation;
 }
 Model::~Model()
@@ -121,32 +116,11 @@ void Model::deleteFace(Face* face) {
 	delete face->halfedge;
 	delete face;
 }
-Face *Model::addFace(Vertex *v0, Vertex *v1, Vertex *v2) { //モデルに三角形の面を追加する
-	Halfedge* he0 = new Halfedge(v0); // (5)読みこんだ頂点インデックスに基づいて、その頂点を起点とする Halfedgeを生成する 
-	Halfedge* he1 = new Halfedge(v1); // (5) 
-	Halfedge* he2 = new Halfedge(v2); // (5) 
-	halfedges.push_back(he0);
-	halfedges.push_back(he1);
-	halfedges.push_back(he2);
-	he0->next = he1; he0->prev = he2; // (6)Halfedge の nextと prevのリンクを構築する 
-	he1->next = he2; he1->prev = he0; // (6)三角形 
-	he2->next = he0; he2->prev = he1; // (6) 
-
-	Face *face = new Face(he0); // (7)作成した Halfedgeのうちの 1 つ(he0)にリンクする Faceを作成する  
-	faces.push_back(face); // (8)作成した Face を Modelに追加する 
-	he0->face = face; // (9)Halfedge から Face へのリンクを構築する 
-	he1->face = face; // (9) 
-	he2->face = face; // (9) 
-	return face;
-}
 Face *Model::addFace(list<Vertex*> vlist){
 	vector<Halfedge*> halfedges4pairing;
 	list<Vertex*>::iterator it_v;
 	for (it_v = vlist.begin(); it_v != vlist.end(); ++it_v){
-		Halfedge *he = new Halfedge((*it_v));
-		
-		he->setID(halfedges.size());
-		halfedges.push_back(he);
+		Halfedge *he = createHalfedge(*it_v);
 		halfedges4pairing.push_back(he);
 	}
 	for (int i = 0; i < vlist.size(); ++i){
@@ -156,11 +130,7 @@ Face *Model::addFace(list<Vertex*> vlist){
 		halfedges4pairing[i]->next = halfedges4pairing[i_next];
 		halfedges4pairing[i]->prev = halfedges4pairing[i_prev];
 	}
-	Face *face = new Face(halfedges4pairing[0]);
-	
-	face->setID(faces.size());
-	faces.push_back(face);
-	return face;
+	return createFace(halfedges4pairing[0]);
 }
 void Model::draw(GLenum mode){
 	glDisable(GL_LIGHTING);
@@ -269,14 +239,36 @@ Face *Model::cpyFace(Face *_f){
 	}
 
 	//create Face
-	Face *f = new Face(hes[0]);
-	faces.push_back(f);
-	return f;
+	return createFace(hes[0]);
 }
 Vertex *Model::cpyVertex(Vertex *_v){
-	Vertex *v = _v;
+	return createVertex(_v->x, _v->y, _v->z);
+}
+
+
+//create and push list and vertex
+Face *Model::createFace(Halfedge *he){
+	Face *face = new Face(he);
+	face->setID(faces.size());
+	faces.push_back(face);
+	faceVector.push_back(face);
+	return face;
+}
+Halfedge *Model::createHalfedge(Vertex *v){
+	Halfedge *he = new Halfedge(v);
+	he->setID(halfedges.size());
+	halfedges.push_back(he);
+	halfedgeVector.push_back(he);
+	return he;
+}
+Vertex *Model::createVertex(double _x, double _y, double _z){
+	Vertex *v = new Vertex(_x, _y, _z);// (2)読みこんだ x, y, z 座標に基づいて新しい Vertexを生成する
+	v->setID(vertices.size());
+	vertices.push_back(v); // (3)生成した Vertexを Modelに追加する 
+	vertexVector.push_back(v);
 	return v;
 }
+
 
 //ハッシュ関連
 

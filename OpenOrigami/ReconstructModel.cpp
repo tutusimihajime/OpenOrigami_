@@ -1,6 +1,7 @@
 #include "ReconstructingModel.h"
 #include <list>
 #include <vector>
+#include <iostream>
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
 
@@ -9,7 +10,7 @@ using namespace Eigen;
 
 void relocationFaces(Model *mod)
 {
-
+	
 	//重なり順を決定
 	int *overlapOrder = new int[mod->faces.size()];
 	for (int i = 0; i < mod->faces.size(); ++i){
@@ -19,12 +20,33 @@ void relocationFaces(Model *mod)
 		for (int j = 0; j < i; ++j){
 			if (mod->overlapRelation.coeff(i,j) == 1){
 				overlapOrder[i]++;
-			} else if (mod->overlapRelation.coeff(i,j) == 2){
+			}else if (mod->overlapRelation.coeff(i,j) == 2){
 				overlapOrder[j]++;
 			}
 		}
 	}
-	//重なり順で面を移動（頂点を複製しつつ）
+	list<int> tmplist;
+	for (int i = 0; i < mod->faces.size(); ++i){
+		tmplist.push_back(overlapOrder[i]);
+	}
+	tmplist.sort();
+	tmplist.unique();
+	/* //Debug
+	cout << "tmplist = ";
+	for (list<int>::iterator it = tmplist.begin(); it != tmplist.end(); ++it){
+		cout << *it << ", ";
+	}
+	cout << endl;*/
+	for (int i = 0; i < mod->faces.size(); ++i){
+		int j = 0;
+		for (list<int>::iterator it = tmplist.begin(); it != tmplist.end(); ++it){
+			if (*it == overlapOrder[i]){
+				overlapOrder[i] = j;
+			}
+			j++;
+		}
+	}
+	//面を分離
 	for (list<Vertex*>::iterator it_v = mod->vertices.begin(); it_v != mod->vertices.end(); ++it_v){
 		(*it_v)->halfedge = NULL;
 	}
@@ -35,16 +57,29 @@ void relocationFaces(Model *mod)
 			if (he_in_f->vertex->halfedge == NULL){
 				he_in_f->vertex->halfedge = he_in_f;
 			}else{
-				he_in_f->vertex;
+				he_in_f->vertex = mod->cpyVertex(he_in_f->vertex);
+				he_in_f->vertex->halfedge = he_in_f;
 			}
 			he_in_f = he_in_f->next;
-		} while (he_in_f != f->halfedge);
-		mod->faceVector.at(i)->transPosition(overlapOrder[i]*Vector3d(0,0,1));
+		} while (he_in_f != f->halfedge);;
+	}
+	
+	//面を移動
+	for (int i = 0; i < mod->faceVector.size(); ++i){
+		mod->faceVector.at(i)->transPosition(10 * overlapOrder[i] * Vector3d(0, 0, 1));
 	}
 
+	//Debug
+	/*cout << mod->overlapRelation << endl;
+	cout << "overlapOrder = ";
+	for (int i = 0; i < mod->faces.size(); ++i){
+		cout <<overlapOrder[i]<<", ";
+	}
+	cout << endl;*/
 }
 void bridgeEdges(Model *mod)
 {
+
 
 }
 void moveOverlappedVertices(Model *mod)

@@ -32,7 +32,6 @@ public:
 	void deleteVertex(Vertex *vertex);
 	//ƒŠƒXƒg‚©‚ç face ‚ğíœ‚·‚é
 	void deleteFace(Face* face);
-	Face *addFace(Vertex *v0, Vertex *v1, Vertex *v2);
 	Face *addFace(list<Vertex*> vlist);
 	void draw(GLenum mode = GL_RENDER_MODE);
 	void debugPrint();
