@@ -37,9 +37,16 @@ public:
 	void draw(GLenum mode = GL_RENDER_MODE);
 	void debugPrint();
 	void normalizeVertices();
-	Face *cpyFace(Face *_f);
-
 	
+	Face *cpyFace(Face *_f);
+	Vertex *cpyVertex(Vertex *_v);
+	
+	//create and push list and vertex
+	Face *createFace(Halfedge *he);
+	Halfedge *createHalfedge(Vertex *v);
+	Vertex *createVertex(double _x, double _y, double _z);
+
+	//first pairing
 	Halfedge **hash_matrix_he;//hash‚Åhalfedege*‚ğŠi”[‚·‚én*1s—ñ(–¼‘O‚Ímatrix‚¾‚ªAmatrix‚¶‚á‚È‚­‚Ävector)
 	int Model::getHashKey(Vertex *v1, Vertex *v2, int M);
 	void Model::insertHashMatrix(int M);

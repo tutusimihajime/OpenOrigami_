@@ -5,6 +5,8 @@
 #include "Model.h"
 #include "SpringSimulator.h"
 #include "glutwindow.h"
+#include "ReconstructingModel.h"
+
 using namespace std;
 using namespace System;
 using namespace System::Windows::Forms;
@@ -24,9 +26,10 @@ void main(int argc, char *argv[]){
 	}else{
 		model = new Model(argv[1]);
 	}
+	reconstructModel(model);
+	
 	spring_sim = new SpringSimulator(model);
 	//spring_sim->debugPrint();
 	//model->debugPrint();
-	//VERSIONKANRI
 	glutReady(argc, argv);
 }

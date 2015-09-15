@@ -105,7 +105,7 @@ Model::Model(const char *filename)
 	faceVector = vector<Face*>(faces.begin(), faces.end());
 	halfedgeVector = vector<Halfedge*>(halfedges.begin(), halfedges.end());
 	vertexVector = vector<Vertex*>(vertices.begin(), vertices.end());
-	cout << overlapRelation;
+	//cout << overlapRelation;
 }
 Model::~Model()
 {
@@ -273,7 +273,10 @@ Face *Model::cpyFace(Face *_f){
 	faces.push_back(f);
 	return f;
 }
-
+Vertex *Model::cpyVertex(Vertex *_v){
+	Vertex *v = _v;
+	return v;
+}
 
 //ハッシュ関連
 

@@ -26,7 +26,7 @@ void Face::normalizeNormal(){
 	nv.normalize();
 }
 void Face::draw(){
-
+	glNormal3d(nv.x, nv.y, nv.z);
 	glBegin(GL_POLYGON);
 
 	Halfedge *halfedge_in_face = this->halfedge;
@@ -56,4 +56,7 @@ void Face::transPosition(double x, double y, double z){
 		he_in_face->vertex->transPosition(x, y, z);
 		he_in_face = he_in_face->next;
 	} while (he_in_face != this->halfedge);
+}
+void Face::transPosition(Vector3d vec){
+	transPosition(vec.x(), vec.y(), vec.z());
 }
