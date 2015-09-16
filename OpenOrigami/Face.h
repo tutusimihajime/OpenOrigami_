@@ -9,6 +9,7 @@ public:
 	Halfedge *halfedge;
 	MyVector3d nv;
 	int id;
+	int itmp;//”Ä—ptmp
 
 	Face(Halfedge *he);
 	~Face();

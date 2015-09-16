@@ -105,6 +105,7 @@ Model::Model(const char *filename)
 Model::~Model()
 {
 }
+//delete関係はNEED TO FIX 9/16
 void Model::deleteVertex(Vertex *vertex) {
 	vertices.remove(vertex);
 	delete vertex;
@@ -116,6 +117,7 @@ void Model::deleteFace(Face* face) {
 	delete face->halfedge;
 	delete face;
 }
+
 Face *Model::addFace(list<Vertex*> vlist){
 	vector<Halfedge*> halfedges4pairing;
 	list<Vertex*>::iterator it_v;
@@ -219,15 +221,8 @@ Face *Model::cpyFace(Face *_f){
 	vector<Halfedge*> hes;
 	//create vertex and halfedge
 	do{
-		Vertex *v = new Vertex(he_in_f->vertex->x, he_in_f->vertex->y, he_in_f->vertex->z);
-		v->setID(vertices.size());
-		vertices.push_back(v);
-		
-		
-		Halfedge *he = new Halfedge(v);
-		halfedges.push_back(he);
-		hes.push_back(he);
-		
+		Vertex *v = createVertex(he_in_f->vertex->x, he_in_f->vertex->y, he_in_f->vertex->z); 
+		Halfedge *he = createHalfedge(v);
 		he_in_f = he_in_f->next;
 	} while (he_in_f != _f->halfedge);
 	
@@ -268,7 +263,9 @@ Vertex *Model::createVertex(double _x, double _y, double _z){
 	vertexVector.push_back(v);
 	return v;
 }
-
+Vertex *Model::createVertex(Vector3d vec){
+	return createVertex(vec.x(), vec.y(), vec.z());
+}
 
 //ハッシュ関連
 

@@ -15,11 +15,13 @@ public:
 	
 	int id;
 	bool checked;//色々なところで、チェックしたかどうかに使う
+	int itmp;//汎用tmp
 
 	Halfedge(Vertex *v);
 	~Halfedge();
 	void draw();
 	void debugPrint();
 	void setID(int _id){ id = _id; }
+	void setPair(Halfedge *he){ this->pair = he; he->pair = this; }
 };
 

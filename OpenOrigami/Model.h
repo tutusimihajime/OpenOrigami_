@@ -44,7 +44,7 @@ public:
 	Face *createFace(Halfedge *he);
 	Halfedge *createHalfedge(Vertex *v);
 	Vertex *createVertex(double _x, double _y, double _z);
-
+	Vertex *createVertex(Vector3d vec);
 	//first pairing
 	Halfedge **hash_matrix_he;//hash‚Åhalfedege*‚ğŠi”[‚·‚én*1s—ñ(–¼‘O‚Ímatrix‚¾‚ªAmatrix‚¶‚á‚È‚­‚Ävector)
 	int Model::getHashKey(Vertex *v1, Vertex *v2, int M);
