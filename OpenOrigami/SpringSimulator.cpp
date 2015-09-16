@@ -63,31 +63,31 @@ void SpringSimulator::simulate(double dt)
 	{
 		(*it_v)->v->checked = false;
 	}
-
-	list<SpringVertex*>::iterator it_v1, it_v2;
-	for (it_v1 = svertices.begin(); it_v1 != svertices.end(); ++it_v1)
-	{
-		for (it_v2 = svertices.begin(); it_v2 != svertices.end(); ++it_v2)
+	if (0){
+		list<SpringVertex*>::iterator it_v1, it_v2;
+		for (it_v1 = svertices.begin(); it_v1 != svertices.end(); ++it_v1)
 		{
-			if (!(*it_v2)->v->checked)
+			for (it_v2 = svertices.begin(); it_v2 != svertices.end(); ++it_v2)
 			{
-				if ((*it_v1) != (*it_v2))
+				if (!(*it_v2)->v->checked)
 				{
-					MyVector3d vec = createMyVector3d((*it_v1), (*it_v2));
-					double l = log(vec.length());
-					vec.normalize();
-					vec.scale(l);
-					double c = 0.0001;
-					vec.scale(c);
+					if ((*it_v1) != (*it_v2))
+					{
+						MyVector3d vec = createMyVector3d((*it_v1), (*it_v2));
+						double l = log(vec.length());
+						vec.normalize();
+						vec.scale(l);
+						double c = 0.0001;
+						vec.scale(c);
 
-					(*it_v1)->velocity -= vec;
-					(*it_v2)->velocity += vec;
+						(*it_v1)->velocity -= vec;
+						(*it_v2)->velocity += vec;
+					}
 				}
 			}
+			(*it_v1)->v->checked = true;
 		}
-		(*it_v1)->v->checked = true;
 	}
-
 	//‚Î‚Ë‚Ì—Í -> ’¸“_‚Ì‘¬“x
 	list<SpringEdge*>::iterator it_e;
 	for (it_e = sedges.begin(); it_e != sedges.end(); ++it_e)

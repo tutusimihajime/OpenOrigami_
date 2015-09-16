@@ -28,6 +28,8 @@ public:
 	Model();
 	Model(const char *filename);
 	~Model();
+
+	void calcNormal();
 	//リストから vertex を削除する 
 	void deleteVertex(Vertex *vertex);
 	//リストから face を削除する

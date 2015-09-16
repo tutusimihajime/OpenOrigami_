@@ -105,6 +105,11 @@ Model::Model(const char *filename)
 Model::~Model()
 {
 }
+void Model::calcNormal(){
+	for (list < Face*>::iterator it = faces.begin(); it != faces.end(); ++it){
+		(*it)->normalizeNormal();
+	}
+}
 //deleteŠÖŒW‚ÍNEED TO FIX 9/16
 void Model::deleteVertex(Vertex *vertex) {
 	vertices.remove(vertex);

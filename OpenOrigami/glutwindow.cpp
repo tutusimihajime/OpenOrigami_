@@ -301,6 +301,7 @@ void mouse(int button, int state, int x, int y)
 
 void Idle(){
 	if(sim_flag)spring_sim->simulate(0.5);
+	model->calcNormal();
 	Sleep(0.001);
 	glutPostRedisplay();
 }

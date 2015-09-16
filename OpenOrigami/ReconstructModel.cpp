@@ -7,11 +7,11 @@
 
 using namespace std;
 using namespace Eigen;
-
+const double scale = 0.1;
 
 void relocationFaces(Model *mod)
 {
-	const double d = 10;
+	const double d = 2*scale;
 	int *overlapOrder;
 	overlapOrder = new int[mod->faces.size()];
 	//èdÇ»ÇËèáÇåàíË
@@ -75,7 +75,8 @@ void relocationFaces(Model *mod)
 
 	//Debug
 	
-	//cout << mod->overlapRelation << endl;cout << "overlapOrder = ";for (int i = 0; i < mod->faces.size(); ++i){	cout <<overlapOrder[i]<<", ";	}cout << endl;
+	//cout << mod->overlapRelation << endl;
+	//cout << "overlapOrder = ";for (int i = 0; i < mod->faces.size(); ++i){	cout <<overlapOrder[i]<<", ";	}cout << endl;
 	
 }
 bool compFaceItmp(Face *f1, Face *f2){
@@ -94,7 +95,7 @@ Vector3d createVector3d(MyVector3d v){
 void createBridge(Model *mod, Halfedge *he){
 	
 	//create vertex
-	const double h = 2;
+	const double h = 1*scale;
 	const double w = 0.6;
 	Vertex *v1, *v2, *v3, *v4;
 	v1 = he->vertex;
@@ -160,6 +161,31 @@ void createBridge(Model *mod, Halfedge *he){
 
 
 }
+bool isParallel(Vector2d *vec1, Vector2d *vec2, Vector2d *vec3, Vector2d *vec4){
+	Vector2d vecA, vecB;
+	vecA = *vec2 - *vec1;
+	vecB = *vec4 - *vec3;
+	vecA.normalize();
+	vecB.normalize();
+	return (vecA - vecB).norm() < 0.00001 || (vecA + vecB).norm()< 0.00001;
+}
+bool isOnSegment(Vector2d *vec1, Vector2d *vec2, Vector2d *vec3){
+	// 1-2, 3
+	if ((*vec1 - *vec3).norm() < 0.00001)return true;
+
+	Vector2d vecA, vecB, vecA_, vecB_;
+	vecA_ = vecA = *vec2 - *vec1;
+	vecB_ = vecB = *vec3 - *vec1;
+	vecA.normalize();
+	vecB.normalize();
+	// isOn line
+	return (vecA - vecB).norm() < 0.00001 && vecA_.norm() >= vecB_.norm();
+
+}
+bool isOverlap(Vector2d *vec1, Vector2d *vec2, Vector2d *vec3, Vector2d *vec4){
+	// 1-2, 3-4
+	return isParallel(vec1, vec2, vec3, vec4) && (isOnSegment(vec1, vec2, vec3) || isOnSegment(vec1, vec2, vec4) || isOnSegment(vec3, vec4, vec1) || isOnSegment(vec3, vec4, vec2));
+}
 void bridgeEdges(Model *mod)
 {
 	//face -> itmpÅ@ÇÕÅAoverlapOrder
@@ -170,25 +196,56 @@ void bridgeEdges(Model *mod)
 	int faces_num = mod->faces.size();
 	list<Face*> sortedFaces(mod->faces.begin(), mod->faces.end());
 	sortedFaces.sort(compFaceItmp);
-	for (list<Face*>::iterator it_f = sortedFaces.begin(); it_f != sortedFaces.end(); ++it_f){
-	
-		Face *f1 = (*it_f);
+	sortedFaces.reverse();
+	//Debug
+	//cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin();it!= sortedFaces.end(); ++it){	cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp << endl;}
+
+	vector<Face*> sortedFaceVecor(sortedFaces.begin(), sortedFaces.end());
+
+	for (list<Face*>::iterator it_fi = sortedFaces.begin(); it_fi != sortedFaces.end(); ++it_fi){
+
+		Face *f1 = (*it_fi);
 		Halfedge *he_in_f = f1->halfedge;
 		do{
 			int maxHeight = 0;
+
 			if (he_in_f->pair != NULL){
+
 				Face *f2 = he_in_f->pair->face;
 				if (mod->overlapRelation.coeff(f1->id, f2->id) == 2){
-					maxHeight = max(maxHeight, he_in_f->pair->itmp);
+					for (list<Face*>::iterator it_fj = sortedFaces.begin(); it_fj != sortedFaces.end(); ++it_fj){
+						Face *f3 = *it_fj;
+						if (mod->overlapRelation.coeff(f3->id, f1->id)==1&&mod->overlapRelation.coeff(f3->id, f2->id)==2){
+							// f3 on between f1 and f2
+							Halfedge *he_in_f3 = f3->halfedge;
+							do{
+								if (he_in_f3->pair != NULL){
+									Vector2d vec1, vec2, vec3, vec4;
+									vec1 = Vector2d(he_in_f->vertex->x, he_in_f->vertex->y);
+									vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
+									vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
+									vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
+									if (isOverlap(&vec1, &vec2, &vec3, &vec4)){
+										
+										maxHeight = max(maxHeight, he_in_f3->itmp);
+									}
+								}
+								he_in_f3 = he_in_f3->next;
+							} while (he_in_f3 != f3->halfedge);
+						}
+					}
 				}
-				he_in_f->itmp = maxHeight + 1;
+				he_in_f->pair->itmp = maxHeight + 1;
 			}
+
+			he_in_f->itmp = maxHeight + 1;
+			//cout << "he_in_f->itmp = " << he_in_f->itmp << endl;
 			he_in_f = he_in_f->next;
-		} while (he_in_f != (*it_f)->halfedge);
+		} while (he_in_f != f1->halfedge);
 
 	}
 	//Debug
-	cout << "halfedges.itmp = ";for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){cout << (*it_e)->itmp << ", ";	}cout << endl;
+	//cout << "halfedges.itmp = ";for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){cout << (*it_e)->itmp << ", ";	}cout << endl;
 	
 	//create bridge
 	for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){
