@@ -173,8 +173,11 @@ void Model::draw(GLenum mode){
 		}
 	}
 	if (mode != GL_SELECT){
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_LIGHTING);
+		GLfloat materialColor1[] = { 1, 0.2, 0.2, 1 };
+		glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
+		GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
 		glEnable(GL_POLYGON_OFFSET_FILL);
 		glPolygonOffset(1, 30);
 		glColor4f(1, 1, 1, 0.1);

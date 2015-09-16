@@ -184,7 +184,9 @@ void SpringSimulator::draw(GLenum mode){
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
-			glEnable(GL_LIGHTING);
+			else{
+				glEnable(GL_LIGHTING);
+			}
 			glEnable(GL_POLYGON_OFFSET_FILL);
 			glPolygonOffset(1, 30);
 			
@@ -194,7 +196,10 @@ void SpringSimulator::draw(GLenum mode){
 					glColor4f(1, 1, 1, 0.1);
 				}
 				else{
-					glColor3d(1, 1, 1);
+					GLfloat materialColor1[] = { 1, 0.2, 0.2, 1 };
+					glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
+					GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+					glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
 				}
 				(*it_f)->draw();
 			}

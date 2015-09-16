@@ -36,6 +36,17 @@ void Face::draw(){
 	} while (halfedge_in_face!= this->halfedge);
 	glEnd();
 }
+void Face::drawBack(){
+	glNormal3d(-nv.x, -nv.y, -nv.z);
+	glBegin(GL_POLYGON);
+
+	Halfedge *halfedge_in_face = this->halfedge;
+	do{
+		glVertex3d(halfedge_in_face->vertex->x, halfedge_in_face->vertex->y, halfedge_in_face->vertex->z);
+		halfedge_in_face = halfedge_in_face->prev;
+	} while (halfedge_in_face != this->halfedge);
+	glEnd();
+}
 void Face::debugPrint(){
 
 	cout << "f : ";

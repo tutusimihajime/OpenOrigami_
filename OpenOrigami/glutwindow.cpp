@@ -1,6 +1,7 @@
 #include "glutwindow.h"
 #include "SpringSimulator.h"
 #include "Picking.h"
+#include "ReconstructingModel.h"
 #include <iostream>
 
 extern Model *model;
@@ -119,6 +120,7 @@ void myinit() //初期化
 	glEnable(GL_NORMALIZE);      // 面を描く時に面の法線データを正規化する
 	glEnable(GL_LIGHTING);       // 光源による照明を有効化する
 	glEnable(GL_LIGHT0);         // 0番目の光源を有効にする
+	//glEnable(GL_CULL_FACE);
 
 }
 void reshape(int w, int h)        // 再描画関数
@@ -157,18 +159,29 @@ void display(void)
 	glScalef(1, 1, 1);    // 拡大
 	//モデルの描画
 	DrawMeasure(16, 40);
-	//model->draw();
-	spring_sim->draw();
+	if(spring_sim==NULL)model->draw();
+	if(spring_sim!=NULL)spring_sim->draw();
 	//draw(GL_RENDER_MODE);
 	glutSwapBuffers();              // 表示用の画面領域と書きこみ用画面領域を交換して表示する
 }
 void key_input(unsigned char key, int x, int y)
 {
+	
 	switch (key){
 	case 'q':
 		if (select != -1){
 			spring_sim->svertexVector[select]->mobility = !spring_sim->svertexVector[select]->mobility;
 		}
+		break;
+	case 's':
+		reconstructModel(model);
+		spring_sim = new SpringSimulator(model);
+		break;
+	case 'v':
+		spring_sim->v_flag = !spring_sim->v_flag;
+		break;
+	case 'e':
+		spring_sim->e_flag = !spring_sim->e_flag;
 		break;
 	case 'f':
 		spring_sim->f_flag = !spring_sim->f_flag;

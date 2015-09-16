@@ -10,7 +10,7 @@
 using namespace std;
 using namespace System;
 using namespace System::Windows::Forms;
-SpringSimulator *spring_sim;
+SpringSimulator *spring_sim = NULL;
 Model *model;
 [STAThreadAttribute]
 void main(int argc, char *argv[]){
@@ -26,9 +26,10 @@ void main(int argc, char *argv[]){
 	}else{
 		model = new Model(argv[1]);
 	}
-	reconstructModel(model);
+
+	//reconstructModel(model);
+	//spring_sim = new SpringSimulator(model);
 	
-	spring_sim = new SpringSimulator(model);
 	//spring_sim->debugPrint();
 	//model->debugPrint();
 	glutReady(argc, argv);

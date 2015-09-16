@@ -15,6 +15,7 @@ public:
 	~Face();
 	void normalizeNormal();
 	void draw();
+	void drawBack();
 	void debugPrint();
 	void transPosition(MyVector3d vec);
 	void transPosition(double x, double y, double z);

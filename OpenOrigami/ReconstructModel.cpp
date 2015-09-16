@@ -7,7 +7,7 @@
 
 using namespace std;
 using namespace Eigen;
-const double scale = 0.1;
+const double scale = 1;
 
 void relocationFaces(Model *mod)
 {
@@ -124,7 +124,20 @@ void createBridge(Model *mod, Halfedge *he){
 	v6 = mod->createVertex(vec6);
 	v7 = mod->createVertex(vec7);
 	v8 = mod->createVertex(vec8);
-	
+	/*
+	list<Vertex*> listtmp;
+	listtmp.push_back(v1);
+	listtmp.push_back(v2);
+	listtmp.push_back(v3);
+	listtmp.push_back(v4);
+	listtmp.push_back(v5);
+	listtmp.push_back(v6);
+	listtmp.push_back(v7);
+	listtmp.push_back(v8);
+	for (list<Vertex*>::iterator it = listtmp.begin(); it != listtmp.end(); ++it){
+		(*it)->transPosition(-h*vec_h.x(), -h*vec_h.y(), -h*vec_h.z());
+	}
+	*/
 	//create face
 	list<list<Vertex*>> vListList;
 	list<Vertex*> vList;
@@ -182,10 +195,11 @@ bool isOnSegment(Vector2d *vec1, Vector2d *vec2, Vector2d *vec3){
 	return (vecA - vecB).norm() < 0.00001 && vecA_.norm() >= vecB_.norm();
 
 }
-bool isOverlap(Vector2d *vec1, Vector2d *vec2, Vector2d *vec3, Vector2d *vec4){
+bool isOverlapSegment(Vector2d *vec1, Vector2d *vec2, Vector2d *vec3, Vector2d *vec4){
 	// 1-2, 3-4
 	return isParallel(vec1, vec2, vec3, vec4) && (isOnSegment(vec1, vec2, vec3) || isOnSegment(vec1, vec2, vec4) || isOnSegment(vec3, vec4, vec1) || isOnSegment(vec3, vec4, vec2));
 }
+
 void bridgeEdges(Model *mod)
 {
 	//face -> itmpÅ@ÇÕÅAoverlapOrder
@@ -198,7 +212,7 @@ void bridgeEdges(Model *mod)
 	sortedFaces.sort(compFaceItmp);
 	sortedFaces.reverse();
 	//Debug
-	//cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin();it!= sortedFaces.end(); ++it){	cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp << endl;}
+	cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin();it!= sortedFaces.end(); ++it){	cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp << endl;}
 
 	vector<Face*> sortedFaceVecor(sortedFaces.begin(), sortedFaces.end());
 
@@ -225,7 +239,7 @@ void bridgeEdges(Model *mod)
 									vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
 									vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
 									vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
-									if (isOverlap(&vec1, &vec2, &vec3, &vec4)){
+									if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
 										
 										maxHeight = max(maxHeight, he_in_f3->itmp);
 									}
