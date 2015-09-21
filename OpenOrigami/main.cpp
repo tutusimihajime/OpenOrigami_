@@ -33,6 +33,5 @@ void main(int argc, char *argv[]){
 	//spring_sim->debugPrint();
 	//model->debugPrint();
 
-	//testtestest
 	glutReady(argc, argv);
 }

@@ -9,21 +9,19 @@ using namespace std;
 using namespace Eigen;
 const double scale = 1;
 
-void relocationFaces(Model *mod)
-{
-	const double d = 2*scale;
+void calcOverlapOrder(Model *mod){
 	int *overlapOrder;
 	overlapOrder = new int[mod->faces.size()];
-	//d‚È‚è‡‚ğŒˆ’è
-	
+
 	for (int i = 0; i < mod->faces.size(); ++i){
 		overlapOrder[i] = 0;
 	}
-	for (int i = 0; i < mod->faces.size(); ++i){		
+	for (int i = 0; i < mod->faces.size(); ++i){
 		for (int j = 0; j < i; ++j){
-			if (mod->overlapRelation.coeff(i,j) == 1){
+			if (mod->overlapRelation.coeff(i, j) == 1){
 				overlapOrder[i]++;
-			}else if (mod->overlapRelation.coeff(i,j) == 2){
+			}
+			else if (mod->overlapRelation.coeff(i, j) == 2){
 				overlapOrder[j]++;
 			}
 		}
@@ -37,7 +35,7 @@ void relocationFaces(Model *mod)
 	/* //Debug
 	cout << "tmplist = ";
 	for (list<int>::iterator it = tmplist.begin(); it != tmplist.end(); ++it){
-		cout << *it << ", ";
+	cout << *it << ", ";
 	}
 	cout << endl;*/
 	for (int i = 0; i < mod->faces.size(); ++i){
@@ -49,6 +47,73 @@ void relocationFaces(Model *mod)
 			j++;
 		}
 	}
+	for (int i = 0; i < mod->faceVector.size(); ++i){
+		mod->faceVector.at(i)->itmp = overlapOrder[i];
+	}
+
+}
+void calcOverlapOrder2(Model *mod){
+	int *overlapOrder;
+	overlapOrder = new int[mod->faces.size()];
+
+	for (int i = 0; i < mod->faces.size(); ++i){
+		overlapOrder[i] = 0;
+	}
+
+	for (int i = 0; i < mod->faces.size(); ++i){
+		const int inf = 1024;
+		int underMax = -inf;
+		int upperMin = inf;
+		for (int j = 0; j < i; ++j){
+			switch (mod->overlapRelation.coeff(i, j)){
+			case 1:
+				// i < j
+				upperMin = min(upperMin, overlapOrder[j]);
+				break;
+			case 2:
+				// i > j
+				underMax = max(underMax, overlapOrder[j]);
+				break;
+			default:
+				break;
+			}
+		}
+		if (underMax == -inf && upperMin == inf){
+			overlapOrder[i] = 0;
+		}
+		if (underMax == -inf && upperMin != inf){
+			overlapOrder[i] = upperMin - 1;
+		}
+		if (underMax != -inf && upperMin == inf){
+			overlapOrder[i] = underMax + 1;
+		}
+		if (underMax != -inf && upperMin != inf){
+			for (int j = 0; j < i; ++j){
+				if (overlapOrder[j] > underMax+1){
+					overlapOrder[j]++;
+				}
+			}
+			overlapOrder[i] = underMax + 1;
+		}
+	}
+	int mintmp = 0;
+	for (int i = 0; i < mod->faces.size(); ++i){
+		mintmp = min(mintmp, overlapOrder[i]);
+	}
+	if (mintmp < 0){
+		for (int i = 0; i < mod->faces.size(); ++i){
+			overlapOrder[i] -= mintmp;
+		}
+	}
+	for (int i = 0; i < mod->faceVector.size(); ++i){
+		mod->faceVector.at(i)->itmp = overlapOrder[i];
+	}
+}
+void relocationFaces(Model *mod)
+{
+	const double d = 2*scale;
+	//d‚È‚è‡‚ğŒˆ’è
+	calcOverlapOrder(mod);
 	//–Ê‚ğ•ª—£
 	for (list<Vertex*>::iterator it_v = mod->vertices.begin(); it_v != mod->vertices.end(); ++it_v){
 		(*it_v)->halfedge = NULL;
@@ -69,14 +134,13 @@ void relocationFaces(Model *mod)
 	
 	//–Ê‚ğˆÚ“®
 	for (int i = 0; i < mod->faceVector.size(); ++i){
-		mod->faceVector.at(i)->transPosition(d * overlapOrder[i] * Vector3d(0, 0, 1));
-		mod->faceVector.at(i)->itmp = overlapOrder[i];
+		mod->faceVector.at(i)->transPosition(d * mod->faceVector.at(i)->itmp * Vector3d(0, 0, 1));
 	}
 
 	//Debug
 	
 	//cout << mod->overlapRelation << endl;
-	//cout << "overlapOrder = ";for (int i = 0; i < mod->faces.size(); ++i){	cout <<overlapOrder[i]<<", ";	}cout << endl;
+	cout << "overlapOrder = "; for (int i = 0; i < mod->faces.size(); ++i){ cout << mod->faceVector.at(i)->itmp << ", "; }cout << endl;
 	
 }
 bool compFaceItmp(Face *f1, Face *f2){
@@ -259,7 +323,7 @@ void bridgeEdges(Model *mod)
 
 	}
 	//Debug
-	//cout << "halfedges.itmp = ";for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){cout << (*it_e)->itmp << ", ";	}cout << endl;
+	cout << "halfedges.itmp = ";for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){cout << (*it_e)->itmp << ", ";	}cout << endl;
 	
 	//create bridge
 	for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){
