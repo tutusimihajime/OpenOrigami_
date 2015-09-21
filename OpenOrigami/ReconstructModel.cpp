@@ -52,6 +52,7 @@ void calcOverlapOrder(Model *mod){
 	}
 
 }
+//gomi
 void calcOverlapOrder2(Model *mod){
 	int *overlapOrder;
 	overlapOrder = new int[mod->faces.size()];
@@ -347,6 +348,7 @@ void moveOverlappedVertices(Model *mod)
 }
 void reconstructModel(Model *mod)
 {
+	cout << mod->overlapRelation << endl;
 	// relocation facs
 	relocationFaces(mod);
 	// bridge edges
