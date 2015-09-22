@@ -110,11 +110,16 @@ void calcOverlapOrder2(Model *mod){
 		mod->faceVector.at(i)->itmp = overlapOrder[i];
 	}
 }
+void calcOverlapOrder3(Model *mod){
+	for (int i = 0; i < mod->faceVector.size(); ++i){
+		mod->faceVector.at(i)->itmp = i;
+	}
+}
 void relocationFaces(Model *mod)
 {
 	const double d = 2*scale;
 	//d‚È‚è‡‚ğŒˆ’è
-	calcOverlapOrder(mod);
+	calcOverlapOrder3(mod);
 	//–Ê‚ğ•ª—£
 	for (list<Vertex*>::iterator it_v = mod->vertices.begin(); it_v != mod->vertices.end(); ++it_v){
 		(*it_v)->halfedge = NULL;
@@ -348,7 +353,6 @@ void moveOverlappedVertices(Model *mod)
 }
 void reconstructModel(Model *mod)
 {
-	cout << mod->overlapRelation << endl;
 	// relocation facs
 	relocationFaces(mod);
 	// bridge edges

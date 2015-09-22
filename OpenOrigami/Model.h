@@ -11,7 +11,6 @@ using namespace Eigen;
 class Model
 {
 private:
-	//AAAAAAAAAAAA
 public:
 	list<Face*> faces;
 	list<Halfedge*> halfedges;
