@@ -110,9 +110,92 @@ void calcOverlapOrder2(Model *mod){
 		mod->faceVector.at(i)->itmp = overlapOrder[i];
 	}
 }
+//KIKUCHI THE GOD
 void calcOverlapOrder3(Model *mod){
-	for (int i = 0; i < mod->faceVector.size(); ++i){
-		mod->faceVector.at(i)->itmp = i;
+	// init q
+	list<int> q;
+	for (int i = 0; i < mod->faces.size(); ++i){
+		q.push_back(i);
+	}
+	list<list<int>> lists;
+
+	while (!q.empty()){ 
+		// init l
+		list<int> l;
+		l.push_back(q.front());
+		q.pop_front();
+		int tmpQ = q.size();
+		for (int i = 0; i < tmpQ; ++i){
+			int tmpL = l.size();
+			int lookAt = q.front();
+			q.pop_front();
+			int before = 2;
+			for (list<int>::iterator it = l.begin(); it != l.end(); ++it){
+				int now = mod->overlapRelation.coeff(lookAt,*it);
+				if (now == 1){
+					if (before == 2){
+						//“ü‚ê‚é
+						l.insert(it, lookAt);
+					}
+					before = now;
+					break;
+				}
+				before = now;
+			}
+			if (before == 2){
+				l.push_back(lookAt);
+			}
+			if (tmpL == l.size()){
+				q.push_back(lookAt);
+			}
+		}
+		
+		lists.push_back(l);
+	}
+	//Debug
+	//cout << "lists = ";	for (list<list<int>>::iterator it = lists.begin(); it != lists.end(); ++it){cout << "{ ";for (list<int>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2){cout << *it2 << " ";}cout << " }, ";}cout << endl;
+
+	list<int> mergeList = lists.front();
+	lists.pop_front();
+	while (!lists.empty()){
+		list<int> targetList = lists.front();
+		lists.pop_front();
+		while (!targetList.empty()){
+			int target = targetList.front();
+			targetList.pop_front();
+			int before = 2;
+			int cntZero = 0;
+			for (list<int>::iterator it = mergeList.begin(); it != mergeList.end(); ++it){
+				int now = mod->overlapRelation.coeff(target, *it);
+				if (now == 0){
+					cntZero++;
+				}
+				if (now == 1){
+					mergeList.insert(it, target);
+					before = now;
+					break;
+				}
+				if (now == 2){
+					cntZero = 0;
+				}
+				before = now;
+			}
+			if (before != 1){
+				list<int>::iterator it = mergeList.end();
+				for (int i = 0; i < cntZero; ++i){
+					it--;
+				}
+				mergeList.insert(it, target);
+			}
+		}
+	}
+	
+	//Debug
+	//cout << "{ ";for (list<int>::iterator it2 = mergeList.begin(); it2 != mergeList.end(); ++it2){cout << *it2 << " "; }cout << " }"<<endl;
+
+	int i = 0;
+	for (list<int>::iterator it = mergeList.begin(); it != mergeList.end(); ++it){
+		mod->faceVector.at(*it)->itmp = i++;
 	}
 }
 void relocationFaces(Model *mod)

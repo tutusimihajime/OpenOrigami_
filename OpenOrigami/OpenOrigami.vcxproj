@@ -79,8 +79,6 @@
     <ClCompile Include="Halfedge.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="MyNode.cpp" />
-    <ClCompile Include="MyTree.cpp" />
     <ClCompile Include="Picking.cpp" />
     <ClCompile Include="ReconstructModel.cpp" />
     <ClCompile Include="SpringEdge.cpp" />
@@ -94,8 +92,6 @@
     <ClInclude Include="glutwindow.h" />
     <ClInclude Include="Halfedge.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="MyNode.h" />
-    <ClInclude Include="MyTree.h" />
     <ClInclude Include="Picking.h" />
     <ClInclude Include="ReconstructingModel.h" />
     <ClInclude Include="SpringEdge.h" />
