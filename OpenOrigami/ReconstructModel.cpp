@@ -8,7 +8,9 @@
 using namespace std;
 using namespace Eigen;
 const double scale = 1;
-
+bool compFaceItmp(Face *f1, Face *f2){
+	return f1->itmp < f2->itmp;
+}
 void calcOverlapOrder(Model *mod){
 	int *overlapOrder;
 	overlapOrder = new int[mod->faces.size()];
@@ -131,7 +133,7 @@ void calcOverlapOrder3(Model *mod){
 			q.pop_front();
 			int before = 2;
 			for (list<int>::iterator it = l.begin(); it != l.end(); ++it){
-				int now = mod->overlapRelation.coeff(lookAt,*it);
+				int now = mod->overlapRelation.coeff(lookAt, *it);
 				if (now == 1){
 					if (before == 2){
 						//“ü‚ê‚é
@@ -149,11 +151,11 @@ void calcOverlapOrder3(Model *mod){
 				q.push_back(lookAt);
 			}
 		}
-		
+
 		lists.push_back(l);
 	}
 	//Debug
-	//cout << "lists = ";	for (list<list<int>>::iterator it = lists.begin(); it != lists.end(); ++it){cout << "{ ";for (list<int>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2){cout << *it2 << " ";}cout << " }, ";}cout << endl;
+	cout << "lists = ";	for (list<list<int>>::iterator it = lists.begin(); it != lists.end(); ++it){cout << "{ ";for (list<int>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2){cout << *it2 << " ";}cout << " }, ";}cout << endl;
 
 	list<int> mergeList = lists.front();
 	lists.pop_front();
@@ -189,7 +191,7 @@ void calcOverlapOrder3(Model *mod){
 			}
 		}
 	}
-	
+
 	//Debug
 	//cout << "{ ";for (list<int>::iterator it2 = mergeList.begin(); it2 != mergeList.end(); ++it2){cout << *it2 << " "; }cout << " }"<<endl;
 
@@ -197,10 +199,50 @@ void calcOverlapOrder3(Model *mod){
 	for (list<int>::iterator it = mergeList.begin(); it != mergeList.end(); ++it){
 		mod->faceVector.at(*it)->itmp = i++;
 	}
+
+	//
+	
+	list<Face*> sortedFaces(mod->faces.begin(), mod->faces.end());
+	sortedFaces.sort(compFaceItmp);
+	for (list<Face*>::iterator it = sortedFaces.begin(); it != sortedFaces.end(); ++it){
+		(*it)->itmp = 0;
+	}
+	//cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin(); it != sortedFaces.end(); ++it){ cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp << endl; }
+
+	for (list<Face*>::iterator iti = sortedFaces.begin(); iti != sortedFaces.end(); ++iti){
+		Face *nearestLowwer = NULL;
+		Face *firstZero = NULL;
+		for (list < Face* >::iterator itj = sortedFaces.begin(); itj != iti; ++itj){
+			if (mod->overlapRelation.coeff((*iti)->id, (*itj)->id) == 0){
+				if (firstZero == NULL && nearestLowwer == NULL){
+					firstZero = *itj;
+				}
+			}
+			if (mod->overlapRelation.coeff((*iti)->id, (*itj)->id) == 2){
+				if (nearestLowwer == NULL){
+					nearestLowwer = *itj;
+				}else{
+					nearestLowwer = (nearestLowwer->itmp > (*itj)->itmp) ? nearestLowwer : (*itj);
+				}
+				firstZero = NULL;
+			}
+		}
+		if (firstZero != NULL){
+			(*iti)->itmp = firstZero->itmp;
+		}else if (nearestLowwer != NULL){
+			(*iti)->itmp = nearestLowwer->itmp + 1;
+		}
+	}
+	cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin(); it != sortedFaces.end(); ++it){ cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp<< endl;
+	
+	}
+	
+
 }
+
 void relocationFaces(Model *mod)
 {
-	const double d = 2*scale;
+	const double d = 2 * scale;
 	//d‚È‚è‡‚ðŒˆ’è
 	calcOverlapOrder3(mod);
 	//–Ê‚ð•ª—£
@@ -213,28 +255,25 @@ void relocationFaces(Model *mod)
 		do{
 			if (he_in_f->vertex->halfedge == NULL){
 				he_in_f->vertex->halfedge = he_in_f;
-			}else{
+			}
+			else{
 				he_in_f->vertex = mod->cpyVertex(he_in_f->vertex);
 				he_in_f->vertex->halfedge = he_in_f;
 			}
 			he_in_f = he_in_f->next;
 		} while (he_in_f != f->halfedge);;
 	}
-	
+
 	//–Ê‚ðˆÚ“®
 	for (int i = 0; i < mod->faceVector.size(); ++i){
 		mod->faceVector.at(i)->transPosition(d * mod->faceVector.at(i)->itmp * Vector3d(0, 0, 1));
 	}
 
-	//Debug
-	
 	//cout << mod->overlapRelation << endl;
-	cout << "overlapOrder = "; for (int i = 0; i < mod->faces.size(); ++i){ cout << mod->faceVector.at(i)->itmp << ", "; }cout << endl;
+	//cout << "itmp = "; for (int i = 0; i < mod->faces.size(); ++i){ cout << mod->faceVector.at(i)->itmp << ", "; }cout << endl;
 	
 }
-bool compFaceItmp(Face *f1, Face *f2){
-	return f1->itmp < f2->itmp;
-}
+
 Vector3d createVector3d(Halfedge *he){
 	return Vector3d(he->next->vertex->x - he->vertex->x, he->next->vertex->y - he->vertex->y, he->next->vertex->z - he->vertex->z);
 }
@@ -363,9 +402,9 @@ void bridgeEdges(Model *mod)
 	int faces_num = mod->faces.size();
 	list<Face*> sortedFaces(mod->faces.begin(), mod->faces.end());
 	sortedFaces.sort(compFaceItmp);
-	sortedFaces.reverse();
+	//sortedFaces.reverse();
 	//Debug
-	cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin();it!= sortedFaces.end(); ++it){	cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp << endl;}
+	//cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin();it!= sortedFaces.end(); ++it){	cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp << endl;}
 
 	vector<Face*> sortedFaceVecor(sortedFaces.begin(), sortedFaces.end());
 
@@ -412,7 +451,7 @@ void bridgeEdges(Model *mod)
 
 	}
 	//Debug
-	cout << "halfedges.itmp = ";for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){cout << (*it_e)->itmp << ", ";	}cout << endl;
+	//cout << "halfedges.itmp = ";for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){cout << (*it_e)->itmp << ", ";	}cout << endl;
 	
 	//create bridge
 	for (list<Halfedge*>::iterator it_e = mod->halfedges.begin(); it_e != mod->halfedges.end(); ++it_e){
