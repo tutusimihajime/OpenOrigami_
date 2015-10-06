@@ -186,6 +186,9 @@ void key_input(unsigned char key, int x, int y)
 	case 'f':
 		spring_sim->f_flag = !spring_sim->f_flag;
 		break;
+	case'W':
+		model->exportOBJ();
+		break;
 	case 27:
 		exit(0);
 		break;
@@ -219,9 +222,10 @@ void mouse_motion_left(int x, int y){
 	if (select != -1){
 		MyVector3d dv(x, y, 0);
 		dv -= cv;
+		dv.scale(scl);
+		dv.scale(fabs(zoom.z));
 		dv.y *= -1;
-		dv = rotateMyVector3d(dv);
-		
+		dv = rotateMyVector3d(dv);		
 		model->vertexVector[select]->transPosition(dv);
 		cv.set(x, y, 0);
 	}
@@ -321,8 +325,8 @@ void Idle(){
 
 void MouseWheel(int wheel_number, int direction, int x, int y){
 	if (direction == 1){
-		zoom += MyVector3d(0,0,20);
+		zoom += MyVector3d(0,0,10);
 	} else{
-		zoom -= MyVector3d(0, 0, 20);
+		zoom -= MyVector3d(0, 0, 10);
 	}
 }

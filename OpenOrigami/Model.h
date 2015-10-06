@@ -52,5 +52,7 @@ public:
 	void Model::insertHashMatrix(int M);
 	void Model::setHalfedgePair_hash(int M);
 	void Model::setAllHalfedgePair_hash();
+
+	void Model::exportOBJ();
 };
 

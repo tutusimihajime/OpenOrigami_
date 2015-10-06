@@ -170,16 +170,20 @@ void SpringSimulator::draw(GLenum mode){
 	}
 	if (e_flag){
 		if (mode != GL_SELECT){
+			glEnable(GL_LINE_SMOOTH);
 			glColor3f(0.3, 0.3, 0.3);
 			glLineWidth(1);
 			list<Halfedge*>::iterator it_h;
 			for (it_h = m_model->halfedges.begin(); it_h != m_model->halfedges.end(); ++it_h){
 				(*it_h)->draw();
 			}
+
+			glDisable(GL_LINE_SMOOTH);
 		}
 	}
 	if (f_flag){
 		if (mode != GL_SELECT){
+			glEnable(GL_POLYGON_SMOOTH);
 			if (xray_flag){
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -208,6 +212,7 @@ void SpringSimulator::draw(GLenum mode){
 			if (xray_flag){
 				glDisable(GL_BLEND);
 			}
+			glDisable(GL_POLYGON_SMOOTH);
 		}
 	}
 }

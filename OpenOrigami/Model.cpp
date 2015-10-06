@@ -356,3 +356,24 @@ void Model::setAllHalfedgePair_hash(){
 	//íœ
 	delete[] hash_matrix_he;
 }
+
+void Model::exportOBJ(){
+	cout << "input name( ***.obj) : ";
+	string filename;
+	cin>>filename;
+	std::ofstream file(filename+".obj");
+	std::list<Vertex*>::iterator it_v;
+	std::list<Face*>::iterator it_f;
+	for (it_v = vertices.begin(); it_v != vertices.end(); ++it_v){
+		file << "v " << (*it_v)->x << " " << (*it_v)->y << " " << (*it_v)->z << std::endl;
+	}
+	for (it_f = faces.begin(); it_f != faces.end(); ++it_f){
+		file << "f ";
+		Halfedge *he = (*it_f)->halfedge;
+		do{
+			file << he->vertex->id + 1<<" ";
+			he = he->next;
+		} while (he != (*it_f)->halfedge);
+		file << endl;
+	}
+}

@@ -7,7 +7,7 @@
 
 using namespace std;
 using namespace Eigen;
-const double scale = 1;
+double scale = 0.5;
 bool compFaceItmp(Face *f1, Face *f2){
 	return f1->itmp < f2->itmp;
 }
@@ -155,7 +155,7 @@ void calcOverlapOrder3(Model *mod){
 		lists.push_back(l);
 	}
 	//Debug
-	cout << "lists = ";	for (list<list<int>>::iterator it = lists.begin(); it != lists.end(); ++it){cout << "{ ";for (list<int>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2){cout << *it2 << " ";}cout << " }, ";}cout << endl;
+	//cout << "lists = ";	for (list<list<int>>::iterator it = lists.begin(); it != lists.end(); ++it){cout << "{ ";for (list<int>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2){cout << *it2 << " ";}cout << " }, ";}cout << endl;
 
 	list<int> mergeList = lists.front();
 	lists.pop_front();
@@ -233,16 +233,22 @@ void calcOverlapOrder3(Model *mod){
 			(*iti)->itmp = nearestLowwer->itmp + 1;
 		}
 	}
-	cout << "sortedFaces = \n";	for (list<Face*>::iterator it = sortedFaces.begin(); it != sortedFaces.end(); ++it){ cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp<< endl;
-	
+	int iMax = 0;
+	for (list<Face*>::iterator it = sortedFaces.begin(); it != sortedFaces.end(); ++it){
+		iMax = max(iMax, (*it)->itmp);
 	}
+	//scale = scale / (double)iMax;
+	//cout << scale << endl;
+	//Debug
+	//cout << "sortedFaces = \n";for (list<Face*>::iterator it = sortedFaces.begin(); it != sortedFaces.end(); ++it){cout << "id = " << (*it)->id << ", itmp = " << (*it)->itmp<< endl;}
 	
 
 }
 
 void relocationFaces(Model *mod)
 {
-	const double d = 2 * scale;
+	double d = 2 * scale;
+	cout << d << endl;
 	//重なり順を決定
 	calcOverlapOrder3(mod);
 	//面を分離
@@ -287,8 +293,8 @@ Vector3d createVector3d(MyVector3d v){
 void createBridge(Model *mod, Halfedge *he){
 	
 	//create vertex
-	const double h = 1*scale;
-	const double w = 0.6;
+	double h = 1 * scale;
+	double w = 0.6 * scale;
 	Vertex *v1, *v2, *v3, *v4;
 	v1 = he->vertex;
 	v2 = he->next->vertex;
@@ -316,20 +322,7 @@ void createBridge(Model *mod, Halfedge *he){
 	v6 = mod->createVertex(vec6);
 	v7 = mod->createVertex(vec7);
 	v8 = mod->createVertex(vec8);
-	/*
-	list<Vertex*> listtmp;
-	listtmp.push_back(v1);
-	listtmp.push_back(v2);
-	listtmp.push_back(v3);
-	listtmp.push_back(v4);
-	listtmp.push_back(v5);
-	listtmp.push_back(v6);
-	listtmp.push_back(v7);
-	listtmp.push_back(v8);
-	for (list<Vertex*>::iterator it = listtmp.begin(); it != listtmp.end(); ++it){
-		(*it)->transPosition(-h*vec_h.x(), -h*vec_h.y(), -h*vec_h.z());
-	}
-	*/
+
 	//create face
 	list<list<Vertex*>> vListList;
 	list<Vertex*> vList;
@@ -356,10 +349,10 @@ void createBridge(Model *mod, Halfedge *he){
 		f[i] = mod->addFace(*it);
 		++i;
 	}
-	return;
-	//make pairing
+	
+	//make pairing 10/6 バグ・・・直った
 	Halfedge *he_p = he->pair;
-	he->pair->setPair(f[0]->halfedge->prev);
+	he->setPair(f[0]->halfedge->prev);
 	f[0]->halfedge->next->setPair(f[1]->halfedge->prev);
 	f[1]->halfedge->next->setPair(f[2]->halfedge->prev);
 	f[2]->halfedge->next->setPair(he_p);
