@@ -1,9 +1,18 @@
 #include "SpringSimulator.h"
 #include <iostream>
 #include <vector>
+#include <cstdio>
+#include <ctime>
+
 extern int select;
 
+inline void initRand(){
+	srand((unsigned int)time(NULL));
+}
 void SpringSimulator::generateSpringEdges(){
+	//test 10/6
+	//initRand();
+
 	vector<SpringVertex*> svertices4index;
 	//Ç‹Ç∏SpringVertexÇçÏÇÈ
 	list<Vertex*>::iterator it_v;
@@ -25,6 +34,14 @@ void SpringSimulator::generateSpringEdges(){
 			sv = svertices4index[(*it_h)->vertex->id];
 			ev = svertices4index[(*it_h)->next->vertex->id];
 			SpringEdge *spe = new SpringEdge(sv, ev);
+			
+			//test 10/6
+/*
+			float d = 3;
+			float Max = 100+d;
+			float min = 100-d;
+			spe->naturalLength *= 0.01 * (min+( rand() * (Max-min+1) / (1.0 + RAND_MAX) ));
+*/
 			sedges.push_back(spe);
 			(*it_h)->checked = true;
 			if ((*it_h)->pair != NULL){
@@ -105,7 +122,8 @@ void SpringSimulator::simulate(double dt)
 			(*it_v)->velocity.scale(0.2);//å∏êä
 		}
 	}
-
+	// Collision Detection
+	//CKF
 	caluculateKineticEnergy();
 }
 
@@ -142,28 +160,41 @@ void SpringSimulator::draw(GLenum mode){
 		for (it_v = m_model->vertices.begin(); it_v != m_model->vertices.end(); ++it_v){
 			if (mode == GL_SELECT){
 				glLoadName((GLuint)(*it_v)->id);
-				glPointSize(3);
+				glPointSize(4);
+
 			}else{
 				
-				glPointSize(3);
+				glPointSize(4);
 				glColor3f(0.1, 0.1, 0.1);
-
+				
 				if (svertexVector[(*it_v)->id]->mobility == false && (*it_v)->id != select){
-					glPointSize(5);
+					glPointSize(6);
 					glColor3f(0, 0, 0.8);
 				}
 
 				if (svertexVector[(*it_v)->id]->mobility != false && (*it_v)->id == select){
-					glPointSize(5);
+					glPointSize(6);
 					glColor3f(0.8, 0, 0);
 
 				}
 				if (svertexVector[(*it_v)->id]->mobility == false && (*it_v)->id == select){
-					glPointSize(5);
+					glPointSize(6);
 					glColor3f(0, 0.8, 0);
 
 				}
 
+				// Draw sphere
+/*
+				glEnable(GL_LIGHTING);
+				GLUquadric *sphere;
+				sphere = gluNewQuadric();
+				glPushMatrix();
+				glTranslatef((*it_v)->x, (*it_v)->y, (*it_v)->z);
+				gluSphere(sphere, 0.2, 8, 8);
+				glPopMatrix();
+				gluDeleteQuadric(sphere);
+				glDisable(GL_LIGHTING);
+*/
 			}
 			(*it_v)->draw();
 		}
@@ -171,10 +202,17 @@ void SpringSimulator::draw(GLenum mode){
 	if (e_flag){
 		if (mode != GL_SELECT){
 			glEnable(GL_LINE_SMOOTH);
-			glColor3f(0.3, 0.3, 0.3);
-			glLineWidth(1);
 			list<Halfedge*>::iterator it_h;
 			for (it_h = m_model->halfedges.begin(); it_h != m_model->halfedges.end(); ++it_h){
+				if ((*it_h)->pair == NULL){
+
+					glColor3f(0.3, 0.3, 0.3);
+					glLineWidth(2);
+
+				}else{
+					glColor3f(0.6, 0.6, 0.6);
+					glLineWidth(1);
+				}
 				(*it_h)->draw();
 			}
 

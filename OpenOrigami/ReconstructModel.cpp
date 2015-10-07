@@ -7,7 +7,7 @@
 
 using namespace std;
 using namespace Eigen;
-double scale = 0.5;
+double scale = 1;
 bool compFaceItmp(Face *f1, Face *f2){
 	return f1->itmp < f2->itmp;
 }
@@ -248,7 +248,7 @@ void calcOverlapOrder3(Model *mod){
 void relocationFaces(Model *mod)
 {
 	double d = 2 * scale;
-	cout << d << endl;
+	//cout << d << endl;
 	//d‚È‚è‡‚ðŒˆ’è
 	calcOverlapOrder3(mod);
 	//–Ê‚ð•ª—£

@@ -158,7 +158,10 @@ void display(void)
 	//ƒ‚ƒfƒ‹‚ÌŠg‘å/k¬
 	glScalef(1, 1, 1);    // Šg‘å
 	//ƒ‚ƒfƒ‹‚Ì•`‰æ
+
+	glEnable(GL_LINE_SMOOTH);
 	DrawMeasure(16, 40);
+	glDisable(GL_LINE_SMOOTH);
 	if(spring_sim==NULL)model->draw();
 	if(spring_sim!=NULL)spring_sim->draw();
 	//draw(GL_RENDER_MODE);
