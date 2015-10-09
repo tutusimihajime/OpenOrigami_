@@ -21,9 +21,8 @@ Model::Model(const char *filename)
 {
 	ifstream datafile(filename);
 	vector<Vertex*> vertices4index; // インデックスで頂点を参照するためのvector
+	vector<Vertex*> vertices4index2; // subface
 
-	vector<Face*> faces4layer; //フェースにレイヤー数を設定するためのvector
-	int index_f=0;
 	string str;
 
 	while (datafile >> str)
@@ -38,7 +37,8 @@ Model::Model(const char *filename)
 
 		}
 		else if (str == "f")
-		{// 面を構成する頂点インデックス情報の読み込み
+		{
+			// 面を構成する頂点インデックス情報の読み込み
 			char buf[255];
 			char *pbuf = buf;
 			int n_elements = 0;
@@ -69,13 +69,52 @@ Model::Model(const char *filename)
 				vlist.push_back(vertices4index[(*it_i) - 1]);
 			}
 
-			//頂点をZにずらす
-			list<Vertex*>::iterator it_v;
-			for (it_v = vlist.begin(); it_v != vlist.end(); ++it_v){
-				//(*it_v)->z = faces.size()*10;
-			}
 			//頂点のリストを引数にして面の登録を行う
-			faces4layer.push_back( addFace(vlist) );
+			addFace(vlist);
+		}
+		else if (str == "sv"){
+
+			double x, y, z;
+			datafile >> x >> y >> z;
+			Vertex *v = new Vertex(x, y, z);
+			v->setID(vertices4index2.size());
+			vertices4index2.push_back(v);
+			subvertexVector.push_back(v);
+		}
+		else if (str == "sf"){
+			// 面を構成する頂点インデックス情報の読み込み
+			char buf[255];
+			char *pbuf = buf;
+			int n_elements = 0;
+			datafile.getline(buf, sizeof(buf));
+			while (*pbuf){
+				if (*pbuf == ' ') {
+					n_elements++;
+				}
+				pbuf++;
+			}
+
+			list<int> index;
+			//(4)面を構成する頂点インデックスをファイルから読み込む
+			pbuf = buf;
+			for (int i = 0; i < n_elements; i++)
+			{
+				pbuf = strchr(pbuf, ' ');
+				pbuf++;
+				int i_tmp;
+				//　構成要素の読み取り
+				sscanf_s(pbuf, "%d", &i_tmp);
+				index.push_back(i_tmp);
+			}
+
+			list<Vertex*> vlist;
+			for (list<int>::iterator it_i = index.begin(); it_i != index.end(); ++it_i)
+			{
+				vlist.push_back(vertices4index2[(*it_i) - 1]);
+			}
+
+			//頂点のリストを引数にして面の登録を行う
+			addFace2(vlist);
 		}
 		else if (str == "m"){
 			overlapRelation.resize(faces.size(), faces.size());
@@ -139,6 +178,26 @@ Face *Model::addFace(list<Vertex*> vlist){
 	}
 	return createFace(halfedges4pairing[0]);
 }
+Face *Model::addFace2(list<Vertex*> vlist){
+	vector<Halfedge*> halfedges4pairing;
+	list<Vertex*>::iterator it_v;
+	for (it_v = vlist.begin(); it_v != vlist.end(); ++it_v){
+		Halfedge *he = new Halfedge(*it_v);
+		(*it_v)->halfedge = he;
+		halfedges4pairing.push_back(he);
+	}
+	for (int i = 0; i < vlist.size(); ++i){
+		int i_next, i_prev;
+		i_next = (i == vlist.size() - 1) ? 0 : i + 1;
+		i_prev = (i == 0) ? vlist.size() - 1 : i - 1;
+		halfedges4pairing[i]->next = halfedges4pairing[i_next];
+		halfedges4pairing[i]->prev = halfedges4pairing[i_prev];
+	}
+	Face *face = new Face(halfedges4pairing[0]);
+	face->setID(subfaceVector.size());
+	subfaceVector.push_back(face);
+	return face;
+}
 void Model::draw(GLenum mode){
 	glDisable(GL_LIGHTING);
 	
@@ -192,6 +251,20 @@ void Model::draw(GLenum mode){
 	}
 
 }
+void Model::drawSubFaces(){
+	glDisable(GL_LIGHTING);
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(1, 30);
+
+	for (int i = 0; i < subfaceVector.size(); ++i){
+		float col = (float)i / subfaceVector.size();
+		glColor3d(1-col, 1-col, 1);
+		subfaceVector.at(i)->draw();
+	}
+	glDisable(GL_POLYGON_OFFSET_FILL);
+	
+
+}
 void Model::debugPrint(){
 	cout << "vertices.size() = " << vertices.size() << endl;
 	list<Vertex*>::iterator it_v;
@@ -222,6 +295,9 @@ void Model::normalizeVertices(){
 
 	for (it_v = vertices.begin(); it_v != vertices.end(); ++it_v){
 		(*it_v)->transPosition(m.x,m.y,m.z);
+	}
+	for (int i = 0; i < subvertexVector.size(); ++i){
+		subvertexVector.at(i)->transPosition(m.x, m.y, m.z);
 	}
 }
 Face *Model::cpyFace(Face *_f){
@@ -376,4 +452,33 @@ void Model::exportOBJ(){
 		} while (he != (*it_f)->halfedge);
 		file << endl;
 	}
+}
+
+void Model::deleteGarbageSubface(){
+	if (subfaceVector.size() == 0){
+		cout << "This Model does NOT have subfaces.\n";
+		return;
+	}
+	Face *garbage = NULL;
+	int v_num_Max = 0;
+	int i_garbage = -1;
+	for (int i = 0; i < subfaceVector.size(); ++i){
+		int v_num = 0;
+		Halfedge *he = subfaceVector.at(i)->halfedge;
+		do{
+			v_num++;
+			he = he->next;
+		} while (he != subfaceVector.at(i)->halfedge);
+		if (v_num > v_num_Max){
+			v_num_Max = v_num;
+			garbage = subfaceVector.at(i);
+			i_garbage = i;
+		}
+	}
+	vector<Face*>::iterator it = subfaceVector.begin();
+	for (int i = 0; i < i_garbage; ++i){
+		++it;
+	}
+	subfaceVector.erase(it);
+	delete garbage;
 }

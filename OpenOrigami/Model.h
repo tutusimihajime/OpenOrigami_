@@ -15,7 +15,7 @@ public:
 	list<Face*> faces;
 	list<Halfedge*> halfedges;
 	list<Vertex*> vertices;
-		
+	
 	// ピッキングで使うために急遽作成したベクタ。リストじゃなくて最初からこっちでよかったかも
 	vector<Face*> faceVector;
 	vector<Halfedge*> halfedgeVector;
@@ -24,6 +24,10 @@ public:
 	//面の重なり情報を保存
 	SparseMatrix<int> overlapRelation;
 
+	//subface
+	vector<Vertex*> subvertexVector;
+	vector<Face*> subfaceVector;
+	//----------
 	Model();
 	Model(const char *filename);
 	~Model();
@@ -34,7 +38,10 @@ public:
 	//リストから face を削除する
 	void deleteFace(Face* face);
 	Face *addFace(list<Vertex*> vlist);
+
+	Face *addFace2(list<Vertex*> vlist);//subface用
 	void draw(GLenum mode = GL_RENDER_MODE);
+	void drawSubFaces();
 	void debugPrint();
 	void normalizeVertices();
 	
@@ -46,13 +53,18 @@ public:
 	Halfedge *createHalfedge(Vertex *v);
 	Vertex *createVertex(double _x, double _y, double _z);
 	Vertex *createVertex(Vector3d vec);
+	
 	//first pairing
 	Halfedge **hash_matrix_he;//hashでhalfedege*を格納するn*1行列(名前はmatrixだが、matrixじゃなくてvector)
 	int Model::getHashKey(Vertex *v1, Vertex *v2, int M);
 	void Model::insertHashMatrix(int M);
 	void Model::setHalfedgePair_hash(int M);
 	void Model::setAllHalfedgePair_hash();
-
+	
+	//export
 	void Model::exportOBJ();
+
+	//subface
+	void Model::deleteGarbageSubface();
 };
 

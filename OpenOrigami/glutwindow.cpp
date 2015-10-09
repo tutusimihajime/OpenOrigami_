@@ -24,6 +24,11 @@ MyVector3d cv, tv, sv, tmp_v;//cv:ƒhƒ‰ƒbƒOŠJnˆÊ’utv:•½sˆÚ“®s—ñ—p,sv:‚±‚ê‚Ü‚Å‚
 //ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“
 bool sim_flag = false;
 
+//test—p
+bool isDrawSubface = false;
+
+//-------------------------
+
 // ƒNƒH[ƒ^ƒjƒIƒ“‚ÌÏ r <- p x q
 static void qmul(double r[], const double p[], const double q[])
 {
@@ -162,9 +167,12 @@ void display(void)
 	glEnable(GL_LINE_SMOOTH);
 	DrawMeasure(16, 40);
 	glDisable(GL_LINE_SMOOTH);
-	if(spring_sim==NULL)model->draw();
-	if(spring_sim!=NULL)spring_sim->draw();
-	//draw(GL_RENDER_MODE);
+	if (isDrawSubface){
+		model->drawSubFaces();
+	}else{
+		if (spring_sim == NULL)model->draw();
+		if (spring_sim != NULL)spring_sim->draw();
+	}
 	glutSwapBuffers();              // •\¦—p‚Ì‰æ–Ê—Ìˆæ‚Æ‘‚«‚±‚İ—p‰æ–Ê—Ìˆæ‚ğŒğŠ·‚µ‚Ä•\¦‚·‚é
 }
 void key_input(unsigned char key, int x, int y)
@@ -188,6 +196,9 @@ void key_input(unsigned char key, int x, int y)
 		break;
 	case 'f':
 		spring_sim->f_flag = !spring_sim->f_flag;
+		break;
+	case 'p':
+		isDrawSubface = !isDrawSubface;
 		break;
 	case'W':
 		model->exportOBJ();
