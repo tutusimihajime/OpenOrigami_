@@ -11,6 +11,7 @@ public:
 	int id;
 	int itmp;//汎用tmp
 	bool isDrawn;
+	int type;//0:通常, 1:間引かれ, 2:ブリッジ
 	Vector3d *g;//重心
 	Face(Halfedge *he);
 	~Face();

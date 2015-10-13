@@ -114,7 +114,8 @@ Model::Model(const char *filename)
 			}
 
 			//’¸“_‚ÌƒŠƒXƒg‚ğˆø”‚É‚µ‚Ä–Ê‚Ì“o˜^‚ğs‚¤
-			addFace2(vlist);
+			Face *f = addFace2(vlist);
+			f->type = 0;
 		}
 		else if (str == "m"){
 			overlapRelation.resize(faces.size(), faces.size());
@@ -538,7 +539,6 @@ bool isOverlap2D(Face *subface, Face *face){
 		}
 		he = he->next;
 	} while (he != face->halfedge);
-	cout << cnt << endl;
 	return cnt % 2 == 1;
 }
 void Model::calcAllSubfaceG(){

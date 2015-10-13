@@ -57,6 +57,7 @@ SpringSimulator::SpringSimulator(Model *model){
 	m_model = model;
 	v_flag = e_flag = f_flag = true;
 	xray_flag = false;
+	f_type = 0;
 	generateSpringEdges();
 }
 MyVector3d createMyVector3d(SpringVertex *v1, SpringVertex *v2){
@@ -158,6 +159,16 @@ void SpringSimulator::draw(GLenum mode){
 	if (v_flag){
 		list<Vertex*>::iterator it_v;
 		for (it_v = m_model->vertices.begin(); it_v != m_model->vertices.end(); ++it_v){
+			
+			if (f_type == 1 && (*it_v)->halfedge->face->type == 1){
+				continue;
+			}
+			if (f_type == 2 && (*it_v)->halfedge->face->type == 1){
+				continue;
+			}
+			if (f_type != 2 && (*it_v)->halfedge->face->type == 2){
+				continue;
+			}
 			if (mode == GL_SELECT){
 				glLoadName((GLuint)(*it_v)->id);
 				glPointSize(4);
@@ -204,6 +215,16 @@ void SpringSimulator::draw(GLenum mode){
 			glEnable(GL_LINE_SMOOTH);
 			list<Halfedge*>::iterator it_h;
 			for (it_h = m_model->halfedges.begin(); it_h != m_model->halfedges.end(); ++it_h){
+
+				if (f_type == 1 && (*it_h)->face->type == 1){
+					continue;
+				}
+				if (f_type == 2 && (*it_h)->face->type == 1){
+					continue;
+				}
+				if (f_type != 2 && (*it_h)->face->type == 2){
+					continue;
+				}
 				if ((*it_h)->pair == NULL){
 
 					glColor3f(0.3, 0.3, 0.3);
@@ -235,8 +256,15 @@ void SpringSimulator::draw(GLenum mode){
 			list<Face*>::iterator it_f;
 			for (it_f = m_model->faces.begin(); it_f != m_model->faces.end(); ++it_f){
 				
-				if (!(*it_f)->isDrawn)continue;
-
+				if (f_type == 1 && (*it_f)->type == 1){
+					continue;
+				}
+				if (f_type == 2 && (*it_f)->type == 1){
+					continue;
+				}
+				if (f_type != 2 && (*it_f)->type == 2){
+					continue;
+				}
 				if (xray_flag){
 					glColor4f(1, 1, 1, 0.1);
 				}
@@ -245,6 +273,8 @@ void SpringSimulator::draw(GLenum mode){
 					glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
 					GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 					glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
+
+				
 				}
 				(*it_f)->draw();
 			}

@@ -199,6 +199,10 @@ void key_input(unsigned char key, int x, int y)
 	case 'f':
 		spring_sim->f_flag = !spring_sim->f_flag;
 		break;
+	case 't':
+		spring_sim->f_type++;
+		if (spring_sim->f_type > 2)spring_sim->f_type = 0;
+		break;
 	case 'p':
 		isDrawSubface = !isDrawSubface;
 		break;

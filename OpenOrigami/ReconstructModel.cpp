@@ -347,6 +347,7 @@ void createBridge(Model *mod, Halfedge *he){
 	int i = 0;
 	for (list<list<Vertex*>>::iterator it = vListList.begin(); it != vListList.end(); ++it){
 		f[i] = mod->addFace(*it);
+		f[i]->type = 2;
 		++i;
 	}
 	
@@ -467,6 +468,11 @@ void moveOverlappedVertices(Model *mod)
 
 }
 void setIsDraw(Model *mod){
+	// ‚Ü‚¸A‚·‚×‚Ä‚ğŠÔˆø‚­‚±‚Æ‚É‚·‚é
+	for (int i = 0; i < mod->faceVector.size(); ++i){
+		mod->faceVector.at(i)->type = 1;
+	}
+	// ŠÔˆø‚©‚È‚¢‚à‚Ì‚ğ‘I‚Ô
 	for (int i = 0; i < mod->subfaceVector.size(); ++i){
 		Face *fTop = NULL, *fBot = NULL;
 		for (int j = 0; j < mod->faceVector.size(); ++j){
@@ -484,6 +490,7 @@ void setIsDraw(Model *mod){
 			}
 		}
 		fTop->isDrawn = fBot->isDrawn = true;
+		fTop->type = fBot->type = 0;
 	}
 
 	//test

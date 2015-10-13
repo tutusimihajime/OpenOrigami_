@@ -21,6 +21,7 @@ public:
 	bool v_flag;
 	bool e_flag;
 	bool f_flag;
+	int f_type;//0:’Êí, 1:ŠÔˆø‚­, 2:F•ª‚¯
 	bool xray_flag;
 
 	SpringSimulator(Model *model);

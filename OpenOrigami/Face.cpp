@@ -10,7 +10,7 @@ using namespace std;
 Face::Face(Halfedge *he) {
 	halfedge = he; // Face ¨ Halfedge ‚ÌƒŠƒ“ƒN
 	normalizeNormal();
-	isDrawn = false;
+	isDrawn = true;
 	Halfedge *he_in_f = he;
 	do{
 		he_in_f->face = this;
