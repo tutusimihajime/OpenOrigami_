@@ -27,6 +27,7 @@ public:
 	//subface
 	vector<Vertex*> subvertexVector;
 	vector<Face*> subfaceVector;
+	bool **subfaceOverlapFace;
 	//----------
 	Model();
 	Model(const char *filename);
@@ -66,5 +67,11 @@ public:
 
 	//subface
 	void Model::deleteGarbageSubface();
+	void Model::checkOverlapSubface();
+
+	// Calculate Center of Gravity
+	void calcAllFaceG();
+	void calcAllSubfaceG();
+
 };
 

@@ -185,8 +185,10 @@ void key_input(unsigned char key, int x, int y)
 		}
 		break;
 	case 's':
-		reconstructModel(model);
-		spring_sim = new SpringSimulator(model);
+		if (spring_sim == NULL){
+			reconstructModel(model);
+			spring_sim = new SpringSimulator(model);
+		}
 		break;
 	case 'v':
 		spring_sim->v_flag = !spring_sim->v_flag;
@@ -276,8 +278,10 @@ void mouse(int button, int state, int x, int y)
 	case GLUT_LEFT_BUTTON:
 		switch (state) {
 		case GLUT_DOWN:
-			pick(x, y);
-			cv.set(x, y, 0);
+			if (spring_sim != NULL){
+				pick(x, y);
+				cv.set(x, y, 0);
+			}
 			glutMotionFunc(mouse_motion_left);
 			break;
 		case GLUT_UP:

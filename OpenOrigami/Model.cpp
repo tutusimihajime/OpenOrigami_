@@ -7,7 +7,7 @@
 #include <iostream>
 #include <list>
 #include <cstdio>
-
+#include <Eigen/Geometry>
 #include "MyVector3d.h"
 
 using namespace std;
@@ -481,4 +481,89 @@ void Model::deleteGarbageSubface(){
 	}
 	subfaceVector.erase(it);
 	delete garbage;
+}
+
+class Segment{
+public:
+	Vector3d s;//始点
+	Vector3d v;//方向
+	Segment(Vector2d *_s, Vector2d *_v){
+		s = Vector3d(_s->x(), _s->y(), 0);
+		v = Vector3d(_v->x(), _v->y(), 0);
+	}
+	void debugPrint(){
+		cout << "s :\n" << s<<"\nv :\n"<<v<<endl;
+	}
+};
+bool isCrossSegment(Segment *seg1, Segment *seg2){
+	
+	Vector3d v = seg2->s-seg1->s;//始点の差
+	Vector3d Crs_v1_v2 = seg1->v.cross(seg2->v);
+	
+	//parallelならfalse
+	if ( Crs_v1_v2.norm() == 0.0f){
+		return false;
+	}
+
+	Vector3d Crs_v_v1 = v.cross(seg1->v);
+	Vector3d Crs_v_v2 = v.cross(seg2->v);
+	int sign1 = ((Crs_v_v2.z() > 0) - (Crs_v_v2.z() < 0));
+	int sign2 = ((Crs_v1_v2.z() > 0) - (Crs_v1_v2.z() < 0));
+	int sign3 = ((Crs_v_v1.z() > 0) - (Crs_v_v1.z() < 0));
+
+	float t1 = sign1 * sign2 *Crs_v_v2.norm() / Crs_v1_v2.norm();
+	float t2 = sign2 * sign3 * Crs_v_v1.norm() / Crs_v1_v2.norm();
+
+	const float eps = 0.00001f;
+	if (t1 + eps<0||t1-eps>1||t2+eps<0||t2-eps>1){
+		return false;
+	}
+	Vector3d crossPos = seg1->s + seg1->v * t1;
+	return true;
+	
+}
+bool isOverlap2D(Face *subface, Face *face){
+	//subfaceの重心(2D)を求める
+	Vector2d g(subface->g->x(), subface->g->y());
+
+	//faceがgを含むかどうか調べる
+	Segment g_halfline(&g, &Vector2d(1000,0));
+	int cnt = 0;
+	Halfedge *he = face->halfedge;
+	do{
+		Segment edge(&Vector2d(he->vertex->x, he->vertex->y), &Vector2d(he->next->vertex->x - he->vertex->x, he->next->vertex->y - he->vertex->y));
+		
+		if (isCrossSegment(&g_halfline, &edge)){
+			cnt++;
+		}
+		he = he->next;
+	} while (he != face->halfedge);
+	cout << cnt << endl;
+	return cnt % 2 == 1;
+}
+void Model::calcAllSubfaceG(){
+	for (int i = 0; i < subfaceVector.size(); ++i){
+		subfaceVector.at(i)->calcCenterOfGravity();
+	}
+}
+void Model::checkOverlapSubface(){
+
+	calcAllSubfaceG();
+
+	subfaceOverlapFace = new bool*[subfaceVector.size()];
+	for (int i = 0; i < subfaceVector.size(); ++i){
+		subfaceOverlapFace[i] = new bool[faces.size()];
+	}
+	for (int i = 0; i < subfaceVector.size(); ++i){
+		for (int j = 0; j < faceVector.size(); ++j){
+			subfaceOverlapFace[i][j] = isOverlap2D(subfaceVector.at(i), faceVector.at(j));
+		}
+	}
+	//test
+	/*for (int i = 0; i < subfaceVector.size(); ++i){
+		for (int j = 0; j < faceVector.size(); ++j){
+			cout << subfaceOverlapFace[i][j]<<" ";
+		}
+		cout << endl;
+	}*/
 }

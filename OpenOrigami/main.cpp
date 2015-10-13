@@ -33,10 +33,12 @@ void main(int argc, char *argv[]){
 	//spring_sim->debugPrint();
 	//model->debugPrint();
 	model->deleteGarbageSubface();
+	cout << "face " << model->faces.size() << endl;
 	cout << "subface " << model->subfaceVector.size() << " : " << endl;
 	
 	for (int i = 0; i < model->subfaceVector.size(); ++i){
 		//model->subfaceVector.at(i)->transPosition(0, 0, i * 5);
 	}
+	model->checkOverlapSubface();
 	glutReady(argc, argv);
 }

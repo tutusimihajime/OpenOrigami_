@@ -10,6 +10,7 @@ using namespace std;
 Face::Face(Halfedge *he) {
 	halfedge = he; // Face ¨ Halfedge ‚ÌƒŠƒ“ƒN
 	normalizeNormal();
+	isDrawn = false;
 	Halfedge *he_in_f = he;
 	do{
 		he_in_f->face = this;
@@ -70,4 +71,17 @@ void Face::transPosition(double x, double y, double z){
 }
 void Face::transPosition(Vector3d vec){
 	transPosition(vec.x(), vec.y(), vec.z());
+}
+void Face::calcCenterOfGravity(){
+	
+	g = new Vector3d(0, 0, 0);
+	int n = 0;//Face‚Ì’†‚Ì’¸“_E•Ó‚Ì”
+	Halfedge *he = halfedge;
+	do{
+		*g += Vector3d(he->vertex->x, he->vertex->y, he->vertex->z);
+		n++;
+		he = he->next;
+	} while (he != halfedge);
+	*g /= (float)n;
+
 }

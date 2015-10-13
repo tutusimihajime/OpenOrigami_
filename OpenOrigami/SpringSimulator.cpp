@@ -234,6 +234,9 @@ void SpringSimulator::draw(GLenum mode){
 			
 			list<Face*>::iterator it_f;
 			for (it_f = m_model->faces.begin(); it_f != m_model->faces.end(); ++it_f){
+				
+				if (!(*it_f)->isDrawn)continue;
+
 				if (xray_flag){
 					glColor4f(1, 1, 1, 0.1);
 				}

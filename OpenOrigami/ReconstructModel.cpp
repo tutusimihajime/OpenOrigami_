@@ -466,12 +466,42 @@ void moveOverlappedVertices(Model *mod)
 {
 
 }
+void setIsDraw(Model *mod){
+	for (int i = 0; i < mod->subfaceVector.size(); ++i){
+		Face *fTop = NULL, *fBot = NULL;
+		for (int j = 0; j < mod->faceVector.size(); ++j){
+			if (mod->subfaceOverlapFace[i][j]){
+				if (fTop == NULL){
+					fTop = mod->faceVector.at(j);
+				}else if (fTop->itmp < mod->faceVector.at(j)->itmp){
+					fTop = mod->faceVector.at(j);
+				}
+				if (fBot == NULL){
+					fBot = mod->faceVector.at(j);
+				}else if(fBot->itmp > mod->faceVector.at(j)->itmp){
+					fBot = mod->faceVector.at(j);
+				}
+			}
+		}
+		fTop->isDrawn = fBot->isDrawn = true;
+	}
+
+	//test
+	/*cout << "isDrawn\n";
+	for (int i = 0; i < mod->faceVector.size(); ++i){
+		cout << mod->faceVector.at(i)->isDrawn << " ";
+	}*/
+}
 void reconstructModel(Model *mod)
 {
 	// relocation facs
 	relocationFaces(mod);
+	// set isDraw
+	setIsDraw(mod);
 	// bridge edges
 	bridgeEdges(mod);
 	// move overlapped vertices
 	moveOverlappedVertices(mod);
+	
+	
 }
