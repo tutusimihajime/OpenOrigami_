@@ -454,7 +454,54 @@ void Model::exportOBJ(){
 		file << endl;
 	}
 }
+void Model::deleteSubVertex(Vertex *garbage){
+	if (garbage == NULL){
+		cout << "garbage vertex is NULL.\n";
+		return;
+	}
+	vector<Vertex*>::iterator it_v = subvertexVector.begin();
+	for (int i = 0; i < subvertexVector.size(); ++i){
+		if (subvertexVector.at(i) == garbage){
+			break;
+		}
+		++it_v;
+	}
+	subvertexVector.erase(it_v);
+	delete garbage;
+}
+void Model::deleteSubFace(Face *garbage){
+	if (garbage == NULL){
+		cout << "garabage face is NULL.\n";
+		return;
+	}
+	vector<Face*>::iterator it_f = subfaceVector.begin();
+	for (int i = 0; i < subfaceVector.size(); ++i){
+		if(subfaceVector.at(i)==garbage){
+			break;
+		}
+		++it_f;
+	}
+	subfaceVector.erase(it_f);
 
+	int n = 0;//エッジの数を記録
+	Halfedge *he = garbage->halfedge;
+	do{
+		deleteSubVertex(he->vertex);
+		n++;
+		he = he->next;
+	} while (he != garbage->halfedge);
+	
+	for (int i = 0; i < n; ++i){
+		Halfedge *he_next = he->next;
+		if (he->pair != NULL){
+			(he->pair)->pair = NULL;
+		}
+		delete he;
+		he = he_next;
+	}
+
+	delete garbage;
+}
 void Model::deleteGarbageSubface(){
 	if (subfaceVector.size() == 0){
 		cout << "This Model does NOT have subfaces.\n";
@@ -481,6 +528,20 @@ void Model::deleteGarbageSubface(){
 		++it;
 	}
 	subfaceVector.erase(it);
+	Halfedge *he = garbage->halfedge;
+	do{
+		vector<Vertex*>::iterator it_v = subvertexVector.begin();
+		for (int i = 0; i < faceVector.size(); ++i){
+			if (subvertexVector.at(i)->id == he->vertex->id){
+				Vertex *v = subvertexVector.at(i);
+				subvertexVector.erase(it_v);
+				delete v;
+				break;
+			}
+			++it_v;
+		}
+		he = he->next;
+	} while (he!=garbage->halfedge);
 	delete garbage;
 }
 

@@ -68,6 +68,8 @@ public:
 	//subface
 	void Model::deleteGarbageSubface();
 	void Model::checkOverlapSubface();
+	void Model::deleteSubVertex(Vertex *garbage);
+	void Model::deleteSubFace(Face *garbage);
 
 	// Calculate Center of Gravity
 	void calcAllFaceG();
