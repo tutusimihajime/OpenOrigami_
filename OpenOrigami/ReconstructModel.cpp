@@ -509,6 +509,5 @@ void reconstructModel(Model *mod)
 	bridgeEdges(mod);
 	// move overlapped vertices
 	moveOverlappedVertices(mod);
-	
-	
+
 }

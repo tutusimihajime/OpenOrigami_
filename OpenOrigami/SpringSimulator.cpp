@@ -124,15 +124,13 @@ void SpringSimulator::simulate(double dt)
 		}
 	}
 	// Collision Detection
-	//CKF
+	//CKE
 	caluculateKineticEnergy();
 }
-
 void SpringSimulator::debugPrint(){
 	cout << "SpringEdges : " << sedges.size() << endl;
 	cout << "SpringVertices : " << svertices.size() << endl;
 }
-
 void SpringSimulator::setImmobilty(int id){
 	svertexVector[id]->mobility = false;
 }
@@ -152,7 +150,6 @@ void SpringSimulator::caluculateKineticEnergy(){
 	}
 	//cout << "K = " << K << endl;
 }
-
 void SpringSimulator::draw(GLenum mode){
 	glDisable(GL_LIGHTING);
 

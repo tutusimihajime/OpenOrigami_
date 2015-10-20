@@ -150,19 +150,36 @@ void Model::calcNormal(){
 		(*it)->normalizeNormal();
 	}
 }
-//deleteŠÖŒW‚ÍNEED TO FIX 9/16
+//deleteŠÖŒW‚ÍNEED TO FIX 9/16 ---test‚µ‚Ä‚È‚¢‚¯‚Çˆê‰ 10/20
 void Model::deleteVertex(Vertex *vertex) {
 	vertices.remove(vertex);
+	vector<Vertex*>::iterator it_v = remove(vertexVector.begin(), vertexVector.end(), vertex);
+	vertexVector.erase(it_v);
 	delete vertex;
+}
+void Model::deleteHalfedge(Halfedge *he){
+	halfedges.remove(he);
+	vector<Halfedge*>::iterator it_e = remove(halfedgeVector.begin(), halfedgeVector.end(), he);
+	halfedgeVector.erase(it_e);
+	delete he;
 }
 void Model::deleteFace(Face* face) {
 	faces.remove(face);
-	delete face->halfedge->next;
-	delete face->halfedge->prev;
-	delete face->halfedge;
+	vector<Face*>::iterator it_f = remove(faceVector.begin(), faceVector.end(), face);
+	faceVector.erase(it_f);
+	list<Halfedge*> deleteEdges;
+	Halfedge *he = (*it_f)->halfedge;
+	do{
+		deleteEdges.push_back(he);
+		he = he->next;
+	} while (he != (*it_f)->halfedge);
+	while (!deleteEdges.empty()){
+		Halfedge *garbage = deleteEdges.front();
+		deleteEdges.pop_front();
+		deleteHalfedge(garbage);
+	}
 	delete face;
 }
-
 Face *Model::addFace(list<Vertex*> vlist){
 	vector<Halfedge*> halfedges4pairing;
 	list<Vertex*>::iterator it_v;
@@ -179,6 +196,7 @@ Face *Model::addFace(list<Vertex*> vlist){
 	}
 	return createFace(halfedges4pairing[0]);
 }
+//subface‚ÌaddFace
 Face *Model::addFace2(list<Vertex*> vlist){
 	vector<Halfedge*> halfedges4pairing;
 	list<Vertex*>::iterator it_v;
@@ -325,7 +343,6 @@ Vertex *Model::cpyVertex(Vertex *_v){
 	return createVertex(_v->x, _v->y, _v->z);
 }
 
-
 //create and push list and vertex
 Face *Model::createFace(Halfedge *he){
 	Face *face = new Face(he);
@@ -433,7 +450,6 @@ void Model::setAllHalfedgePair_hash(){
 	//íœ
 	delete[] hash_matrix_he;
 }
-
 void Model::exportOBJ(){
 	cout << "input name( ***.obj) : ";
 	string filename;
@@ -544,7 +560,6 @@ void Model::deleteGarbageSubface(){
 	} while (he!=garbage->halfedge);
 	delete garbage;
 }
-
 class Segment{
 public:
 	Vector3d s;//n“_

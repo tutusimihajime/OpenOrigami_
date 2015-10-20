@@ -36,6 +36,7 @@ public:
 	void calcNormal();
 	//リストから vertex を削除する 
 	void deleteVertex(Vertex *vertex);
+	void deleteHalfedge(Halfedge *he);
 	//リストから face を削除する
 	void deleteFace(Face* face);
 	Face *addFace(list<Vertex*> vlist);

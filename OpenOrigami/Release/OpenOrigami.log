@@ -1,33 +1,7 @@
-﻿2015/10/14 14:52:49 にビルドを開始しました。
+﻿2015/10/20 14:07:24 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib Model.cpp Picking.cpp ReconstructModel.cpp SpringSimulator.cpp glutwindow.cpp main.cpp
-         Model.cpp
-     1>Model.cpp(123): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(125): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(173): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(190): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(216): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(219): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(227): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(237): warning C4305: '初期化中' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(243): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(260): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(300): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(315): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(463): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(478): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(513): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(534): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(576): warning C4244: '初期化中' : 'double' から 'float' への変換です。データが失われる可能性があります。
-     1>Model.cpp(577): warning C4244: '初期化中' : 'double' から 'float' への変換です。データが失われる可能性があります。
-     1>Model.cpp(606): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(615): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(618): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(619): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-         Picking.cpp
-     1>Picking.cpp(35): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Picking.cpp(98): warning C4244: '引数' : 'double' から 'GLfloat' への変換です。データが失われる可能性があります。
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib ReconstructModel.cpp
          ReconstructModel.cpp
      1>ReconstructModel.cpp(18): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
      1>ReconstructModel.cpp(21): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
@@ -45,24 +19,6 @@
      1>ReconstructModel.cpp(472): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
      1>ReconstructModel.cpp(476): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
      1>ReconstructModel.cpp(478): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-         SpringSimulator.cpp
-     1>SpringSimulator.cpp(179): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SpringSimulator.cpp(183): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SpringSimulator.cpp(188): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SpringSimulator.cpp(193): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SpringSimulator.cpp(230): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SpringSimulator.cpp(234): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SpringSimulator.cpp(269): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SpringSimulator.cpp(272): warning C4305: '初期化中' : 'double' から 'GLfloat' へ切り詰めます。
-         glutwindow.cpp
-     1>glutwindow.cpp(116): warning C4305: '初期化中' : 'double' から 'float' へ切り詰めます。
-     1>glutwindow.cpp(123): warning C4305: '引数' : 'double' から 'GLclampf' へ切り詰めます。
-     1>glutwindow.cpp(141): warning C4244: '引数' : 'double' から 'GLfloat' への変換です。データが失われる可能性があります。
-     1>glutwindow.cpp(151): warning C4244: '引数' : 'double' から 'GLfloat' への変換です。データが失われる可能性があります。
-     1>glutwindow.cpp(344): warning C4244: '引数' : 'double' から 'DWORD' への変換です。データが失われる可能性があります。
-         main.cpp
-     1>main.cpp(39): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-         コードを生成中...
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(365): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(366): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
@@ -381,36 +337,6 @@
          	マネージ コードでサポートされていない組み込み型が見つかりました
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(310): warning C4793: Eigen::internal::pstore<double,__m128d>': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(592): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(596): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(604): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><int,int>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\Face.obj
          Release\glutwindow.obj
@@ -437,4 +363,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:16.65
+経過時間 00:00:05.19
