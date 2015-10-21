@@ -702,7 +702,7 @@ void Model::constructSubFaceGroup(){
 		}
 		ave_itmp /= id_subfaceVectorVector.at(i).size();
 		int mid = id_subfaceVectorVector.at(i).size() / 2;
-		cout << "ave_itmp =" << ave_itmp << ", mid = " << mid << endl;
+		//cout << "ave_itmp =" << ave_itmp << ", mid = " << mid << endl;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
 			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//’êŠñ‚¹
 			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + ave_itmp -mid;//’†Šñ‚¹
