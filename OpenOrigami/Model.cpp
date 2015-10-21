@@ -682,10 +682,11 @@ void Model::constructSubFaceGroup(){
 		cout << endl;
 	}*/
 
-	//サブフェースのitmpの圧縮
+	//サブフェースのitmpの圧縮, itmp2は、グループ内での順位
 	
 	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
 		int min_itmp = 0;
+		int ave_itmp = 0;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
 			id_subfaceVectorVector[i][j]->itmp2 = 0;
 			for (int k = 0; k < id_subfaceVectorVector.at(i).size(); ++k){
@@ -693,13 +694,22 @@ void Model::constructSubFaceGroup(){
 					id_subfaceVectorVector[i][j]->itmp2++;
 				}
 			}
+			ave_itmp += id_subfaceVectorVector[i][j]->itmp;
 			min_itmp = min(min_itmp, id_subfaceVectorVector[i][j]->itmp);
 		}
+		if (id_subfaceVectorVector.at(i).size() == 0){
+			continue;
+		}
+		ave_itmp /= id_subfaceVectorVector.at(i).size();
+		int mid = id_subfaceVectorVector.at(i).size() / 2;
+		cout << "ave_itmp =" << ave_itmp << ", mid = " << mid << endl;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
-			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;
+			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//底寄せ
+			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + ave_itmp -mid;//中寄せ
 		}
 	}
-	cout << "subfaceVector.size() = " << subfaceVector.size() << endl;
+	//test
+	/*cout << "subfaceVector.size() = " << subfaceVector.size() << endl;
 	cout << "id_subfaceVectorVector.size() = " << id_subfaceVectorVector.size() << endl;
 	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
 		cout << "  id_subfaceVectorVector.at(" << i << ").size() = " << id_subfaceVectorVector.at(i).size() << endl;
@@ -707,7 +717,7 @@ void Model::constructSubFaceGroup(){
 			cout << "  " << id_subfaceVectorVector[i][j]->itmp << " ";
 		}
 		cout << endl;
-	}
+	}*/
 	//itmpによるsubfacesの再配置
 	const double d = 2;
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){

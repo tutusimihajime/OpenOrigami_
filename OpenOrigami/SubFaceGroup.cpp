@@ -67,12 +67,17 @@ float distanceVertices(Vertex *v1, Vertex *v2){
 //merge
 void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2){
 	
-	if (v2->halfedge->face->itmp > v1->halfedge->face->itmp){
+	/*if (v2->halfedge->face->itmp > v1->halfedge->face->itmp){
 		v1->halfedge->face->itmp = v2->halfedge->face->itmp;
 		v1->halfedge = v2->halfedge;
 	}
 	v2->halfedge->vertex = v1;
 
+	delete v2;*/
+	if (v2->z > v1->z){
+		v1->z = v2->z;
+	}
+	v2->halfedge->vertex = v1;
 	delete v2;
 }
 void SubFaceGroup::mergeAllVertexPair(){
