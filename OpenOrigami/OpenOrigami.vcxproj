@@ -85,6 +85,7 @@
     <ClCompile Include="SpringSimulator.cpp" />
     <ClCompile Include="SpringVertex.cpp" />
     <ClCompile Include="MyVector3d.cpp" />
+    <ClCompile Include="SubFaceGroup.cpp" />
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +99,7 @@
     <ClInclude Include="SpringSimulator.h" />
     <ClInclude Include="SpringVertex.h" />
     <ClInclude Include="MyVector3d.h" />
+    <ClInclude Include="SubFaceGroup.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>

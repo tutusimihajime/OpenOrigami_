@@ -450,6 +450,7 @@ void Model::setAllHalfedgePair_hash(){
 	//削除
 	delete[] hash_matrix_he;
 }
+//OBJ出力
 void Model::exportOBJ(){
 	cout << "input name( ***.obj) : ";
 	string filename;
@@ -470,6 +471,7 @@ void Model::exportOBJ(){
 		file << endl;
 	}
 }
+//サブ～削除
 void Model::deleteSubVertex(Vertex *garbage){
 	if (garbage == NULL){
 		cout << "garbage vertex is NULL.\n";
@@ -560,6 +562,7 @@ void Model::deleteGarbageSubface(){
 	} while (he!=garbage->halfedge);
 	delete garbage;
 }
+//重なりチェック
 class Segment{
 public:
 	Vector3d s;//始点

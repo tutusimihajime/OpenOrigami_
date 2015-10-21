@@ -27,18 +27,13 @@ void main(int argc, char *argv[]){
 		model = new Model(argv[1]);
 	}
 
-	//reconstructModel(model);
-	//spring_sim = new SpringSimulator(model);
-	
-	//spring_sim->debugPrint();
-	//model->debugPrint();
+	//testing
 	model->deleteGarbageSubface();
 	cout << "face " << model->faces.size() << endl;
 	cout << "subface " << model->subfaceVector.size() << " : " << endl;
 	
-	for (int i = 0; i < model->subfaceVector.size(); ++i){
-		//model->subfaceVector.at(i)->transPosition(0, 0, i * 5);
-	}
 	model->checkOverlapSubface();
+
+	//GLUT ON STAGE
 	glutReady(argc, argv);
 }
