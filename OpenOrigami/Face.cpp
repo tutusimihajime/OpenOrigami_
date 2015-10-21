@@ -15,6 +15,7 @@ Face::Face(Halfedge *he) {
 	do{
 		he_in_f->face = this;
 		he_in_f = he_in_f->next;
+
 	} while (he_in_f != he);
 }
 Face::~Face()

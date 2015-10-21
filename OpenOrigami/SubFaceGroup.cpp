@@ -6,7 +6,8 @@ using namespace Eigen;
 SubFaceGroup::SubFaceGroup(Face *_oldFace, list<Face*> _subfaces){
 	oldFace = _oldFace;
 	for (list < Face* > ::iterator it_f = _subfaces.begin(); it_f != _subfaces.end(); ++it_f){
-		subfaces.push_back(cpyFace(*it_f));
+		Face *sf = cpyFace(*it_f);
+		subfaces.push_back(sf);
 	}
 
 }
@@ -15,20 +16,37 @@ Face *SubFaceGroup::cpyFace(Face *_f){
 	vector<Halfedge*> hes;
 	//create vertex and halfedge
 	do{
-		Vertex *v = new Vertex(he_in_f->vertex->x, he_in_f->vertex->y, he_in_f->vertex->z);
-		Halfedge *he = new Halfedge(v);
+		Vertex *v = createVertex(he_in_f->vertex->x, he_in_f->vertex->y, he_in_f->vertex->z);
+		Halfedge *he = createHalfedge(v);
+		hes.push_back(he);
 		he_in_f = he_in_f->next;
 	} while (he_in_f != _f->halfedge);
-
 	//pairing edges by vector<Halfedge*>
 	for (int i = 0; i < hes.size(); ++i){
 		hes[i]->next = (i == hes.size() - 1) ? hes[0] : hes[i + 1];
 		hes[i]->prev = (i == 0) ? hes[hes.size() - 1] : hes[i - 1];
-
 	}
-
 	//create Face
-	return new Face(hes[0]);
+	Face *f = SubFaceGroup::createFace(hes[0]);
+	return f;
+}
+
+Vertex *SubFaceGroup::createVertex(double x, double y, double z){
+	Vertex *v = new Vertex(x, y, z);
+	return v;
+}
+Halfedge *SubFaceGroup::createHalfedge(Vertex *v){
+	Halfedge *he = new Halfedge(v);
+	return he;
+}
+Face *SubFaceGroup::createFace(Halfedge *he){
+	Face *face;
+	try{
+		face = new Face(he);
+	}catch (...){
+		cout << "new Ž¸”s\n";
+	}
+	return face;
 }
 Vertex *SubFaceGroup::cpyVertex(Vertex *_v){
 	return (new Vertex(_v->x, _v->y, _v->z));

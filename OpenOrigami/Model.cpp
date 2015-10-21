@@ -655,7 +655,7 @@ void Model::constructSubFaceGroup(){
 				subfaces.push_back(subfaceVector.at(i));
 			}
 		}
-		subFaceGroups.push_back(new SubFaceGroup(faceVector.at(j), subfaces));
+		subFaceGroups.push_back(new SubFaceGroup(faceVector.at(j), subfaces));//10/21 14:27 ƒoƒO
 	}
 }
 void Model::drawSubFaceGroups(){

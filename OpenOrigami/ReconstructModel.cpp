@@ -503,11 +503,9 @@ void setIsDraw(Model *mod){
 
 void relocationSubFaceGroupVertices(Model *mod){
 	// construct mod->subFaceGroups
-	cout << "test\n";
-	mod->constructSubFaceGroup();//10/21 14:23”²‚¯‚È‚¢
-	mod->debugPrintSFGs();
-	cout << "test-end\n";
-
+	mod->constructSubFaceGroup();//10/21 14:23”²‚¯‚È‚¢ -> 10/21 15:53 hes‚Épush‚µ‚Ä‚È‚©‚Á‚½...
+	//mod->debugPrintSFGs();
+	
 }
 void reconstructModel(Model *mod)
 {
