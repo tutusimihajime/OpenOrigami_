@@ -648,6 +648,7 @@ void Model::checkOverlapSubface(){
 }
 //SubFaceGroup
 void Model::constructSubFaceGroup(){
+	//SFGを作る, Face分割、subfacesのitmp,idまで
 	for (int j = 0; j < faceVector.size(); ++j){
 		list<Face*> subfaces;
 		for (int i = 0; i < subfaceVector.size(); ++i){
@@ -655,20 +656,105 @@ void Model::constructSubFaceGroup(){
 				subfaces.push_back(subfaceVector.at(i));
 			}
 		}
-		subFaceGroups.push_back(new SubFaceGroup(faceVector.at(j), subfaces));//10/21 14:27 バグ
+		subFaceGroups.push_back(new SubFaceGroup(faceVector.at(j), subfaces));
+	}
+	//ベクタベクタ作成・・・IDによっては、サイズが0のベクタもあることに注意 → ベクタベクタの外側のベクタのサイズは存在するsubfaceID+1
+	vector<vector<Face*> >id_subfaceVectorVector;
+	for (int i = 0; i < subfaceVector.size()+1; ++i){
+		vector<Face*> id_subfaceVector;
+		for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+			for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
+				if (i == (*it_f)->id){
+					id_subfaceVector.push_back(*it_f);
+				}
+			}
+		}
+		id_subfaceVectorVector.push_back(id_subfaceVector);
+	}
+
+	//test
+	/*cout << "id_subfaceVectorVector.size() = "<<id_subfaceVectorVector.size()<<endl;
+	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
+		cout << "  id_subfaceVectorVector.at("<<i<<").size() = " << id_subfaceVectorVector.at(i).size() << endl;
+		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
+			cout <<"  "<< id_subfaceVectorVector[i][j]->itmp << " ";
+		}
+		cout << endl;
+	}*/
+
+	//サブフェースのitmpの圧縮
+	
+	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
+		int min_itmp = 0;
+		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
+			id_subfaceVectorVector[i][j]->itmp2 = 0;
+			for (int k = 0; k < id_subfaceVectorVector.at(i).size(); ++k){
+				if (id_subfaceVectorVector[i][j]->itmp > id_subfaceVectorVector[i][k]->itmp){
+					id_subfaceVectorVector[i][j]->itmp2++;
+				}
+			}
+			min_itmp = min(min_itmp, id_subfaceVectorVector[i][j]->itmp);
+		}
+		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
+			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;
+		}
+	}
+	cout << "subfaceVector.size() = " << subfaceVector.size() << endl;
+	cout << "id_subfaceVectorVector.size() = " << id_subfaceVectorVector.size() << endl;
+	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
+		cout << "  id_subfaceVectorVector.at(" << i << ").size() = " << id_subfaceVectorVector.at(i).size() << endl;
+		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
+			cout << "  " << id_subfaceVectorVector[i][j]->itmp << " ";
+		}
+		cout << endl;
+	}
+	//itmpによるsubfacesの再配置
+	const double d = 2;
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
+			(*it_f)->setZ((*it_f)->itmp*d);
+		}
+	}
+
+
+	//頂点のマージ
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->mergeAllVertexPair();
+	}
+	
+	//サブフェースの法線計算
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->calcSubFacesNormal();
 	}
 }
 void Model::drawSubFaceGroups(){
 	if (subFaceGroups.empty()){
 		return;
 	}
+	//vertex
 	glDisable(GL_LIGHTING);
+	glPointSize(5);
+	glColor3f(.3,.3,.3);
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->drawVertex();
+	}
+	//edge
+	glDisable(GL_LIGHTING);
+	glEnable(GL_LINE_SMOOTH);
+	glColor3f(.6, .6, .6);
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->drawEdge();
+	}
+	//face
+	glEnable(GL_LIGHTING);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(1, 30);
-
-	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
-		glColor3d(1,0,0);
-		(*it)->draw();
+	GLfloat materialColor1[] = { 1, 0.2, 0.2, 1 };
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
+	GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){	
+		(*it)->drawFace();
 	}
 
 	glDisable(GL_POLYGON_OFFSET_FILL);

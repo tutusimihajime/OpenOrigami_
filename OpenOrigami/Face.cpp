@@ -86,3 +86,10 @@ void Face::calcCenterOfGravity(){
 	*g /= (float)n;
 
 }
+void Face::setZ(double z){
+	Halfedge *he = halfedge;
+	do{
+		he->vertex->z = z;
+		he = he->next;
+	} while (he != halfedge);
+}

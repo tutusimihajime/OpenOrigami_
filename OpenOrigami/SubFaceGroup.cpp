@@ -7,10 +7,20 @@ SubFaceGroup::SubFaceGroup(Face *_oldFace, list<Face*> _subfaces){
 	oldFace = _oldFace;
 	for (list < Face* > ::iterator it_f = _subfaces.begin(); it_f != _subfaces.end(); ++it_f){
 		Face *sf = cpyFace(*it_f);
+		sf->id = (*it_f)->id;
+		sf->itmp = _oldFace->itmp;
 		subfaces.push_back(sf);
 	}
+}
+void SubFaceGroup::initializeSubfacesZ(){
 
 }
+void SubFaceGroup::calcSubFacesNormal(){
+	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
+		(*it_f)->normalizeNormal();
+	}
+}
+//cpy/create
 Face *SubFaceGroup::cpyFace(Face *_f){
 	Halfedge *he_in_f = _f->halfedge;
 	vector<Halfedge*> hes;
@@ -30,7 +40,6 @@ Face *SubFaceGroup::cpyFace(Face *_f){
 	Face *f = SubFaceGroup::createFace(hes[0]);
 	return f;
 }
-
 Vertex *SubFaceGroup::createVertex(double x, double y, double z){
 	Vertex *v = new Vertex(x, y, z);
 	return v;
@@ -55,9 +64,15 @@ float distanceVertices(Vertex *v1, Vertex *v2){
 	Vector2f dv(v1->x - v2->x, v1->y - v2->y);
 	return dv.norm();
 }
-
+//merge
 void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2){
+	
+	if (v2->halfedge->face->itmp > v1->halfedge->face->itmp){
+		v1->halfedge->face->itmp = v2->halfedge->face->itmp;
+		v1->halfedge = v2->halfedge;
+	}
 	v2->halfedge->vertex = v1;
+
 	delete v2;
 }
 void SubFaceGroup::mergeAllVertexPair(){
@@ -102,14 +117,41 @@ void SubFaceGroup::mergeAllVertexPair(){
 		} while (he != (*it_f)->halfedge);
 	}
 }
-
-void SubFaceGroup::draw(GLenum mode){
+//draw
+void SubFaceGroup::drawVertex(GLenum mode){
+	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
+		Halfedge *he = (*it_f)->halfedge;
+		do{
+			he->vertex->draw();
+			he = he->next;
+		} while (he != (*it_f)->halfedge);
+	}
+}
+void SubFaceGroup::drawEdge(GLenum mode){
+	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
+		Halfedge *he = (*it_f)->halfedge;
+		do{
+			he->draw();
+			he = he->next;
+		} while (he != (*it_f)->halfedge);
+	}
+}
+void SubFaceGroup::drawFace(GLenum mode){
 	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
 		(*it_f)->draw();
 	}
 }
+//debug
 void SubFaceGroup::debugPrint(){
 	cout << "Debug SubFaceGroup:\n";
-	cout << "oldFace->id = " << oldFace->id << endl;
-	cout << "subfaces.size() = " << subfaces.size() << endl;
+	cout << "oldFace->id = " << oldFace->id;
+	cout << ", subfaces.size() = " << subfaces.size() << endl;
+	cout << "subfaces->vertex->id :\n";
+	for (list < Face* >::iterator it = subfaces.begin(); it != subfaces.end(); ++it){
+		Halfedge *he = (*it)->halfedge;
+		do{
+			printf("%d ", he->vertex);
+			he = he->next;
+		} while (he != (*it)->halfedge);
+	}
 }

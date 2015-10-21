@@ -23,6 +23,10 @@ public:
 	Vertex *SubFaceGroup::createVertex(double x, double y, double z);
 	Halfedge *SubFaceGroup::createHalfedge(Vertex *v);
 	Face *SubFaceGroup::createFace(Halfedge *he);
-	void draw(GLenum mode = GL_RENDER);
+	void SubFaceGroup::initializeSubfacesZ();
+	void calcSubFacesNormal();
+	void drawVertex(GLenum mode = GL_RENDER);
+	void drawEdge(GLenum mode = GL_RENDER);
+	void drawFace(GLenum mode = GL_RENDER);
 	void debugPrint();
 };
