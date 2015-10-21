@@ -1,4 +1,5 @@
 #include "ReconstructingModel.h"
+#include "SubFaceGroup.h"
 #include <list>
 #include <vector>
 #include <iostream>
@@ -499,10 +500,21 @@ void setIsDraw(Model *mod){
 		cout << mod->faceVector.at(i)->isDrawn << " ";
 	}*/
 }
+
+void relocationSubFaceGroupVertices(Model *mod){
+	// construct mod->subFaceGroups
+	cout << "test\n";
+	mod->constructSubFaceGroup();//10/21 14:23”²‚¯‚È‚¢
+	mod->debugPrintSFGs();
+	cout << "test-end\n";
+
+}
 void reconstructModel(Model *mod)
 {
 	// relocation facs
 	relocationFaces(mod);
+	// SFG
+	relocationSubFaceGroupVertices(mod);
 	// set isDraw
 	setIsDraw(mod);
 	// bridge edges

@@ -646,3 +646,36 @@ void Model::checkOverlapSubface(){
 		cout << endl;
 	}*/
 }
+//SubFaceGroup
+void Model::constructSubFaceGroup(){
+	for (int j = 0; j < faceVector.size(); ++j){
+		list<Face*> subfaces;
+		for (int i = 0; i < subfaceVector.size(); ++i){
+			if (subfaceOverlapFace[i][j]){
+				subfaces.push_back(subfaceVector.at(i));
+			}
+		}
+		subFaceGroups.push_back(new SubFaceGroup(faceVector.at(j), subfaces));
+	}
+}
+void Model::drawSubFaceGroups(){
+	if (subFaceGroups.empty()){
+		return;
+	}
+	glDisable(GL_LIGHTING);
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(1, 30);
+
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		glColor3d(1,0,0);
+		(*it)->draw();
+	}
+
+	glDisable(GL_POLYGON_OFFSET_FILL);
+}
+void Model::debugPrintSFGs(){
+	cout << "Debug SubFaceGroups:\n";
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->debugPrint();
+	}
+}

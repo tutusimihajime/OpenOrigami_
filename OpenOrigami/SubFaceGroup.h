@@ -2,6 +2,7 @@
 #include <list>
 #include <vector>
 #include <iostream>
+#include <GL/freeglut.h>
 #include "Face.h"
 #include "Halfedge.h"
 #include "Vertex.h"
@@ -19,4 +20,6 @@ public:
 	Vertex *SubFaceGroup::cpyVertex(Vertex *_v);
 	void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2);
 	void SubFaceGroup::mergeAllVertexPair();
+	void draw(GLenum mode = GL_RENDER);
+	void debugPrint();
 };

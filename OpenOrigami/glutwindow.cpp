@@ -26,6 +26,7 @@ bool sim_flag = false;
 
 //test—p
 bool isDrawSubface = false;
+bool isDrawSubFaceGroups = false;
 
 //-------------------------
 
@@ -167,7 +168,9 @@ void display(void)
 	glEnable(GL_LINE_SMOOTH);
 	DrawMeasure(16, 40);
 	glDisable(GL_LINE_SMOOTH);
-	if (isDrawSubface){
+	if (isDrawSubFaceGroups){
+		model->drawSubFaceGroups();
+	}else if (isDrawSubface){
 		model->drawSubFaces();
 	}else{
 		if (spring_sim == NULL)model->draw();
@@ -205,6 +208,9 @@ void key_input(unsigned char key, int x, int y)
 		break;
 	case 'p':
 		isDrawSubface = !isDrawSubface;
+		break;
+	case 'g':
+		isDrawSubFaceGroups = !isDrawSubFaceGroups;
 		break;
 	case'W':
 		model->exportOBJ();

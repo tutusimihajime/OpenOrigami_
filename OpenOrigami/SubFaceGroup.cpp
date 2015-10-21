@@ -39,7 +39,8 @@ float distanceVertices(Vertex *v1, Vertex *v2){
 }
 
 void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2){
-
+	v2->halfedge->vertex = v1;
+	delete v2;
 }
 void SubFaceGroup::mergeAllVertexPair(){
 	const float cap = 0.00001;
@@ -70,7 +71,7 @@ void SubFaceGroup::mergeAllVertexPair(){
 						Vertex *v2 = he2->vertex;
 						if (distanceVertices(v, v2) < cap){
 							//ƒ}[ƒW
-
+							mergeVertexPair(v, v2);
 						}
 						he2 = he2->next;
 					} while (he2 != (*it_f2)->halfedge);
@@ -82,4 +83,15 @@ void SubFaceGroup::mergeAllVertexPair(){
 			he = he->next;
 		} while (he != (*it_f)->halfedge);
 	}
+}
+
+void SubFaceGroup::draw(GLenum mode){
+	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
+		(*it_f)->draw();
+	}
+}
+void SubFaceGroup::debugPrint(){
+	cout << "Debug SubFaceGroup:\n";
+	cout << "oldFace->id = " << oldFace->id << endl;
+	cout << "subfaces.size() = " << subfaces.size() << endl;
 }

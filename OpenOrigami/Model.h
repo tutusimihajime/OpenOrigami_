@@ -6,6 +6,8 @@
 #include "Face.h"
 #include "Halfedge.h"
 #include "Vertex.h"
+#include "SubFaceGroup.h"
+
 using namespace std;
 using namespace Eigen;
 class Model
@@ -28,6 +30,10 @@ public:
 	vector<Vertex*> subvertexVector;
 	vector<Face*> subfaceVector;
 	bool **subfaceOverlapFace;
+
+	//SubFaceGroup
+	list<SubFaceGroup*> subFaceGroups;
+
 	//----------
 	Model();
 	Model(const char *filename);
@@ -76,5 +82,9 @@ public:
 	void calcAllFaceG();
 	void calcAllSubfaceG();
 
+	//SubFaceGroup
+	void Model::constructSubFaceGroup();
+	void Model::drawSubFaceGroups();
+	void Model::debugPrintSFGs();
 };
 
