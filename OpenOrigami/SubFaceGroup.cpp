@@ -27,6 +27,7 @@ Face *SubFaceGroup::cpyFace(Face *_f){
 	//create vertex and halfedge
 	do{
 		Vertex *v = createVertex(he_in_f->vertex->x, he_in_f->vertex->y, he_in_f->vertex->z);
+		v->id = he_in_f->vertex->id;
 		Halfedge *he = createHalfedge(v);
 		hes.push_back(he);
 		he_in_f = he_in_f->next;
@@ -67,16 +68,10 @@ float distanceVertices(Vertex *v1, Vertex *v2){
 //merge
 void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2){
 	
-	/*if (v2->halfedge->face->itmp > v1->halfedge->face->itmp){
-		v1->halfedge->face->itmp = v2->halfedge->face->itmp;
-		v1->halfedge = v2->halfedge;
-	}
-	v2->halfedge->vertex = v1;
-
-	delete v2;*/
-	if (v2->z > v1->z){
+	/*if (v2->z > v1->z){
 		v1->z = v2->z;
-	}
+	}*/
+	v1->itmp = (v1->itmp > v2->itmp) ? v1->itmp : v2->itmp;
 	v2->halfedge->vertex = v1;
 	delete v2;
 }
@@ -99,7 +94,7 @@ void SubFaceGroup::mergeAllVertexPair(){
 			
 			if (!v->checked){
 				for (list<Face*>::iterator it_f2 = subfaces.begin(); it_f2 != subfaces.end(); ++it_f2){
-					//同じ面にはvとマージすべき頂点は存在しないので、continue
+					//同じサブフェースにはvとマージすべき頂点は存在しないので、continue
 					if (*it_f == *it_f2){
 						continue;
 					}
@@ -110,6 +105,54 @@ void SubFaceGroup::mergeAllVertexPair(){
 						if (distanceVertices(v, v2) < cap){
 							//マージ
 							mergeVertexPair(v, v2);
+						}
+						he2 = he2->next;
+					} while (he2 != (*it_f2)->halfedge);
+
+				}
+				v->checked = true;
+			}
+
+			he = he->next;
+		} while (he != (*it_f)->halfedge);
+	}
+}
+//unify itmp
+void SubFaceGroup::unifyVertexItmp(Vertex *v1, Vertex *v2){//高いほうに統一
+	int higher_itmp = (v1->itmp > v2->itmp) ? v1->itmp : v2->itmp;
+	v1->itmp = v2->itmp = higher_itmp;
+}
+void SubFaceGroup::unifyAllVertexItmp(){
+	const float cap = 0.00001;
+	// v->checked = false に初期化
+	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
+		Halfedge *he = (*it_f)->halfedge;
+		do{
+			Vertex *v = he->vertex;
+			v->checked = false;
+			he = he->next;
+		} while (he != (*it_f)->halfedge);
+	}
+	// ２重ループ走査でマージ
+	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
+		Halfedge *he = (*it_f)->halfedge;
+		do{
+			Vertex *v = he->vertex;
+
+			if (!v->checked){
+				for (list<Face*>::iterator it_f2 = subfaces.begin(); it_f2 != subfaces.end(); ++it_f2){
+					//同じサブフェースにはvとマージすべき頂点は存在しないので、continue
+					if (*it_f == *it_f2){
+						continue;
+					}
+					//
+					Halfedge *he2 = (*it_f2)->halfedge;
+					do{
+						Vertex *v2 = he2->vertex;
+						if (distanceVertices(v, v2) < cap){
+							//統一
+							unifyVertexItmp(v, v2);
+							v2->checked = true;
 						}
 						he2 = he2->next;
 					} while (he2 != (*it_f2)->halfedge);

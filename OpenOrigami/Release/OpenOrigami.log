@@ -1,4 +1,4 @@
-﻿2015/10/21 20:34:11 にビルドを開始しました。
+﻿2015/10/22 15:55:47 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib Model.cpp
@@ -25,16 +25,16 @@
      1>Model.cpp(633): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
      1>Model.cpp(636): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
      1>Model.cpp(637): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(652): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(654): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(663): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(687): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(690): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(692): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(706): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(747): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(754): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(762): warning C4305: '初期化中' : 'double' から 'GLfloat' へ切り詰めます。
+     1>Model.cpp(655): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>Model.cpp(657): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>Model.cpp(666): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>Model.cpp(679): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>Model.cpp(682): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>Model.cpp(684): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>Model.cpp(698): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>Model.cpp(800): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
+     1>Model.cpp(807): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
+     1>Model.cpp(815): warning C4305: '初期化中' : 'double' から 'GLfloat' へ切り詰めます。
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(610): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(614): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
@@ -82,14 +82,10 @@
          "Release\.NETFramework,Version=v4.0.AssemblyAttributes.obj"
          LINK : /LTCG が指定されましたが、コードの生成は必要ありません。リンク コマンド ラインから /LTCG を削除し、リンカーの性能を改善してください。
      1>.NETFramework,Version=v4.0.AssemblyAttributes.obj : warning LNK4099: PDB 'vc120.pdb' が '.NETFramework,Version=v4.0.AssemblyAttributes.obj' で、または 'C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\vc120.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-     1>Vertex.obj : warning LNK4099: PDB 'vc120.pdb' が 'Vertex.obj' で、または 'C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\vc120.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
      1>MyVector3d.obj : warning LNK4099: PDB 'vc120.pdb' が 'MyVector3d.obj' で、または 'C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\vc120.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-     1>SpringVertex.obj : warning LNK4099: PDB 'vc120.pdb' が 'SpringVertex.obj' で、または 'C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\vc120.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-     1>SpringEdge.obj : warning LNK4099: PDB 'vc120.pdb' が 'SpringEdge.obj' で、または 'C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\vc120.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-     1>Halfedge.obj : warning LNK4099: PDB 'vc120.pdb' が 'Halfedge.obj' で、または 'C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\vc120.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
          OpenOrigami.vcxproj -> C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.exe
      1>プロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:04.50
+経過時間 00:00:04.30

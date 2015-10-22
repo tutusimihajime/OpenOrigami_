@@ -647,6 +647,9 @@ void Model::checkOverlapSubface(){
 	}*/
 }
 //SubFaceGroup
+bool compVertexItmp(Vertex *v1, Vertex *v2){
+	return v1->itmp < v2->itmp;
+}
 void Model::constructSubFaceGroup(){
 	//SFGを作る, Face分割、subfacesのitmp,idまで
 	for (int j = 0; j < faceVector.size(); ++j){
@@ -660,7 +663,7 @@ void Model::constructSubFaceGroup(){
 	}
 	//ベクタベクタ作成・・・IDによっては、サイズが0のベクタもあることに注意 → ベクタベクタの外側のベクタのサイズは存在するsubfaceID+1
 	vector<vector<Face*> >id_subfaceVectorVector;
-	for (int i = 0; i < subfaceVector.size()+1; ++i){
+	for (int i = 0; i < subfaceVector.size() + 1; ++i){
 		vector<Face*> id_subfaceVector;
 		for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 			for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
@@ -672,18 +675,7 @@ void Model::constructSubFaceGroup(){
 		id_subfaceVectorVector.push_back(id_subfaceVector);
 	}
 
-	//test
-	/*cout << "id_subfaceVectorVector.size() = "<<id_subfaceVectorVector.size()<<endl;
-	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
-		cout << "  id_subfaceVectorVector.at("<<i<<").size() = " << id_subfaceVectorVector.at(i).size() << endl;
-		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
-			cout <<"  "<< id_subfaceVectorVector[i][j]->itmp << " ";
-		}
-		cout << endl;
-	}*/
-
 	//サブフェースのitmpの圧縮, itmp2は、グループ内での順位
-	
 	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
 		int min_itmp = 0;
 		int ave_itmp = 0;
@@ -705,33 +697,94 @@ void Model::constructSubFaceGroup(){
 		//cout << "ave_itmp =" << ave_itmp << ", mid = " << mid << endl;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
 			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//底寄せ
-			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + ave_itmp -mid;//中寄せ
+			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + ave_itmp -mid;//中寄せ??全体の基準を計算して、それに寄せる方法がよい?
+		}
+	}
+
+	//itmpによるsubfacesの再配置
+	/*const double d = 2;
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+	for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
+	(*it_f)->setZ((*it_f)->itmp*d);
+	}
+	}*/
+
+	//頂点のitmpの初期化
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		for (list < Face* > ::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
+			Halfedge *he = (*it_f)->halfedge;
+			do{
+				he->vertex->itmp = (*it_f)->itmp;
+				he = he->next;
+			} while (he != (*it_f)->halfedge);
+		}
+	}
+	//id_subVertexListListの構築
+	list<list<Vertex*> > id_subVertexListList;
+	for (vector<Vertex*>::iterator it_sv = subvertexVector.begin(); it_sv != subvertexVector.end(); ++it_sv){
+		int id = (*it_sv)->id;
+		list<Vertex*> id_subVertexList;
+		for (list<SubFaceGroup*>::iterator it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg){
+			for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+				Halfedge *he = (*it_f)->halfedge;
+				do{
+					if (id == he->vertex->id){
+						id_subVertexList.push_back(he->vertex);
+					}
+					he = he->next;
+				} while (he != (*it_f)->halfedge);
+			}
+		}
+		if (!id_subVertexList.empty()){
+			id_subVertexListList.push_back(id_subVertexList);
+		}
+	}
+	//id_subVertexListListのソート
+	for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
+		(*it).sort(compVertexItmp);
+	}
+	//擬似頂点マージ（itmpだけ高いやつにそろえる）
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->unifyAllVertexItmp();
+	}
+	//頂点のitmp再配置
+	for (list<list<Vertex*> >::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it)
+	{
+		for (list<Vertex*>::iterator it_v = (*it).begin(); it_v != (*it).end(); ++it_v)
+		{
+			for (list<Vertex*>::iterator it_v2 = (*it).begin(); it_v2 != it_v; ++it_v2)
+			{
+				if ((*it_v)->itmp <= (*it_v2)->itmp){
+					(*it_v)->itmp = (*it_v2)->itmp + 1;
+				}
+			}
 		}
 	}
 	//test
-	/*cout << "subfaceVector.size() = " << subfaceVector.size() << endl;
-	cout << "id_subfaceVectorVector.size() = " << id_subfaceVectorVector.size() << endl;
-	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
-		cout << "  id_subfaceVectorVector.at(" << i << ").size() = " << id_subfaceVectorVector.at(i).size() << endl;
-		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
-			cout << "  " << id_subfaceVectorVector[i][j]->itmp << " ";
+	for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
+		cout << "\n id = " << (*it).front()->id << " : ";
+		for (list < Vertex* > ::iterator it_v = (*it).begin(); it_v != (*it).end(); ++it_v){
+			printf("%d ", (*it_v)->itmp);
 		}
 		cout << endl;
-	}*/
-	//itmpによるsubfacesの再配置
-	const double d = 2;
+	}
+	//v->itmpによる頂点再配置
+	const double d = 0.5;
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
-			(*it_f)->setZ((*it_f)->itmp*d);
+			Halfedge *he = (*it_f)->halfedge;
+			do{
+				he->vertex->z = he->vertex->itmp * d;
+				he = he->next;
+			} while (he != (*it_f)->halfedge);
 		}
 	}
 
-
-	//頂点のマージ
+	//Z優先で頂点のマージ・・・deleteによってid_subVertexListListはぶっ壊れます!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->mergeAllVertexPair();
 	}
-	
+
 	//サブフェースの法線計算
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->calcSubFacesNormal();

@@ -20,6 +20,8 @@ public:
 	Vertex *SubFaceGroup::cpyVertex(Vertex *_v);
 	void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2);
 	void SubFaceGroup::mergeAllVertexPair();
+	void SubFaceGroup::unifyVertexItmp(Vertex *v1, Vertex *v2);
+	void SubFaceGroup::unifyAllVertexItmp();
 	Vertex *SubFaceGroup::createVertex(double x, double y, double z);
 	Halfedge *SubFaceGroup::createHalfedge(Vertex *v);
 	Face *SubFaceGroup::createFace(Halfedge *he);
