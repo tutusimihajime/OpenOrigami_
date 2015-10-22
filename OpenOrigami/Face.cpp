@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <gl/freeglut.h>
 #include <list>
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -92,4 +93,21 @@ void Face::setZ(double z){
 		he->vertex->z = z;
 		he = he->next;
 	} while (he != halfedge);
+}
+void Face::reverse(){
+	Halfedge *he = halfedge;
+	vector<Vertex*> vList;
+	vector<Halfedge*> hList;
+	do{
+		vList.push_back(he->vertex);
+		hList.push_back(he);
+		he = he->next;
+	} while (he != halfedge);
+	for (int i = 0; i < vList.size(); ++i){
+		hList.at(i)->next = (i == 0) ? hList.at(vList.size() - 1) : hList.at(i - 1);
+		hList.at(i)->prev = (i == vList.size() - 1) ? hList.at(0) : hList.at(i + 1);
+		hList.at(i)->vertex = (i == vList.size() - 1) ? vList.at(0) : vList.at(i + 1);
+		vList.at(i)->halfedge = (i == 0) ? hList.at(vList.size() - 1) : hList.at(i - 1);
+	}
+	normalizeNormal();
 }

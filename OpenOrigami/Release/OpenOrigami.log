@@ -1,70 +1,11 @@
-﻿2015/10/22 15:55:47 にビルドを開始しました。
+﻿2015/10/22 18:35:52 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib Model.cpp
-         Model.cpp
-     1>Model.cpp(123): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(125): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(190): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(208): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(234): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(237): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(245): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(255): warning C4305: '初期化中' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(261): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(278): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(318): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(333): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(481): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(496): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(531): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(552): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(594): warning C4244: '初期化中' : 'double' から 'float' への変換です。データが失われる可能性があります。
-     1>Model.cpp(595): warning C4244: '初期化中' : 'double' から 'float' への変換です。データが失われる可能性があります。
-     1>Model.cpp(624): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(633): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(636): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(637): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(655): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(657): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(666): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(679): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(682): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(684): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(698): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>Model.cpp(800): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(807): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>Model.cpp(815): warning C4305: '初期化中' : 'double' から 'GLfloat' へ切り詰めます。
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(610): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(614): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\model.cpp(622): warning C4793: isOverlap2D': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><int,int>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib SubFaceGroup.cpp
+         SubFaceGroup.cpp
+     1>SubFaceGroup.cpp(40): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SubFaceGroup.cpp(83): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>SubFaceGroup.cpp(130): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\Face.obj
          Release\glutwindow.obj
@@ -88,4 +29,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:04.30
+経過時間 00:00:02.69

@@ -10,7 +10,11 @@ SubFaceGroup::SubFaceGroup(Face *_oldFace, list<Face*> _subfaces){
 		sf->id = (*it_f)->id;
 		sf->itmp = _oldFace->itmp;
 		subfaces.push_back(sf);
+		if (sf->nv.dot(oldFace->nv) < 0){
+			sf->reverse();
+		}
 	}
+	
 }
 void SubFaceGroup::initializeSubfacesZ(){
 

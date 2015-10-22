@@ -761,13 +761,13 @@ void Model::constructSubFaceGroup(){
 		}
 	}
 	//test
-	for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
+	/*for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
 		cout << "\n id = " << (*it).front()->id << " : ";
 		for (list < Vertex* > ::iterator it_v = (*it).begin(); it_v != (*it).end(); ++it_v){
 			printf("%d ", (*it_v)->itmp);
 		}
 		cout << endl;
-	}
+	}*/
 	//v->itmp‚É‚æ‚é’¸“_Ä”z’u
 	const double d = 0.5;
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){

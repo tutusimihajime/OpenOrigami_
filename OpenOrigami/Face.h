@@ -26,5 +26,6 @@ public:
 	void setID(int _id){ id = _id; }
 	void calcCenterOfGravity();
 	void setZ(double z);
+	void reverse();
 };
 
