@@ -26,6 +26,7 @@ public:
 	Halfedge *SubFaceGroup::createHalfedge(Vertex *v);
 	Face *SubFaceGroup::createFace(Halfedge *he);
 	void SubFaceGroup::initializeSubfacesZ();
+	void SubFaceGroup::makeInnerPairing();
 	void calcSubFacesNormal();
 	void drawVertex(GLenum mode = GL_RENDER);
 	void drawEdge(GLenum mode = GL_RENDER);

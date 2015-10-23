@@ -3,6 +3,7 @@
 #include <Eigen/Geometry>
 using namespace Eigen;
 
+
 SubFaceGroup::SubFaceGroup(Face *_oldFace, list<Face*> _subfaces){
 	oldFace = _oldFace;
 	for (list < Face* > ::iterator it_f = _subfaces.begin(); it_f != _subfaces.end(); ++it_f){
@@ -18,6 +19,31 @@ SubFaceGroup::SubFaceGroup(Face *_oldFace, list<Face*> _subfaces){
 }
 void SubFaceGroup::initializeSubfacesZ(){
 
+}
+void SubFaceGroup::makeInnerPairing(){//mergeå„
+	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
+		Halfedge *he1 = (*it_f)->halfedge;
+		do{
+			if (he1->pair == NULL){
+				for (list<Face*>::iterator it_f2 = subfaces.begin(); it_f2 != subfaces.end(); ++it_f2){
+					if (*it_f == *it_f2){
+						continue;
+					}
+					Halfedge *he2 = (*it_f2)->halfedge;
+					do{
+						if (he2->pair == NULL){
+							if (he1->vertex == he2->next->vertex && he1->next->vertex == he2->vertex){
+								he1->setPair(he2);
+								break;
+							}
+						}
+						he2 = he2->next;
+					} while (he2 != (*it_f2)->halfedge);
+				}
+			}
+			he1 = he1->next;
+		} while (he1 != (*it_f)->halfedge);
+	}
 }
 void SubFaceGroup::calcSubFacesNormal(){
 	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
@@ -183,6 +209,14 @@ void SubFaceGroup::drawEdge(GLenum mode){
 	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
 		Halfedge *he = (*it_f)->halfedge;
 		do{
+			if (he->pair == NULL){
+				glLineWidth(2);
+				glColor3f(.0, .0, .9);
+			}
+			else{
+				glLineWidth(1);
+				glColor3f(.6, .6, .6);
+			}
 			he->draw();
 			he = he->next;
 		} while (he != (*it_f)->halfedge);

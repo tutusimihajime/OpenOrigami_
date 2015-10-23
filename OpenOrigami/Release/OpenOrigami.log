@@ -1,11 +1,13 @@
-﻿2015/10/22 18:35:52 にビルドを開始しました。
+﻿2015/10/23 16:39:56 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib SubFaceGroup.cpp
          SubFaceGroup.cpp
-     1>SubFaceGroup.cpp(40): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>SubFaceGroup.cpp(83): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
-     1>SubFaceGroup.cpp(130): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>SubFaceGroup.cpp(66): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SubFaceGroup.cpp(109): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>SubFaceGroup.cpp(156): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>SubFaceGroup.cpp(214): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
+     1>SubFaceGroup.cpp(218): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\Face.obj
          Release\glutwindow.obj
@@ -29,4 +31,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:02.69
+経過時間 00:00:02.62

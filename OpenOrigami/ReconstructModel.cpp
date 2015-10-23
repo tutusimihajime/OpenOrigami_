@@ -268,7 +268,7 @@ void relocationFaces(Model *mod)
 				he_in_f->vertex->halfedge = he_in_f;
 			}
 			he_in_f = he_in_f->next;
-		} while (he_in_f != f->halfedge);;
+		} while (he_in_f != f->halfedge);
 	}
 
 	//–Ê‚ðˆÚ“®

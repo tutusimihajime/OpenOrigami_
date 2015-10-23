@@ -661,6 +661,7 @@ void Model::constructSubFaceGroup(){
 		}
 		subFaceGroups.push_back(new SubFaceGroup(faceVector.at(j), subfaces));
 	}
+
 	//ベクタベクタ作成・・・IDによっては、サイズが0のベクタもあることに注意 → ベクタベクタの外側のベクタのサイズは存在するsubfaceID+1
 	vector<vector<Face*> >id_subfaceVectorVector;
 	for (int i = 0; i < subfaceVector.size() + 1; ++i){
@@ -719,6 +720,7 @@ void Model::constructSubFaceGroup(){
 			} while (he != (*it_f)->halfedge);
 		}
 	}
+
 	//id_subVertexListListの構築
 	list<list<Vertex*> > id_subVertexListList;
 	for (vector<Vertex*>::iterator it_sv = subvertexVector.begin(); it_sv != subvertexVector.end(); ++it_sv){
@@ -739,14 +741,17 @@ void Model::constructSubFaceGroup(){
 			id_subVertexListList.push_back(id_subVertexList);
 		}
 	}
+
 	//id_subVertexListListのソート
 	for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
 		(*it).sort(compVertexItmp);
 	}
+
 	//擬似頂点マージ（itmpだけ高いやつにそろえる）
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->unifyAllVertexItmp();
 	}
+
 	//頂点のitmp再配置
 	for (list<list<Vertex*> >::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it)
 	{
@@ -754,12 +759,14 @@ void Model::constructSubFaceGroup(){
 		{
 			for (list<Vertex*>::iterator it_v2 = (*it).begin(); it_v2 != it_v; ++it_v2)
 			{
-				if ((*it_v)->itmp <= (*it_v2)->itmp){
+				if ((*it_v)->itmp <= (*it_v2)->itmp)
+				{
 					(*it_v)->itmp = (*it_v2)->itmp + 1;
 				}
 			}
 		}
 	}
+
 	//test
 	/*for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
 		cout << "\n id = " << (*it).front()->id << " : ";
@@ -785,10 +792,16 @@ void Model::constructSubFaceGroup(){
 		(*it)->mergeAllVertexPair();
 	}
 
+	//ハーフエッジペアリング
+	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->makeInnerPairing();
+	}
+
 	//サブフェースの法線計算
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->calcSubFacesNormal();
 	}
+
 }
 void Model::drawSubFaceGroups(){
 	if (subFaceGroups.empty()){
