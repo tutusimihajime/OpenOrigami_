@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <Eigen/Geometry>
 #include "MyVector3d.h"
-
+#include <map>
 using namespace std;
 
 extern int select;
@@ -571,6 +571,42 @@ public:
 		s = Vector3d(_s->x(), _s->y(), 0);
 		v = Vector3d(_v->x(), _v->y(), 0);
 	}
+	Segment(Halfedge *he){
+		s = Vector3d(he->vertex->x, he->vertex->y, 0);
+		v = Vector3d(he->next->vertex->x, he->next->vertex->y, 0);
+	}
+
+	bool isParallel(Segment *seg){
+		Vector3d vecA, vecB;
+		vecA = v;
+		vecB = seg->v;
+		vecA.normalize();
+		vecB.normalize();
+		return (vecA - vecB).norm() < 0.00001 || (vecA + vecB).norm()< 0.00001;
+	}
+	bool isOn(Vector3d *vec){
+		// 1-2, 3
+		if ((s - *vec).norm() < 0.00001)return true;
+
+		Vector3d vecA, vecB, vecA_, vecB_;
+		vecA_ = vecA = v;
+		vecB_ = vecB = *vec-s;
+		vecA.normalize();
+		vecB.normalize();
+		// isOn line
+		return (vecA - vecB).norm() < 0.00001 && vecA_.norm() >= vecB_.norm();
+
+	}
+	bool isOverlapSegment(Segment *seg){
+		// 1-2, 3-4
+		Vector3d s_v = s + v;
+		Vector3d seg_s_v = seg->s + seg->v;
+		return isParallel(seg) && (isOn(&seg->s) || isOn(&seg_s_v) || seg->isOn(&s) || seg->isOn(&s_v));
+	}
+	bool isIncludingSegment(Segment *seg){
+		Vector3d seg_s_v = s + v;
+		return isOn(&seg->s) && isOn(&seg_s_v);
+	}
 	void debugPrint(){
 		cout << "s :\n" << s<<"\nv :\n"<<v<<endl;
 	}
@@ -602,6 +638,7 @@ bool isCrossSegment(Segment *seg1, Segment *seg2){
 	return true;
 	
 }
+
 bool isOverlap2D(Face *subface, Face *face){
 	//subfaceの重心(2D)を求める
 	Vector2d g(subface->g->x(), subface->g->y());
@@ -797,6 +834,8 @@ void Model::constructSubFaceGroup(){
 		(*it)->makeInnerPairing();
 	}
 
+	makeOuterPairing();
+
 	//サブフェースの法線計算
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->calcSubFacesNormal();
@@ -839,5 +878,50 @@ void Model::debugPrintSFGs(){
 	cout << "Debug SubFaceGroups:\n";
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->debugPrint();
+	}
+}
+void Model::makeOuterPairing(){
+	map < Halfedge*, list<Halfedge*> > mapHeHeList;
+
+	for (list<SubFaceGroup*>::iterator it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg)
+	{
+		
+		Halfedge *parent = (*it_sfg)->oldFace->halfedge;
+		do{
+			Segment segParent(parent);
+			list<Halfedge*> children;
+			for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f)
+			{
+				Halfedge *child = (*it_f)->halfedge;
+				do{
+					Segment segChild(child);
+					Vector3d vParent = segParent.v;
+					vParent.normalize();
+					Vector3d vChild = segChild.v;
+					vChild.normalize();
+					double dot = vParent.dot(vChild);
+					double cap = 0.00001;
+					if (segParent.isIncludingSegment(&segChild)&&fabs(1-dot)<cap){
+						children.push_back(child);
+					}
+					child = child->next;
+				} while (child != (*it_f)->halfedge);
+			}
+
+			mapHeHeList.insert(pair<Halfedge*, list<Halfedge*>>(parent, children));
+			parent = parent->next;
+		} while (parent != (*it_sfg)->oldFace->halfedge);
+	}
+	//debug
+	for (map < Halfedge*, list<Halfedge*> >::iterator it = mapHeHeList.begin(); it != mapHeHeList.end(); ++it){
+		//printf("parent = %d\nchildren = ", (*it).first);
+		Halfedge *parent = (*it).first;
+		printf("parent:s(%f, %f), v(%f, %f)\n", parent->vertex->x, parent->vertex->y, parent->next->vertex->x - parent->vertex->x, parent->next->vertex->y - parent->vertex->y);
+		for (list<Halfedge*>::iterator it_f = (*it).second.begin(); it_f != (*it).second.end(); ++it_f){
+			//printf("%d ", (*it_f));
+			Halfedge *child = *it_f;
+			printf(" child:s(%f, %f), v(%f, %f)\n", child->vertex->x, child->vertex->y, child->next->vertex->x - child->vertex->x, child->next->vertex->y - child->vertex->y);
+		}
+		cout << endl;
 	}
 }
