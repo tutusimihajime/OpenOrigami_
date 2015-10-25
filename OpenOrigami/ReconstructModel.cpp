@@ -510,14 +510,18 @@ void relocationSubFaceGroupVertices(Model *mod){
 void reconstructModel(Model *mod)
 {
 	// relocation facs
+	cout << "relocationFaces\n";
 	relocationFaces(mod);
 	// SFG
+	cout << "relocationFaceGroupVertices\n";
 	relocationSubFaceGroupVertices(mod);
 	// set isDraw
+	cout << "setIsDraw\n";
 	setIsDraw(mod);
 	// bridge edges
+	cout << "bridgeEdges\n";
 	bridgeEdges(mod);
 	// move overlapped vertices
 	moveOverlappedVertices(mod);
-
+	cout << "reconstruct end\n";
 }

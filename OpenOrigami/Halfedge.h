@@ -16,7 +16,7 @@ public:
 	int id;
 	bool checked;//色々なところで、チェックしたかどうかに使う
 	int itmp;//汎用tmp
-
+	double dtmp;//OuterPairngで使用
 	Halfedge(Vertex *v);
 	~Halfedge();
 	void draw();

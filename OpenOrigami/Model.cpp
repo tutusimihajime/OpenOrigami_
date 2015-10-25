@@ -880,7 +880,22 @@ void Model::debugPrintSFGs(){
 		(*it)->debugPrint();
 	}
 }
+//Halfedge Pairing
+void makeDtmp(Halfedge *parent, list<Halfedge*> *children){
+	Vector2d vParent(parent->vertex->x, parent->vertex->y);
+	for (list<Halfedge*>::iterator it_h = children->begin(); it_h != children->end(); ++it_h){
+		Halfedge *child = *it_h;
+		Vector2d vChild(child->vertex->x, child->vertex->y);
+		child->dtmp = (vParent - vChild).norm();
+	}
+}
+bool compHalfedgeDtmp(Halfedge *he1, Halfedge *he2){
+	return he1->dtmp < he2->dtmp;
+}
+
 void Model::makeOuterPairing(){
+	
+	// create mapHeHeList
 	map < Halfedge*, list<Halfedge*> > mapHeHeList;
 
 	for (list<SubFaceGroup*>::iterator it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg)
@@ -912,16 +927,51 @@ void Model::makeOuterPairing(){
 			parent = parent->next;
 		} while (parent != (*it_sfg)->oldFace->halfedge);
 	}
+
 	//debug
-	for (map < Halfedge*, list<Halfedge*> >::iterator it = mapHeHeList.begin(); it != mapHeHeList.end(); ++it){
-		//printf("parent = %d\nchildren = ", (*it).first);
+	/*for (map < Halfedge*, list<Halfedge*> >::iterator it = mapHeHeList.begin(); it != mapHeHeList.end(); ++it){
 		Halfedge *parent = (*it).first;
 		printf("parent:s(%f, %f), v(%f, %f)\n", parent->vertex->x, parent->vertex->y, parent->next->vertex->x - parent->vertex->x, parent->next->vertex->y - parent->vertex->y);
 		for (list<Halfedge*>::iterator it_f = (*it).second.begin(); it_f != (*it).second.end(); ++it_f){
-			//printf("%d ", (*it_f));
 			Halfedge *child = *it_f;
 			printf(" child:s(%f, %f), v(%f, %f)\n", child->vertex->x, child->vertex->y, child->next->vertex->x - child->vertex->x, child->next->vertex->y - child->vertex->y);
 		}
 		cout << endl;
+	}*/
+	int cnt0 = 0;
+	int cnt1 = 0;
+	for (map < Halfedge*, list<Halfedge*> >::iterator it = mapHeHeList.begin(); it != mapHeHeList.end(); ++it){
+		Halfedge *parent = (*it).first;
+		if (parent->pair != NULL){
+			cnt1++;
+		}
+		else{
+			cnt0++;
+		}
+		makeDtmp( parent, &((*it).second) );
+		(*it).second.sort(compHalfedgeDtmp);
+		parent->checked = false;
 	}
+	cout << "mapHeHeList.size() = " << mapHeHeList.size() << "\n";
+	cout << "cnt0 = " << cnt0 << endl;
+	cout << "cnt1 = " << cnt1 << endl;
+	//pairingEEE‚±‚±‚Ì‚Ç‚±‚©‚Å—Ž‚¿‚é10/25 19:47
+	/*for (map < Halfedge*, list<Halfedge*> >::iterator it = mapHeHeList.begin(); it != mapHeHeList.end(); ++it){
+		Halfedge *parent1 = (*it).first;
+		if (parent1->pair != NULL && !parent1->checked){
+			list<Halfedge*> children1 = (*it).second;
+			Halfedge *parent2 = parent1->pair;
+			map < Halfedge*, list<Halfedge*> >::iterator it2 = mapHeHeList.find(parent2);
+			list<Halfedge*> children2 = (*it2).second;
+			children2.reverse();
+			list<Halfedge*>::iterator it_h2 = children2.begin();
+			for (list<Halfedge*>::iterator it_h1 = children1.begin(); it_h1 != children1.end(); ++it_h1){
+				(*it_h1)->setPair(*it_h2);
+				(*it_h1)->checked = (*it_h2)->checked = true;
+				++it_h2;
+			}
+			parent2->checked = true;
+		}
+		parent1->checked = true;
+	}*/
 }

@@ -212,8 +212,10 @@ void SubFaceGroup::drawEdge(GLenum mode){
 			if (he->pair == NULL){
 				glLineWidth(2);
 				glColor3f(.0, .0, .9);
-			}
-			else{
+			}else if (he->checked == true){
+				glLineWidth(2);
+				glColor3f(0,.9,0);
+			}else{
 				glLineWidth(1);
 				glColor3f(.6, .6, .6);
 			}

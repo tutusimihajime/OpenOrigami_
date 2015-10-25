@@ -224,8 +224,8 @@ void SpringSimulator::draw(GLenum mode){
 				}
 				if ((*it_h)->pair == NULL){
 
-					glColor3f(0.3, 0.3, 0.3);
-					glLineWidth(2);
+					glColor3f(0.9, 0, 0);
+					glLineWidth(3);
 
 				}else{
 					glColor3f(0.6, 0.6, 0.6);
