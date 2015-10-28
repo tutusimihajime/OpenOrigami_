@@ -262,6 +262,7 @@ void SpringSimulator::draw(GLenum mode){
 				if (f_type != 2 && (*it_f)->type == 2){
 					continue;
 				}
+				
 				if (xray_flag){
 					glColor4f(1, 1, 1, 0.1);
 				}
