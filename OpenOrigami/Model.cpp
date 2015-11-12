@@ -11,7 +11,7 @@
 #include "MyVector3d.h"
 #include <map>
 using namespace std;
-
+extern double d;
 extern int select;
 
 Model::Model()
@@ -739,14 +739,6 @@ void Model::constructSubFaceGroup(){
 		}
 	}
 
-	//itmpによるsubfacesの再配置
-	/*const double d = 2;
-	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
-	for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
-	(*it_f)->setZ((*it_f)->itmp*d);
-	}
-	}*/
-
 	//頂点のitmpの初期化
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		for (list < Face* > ::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
@@ -803,17 +795,8 @@ void Model::constructSubFaceGroup(){
 			}
 		}
 	}
-
-	//test
-	/*for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
-		cout << "\n id = " << (*it).front()->id << " : ";
-		for (list < Vertex* > ::iterator it_v = (*it).begin(); it_v != (*it).end(); ++it_v){
-			printf("%d ", (*it_v)->itmp);
-		}
-		cout << endl;
-	}*/
-	//v->itmpによる頂点再配置
-	const double d = 0.5;
+	//v->itmpによる頂点再配置	
+	
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
 			Halfedge *he = (*it_f)->halfedge;
@@ -834,7 +817,7 @@ void Model::constructSubFaceGroup(){
 		(*it)->makeInnerPairing();
 	}
 
-	makeOuterPairing();
+	makeOuterPairing2();
 
 	//サブフェースの法線計算
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
@@ -956,7 +939,7 @@ void Model::makeOuterPairing(){
 	cout << "cnt0 = " << cnt0 << endl;
 	cout << "cnt1 = " << cnt1 << endl;
 	//pairing・・・ここのどこかで落ちる10/25 19:47
-	/*for (map < Halfedge*, list<Halfedge*> >::iterator it = mapHeHeList.begin(); it != mapHeHeList.end(); ++it){
+	for (map < Halfedge*, list<Halfedge*> >::iterator it = mapHeHeList.begin(); it != mapHeHeList.end(); ++it){
 		Halfedge *parent1 = (*it).first;
 		if (parent1->pair != NULL && !parent1->checked){
 			list<Halfedge*> children1 = (*it).second;
@@ -973,5 +956,88 @@ void Model::makeOuterPairing(){
 			parent2->checked = true;
 		}
 		parent1->checked = true;
-	}*/
+	}
+}
+void Model::makeOuterPairing2(){
+	
+	//hePairList作成
+
+	list<pair<Halfedge*, list<Halfedge* > > > hePairList;
+
+	for (list<SubFaceGroup*>::iterator it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg){
+		Halfedge *he_parent = (*it_sfg)->oldFace->halfedge;
+		do{
+			Segment segParent(he_parent);
+			list<Halfedge*> he_children;
+			for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f)
+			{
+				Halfedge *he_child = (*it_f)->halfedge;
+				do{
+					Segment segChild(he_child);
+					Vector3d vParent = segParent.v;
+					vParent.normalize();
+					Vector3d vChild = segChild.v;
+					vChild.normalize();
+					double dot = vParent.dot(vChild);
+					double cap = 0.00001;
+					if (segParent.isIncludingSegment(&segChild) && fabs(1 - dot)<cap){
+						he_children.push_back(he_child);
+					}
+					he_child = he_child->next;
+				} while (he_child != (*it_f)->halfedge);
+			}
+			hePairList.push_back(pair < Halfedge*, list<Halfedge*>>(he_parent, he_children));
+			he_parent = he_parent->next;
+		} while (he_parent != (*it_sfg)->oldFace->halfedge);
+	}
+
+	//sort
+	cout << "hePairList.size() = " << hePairList.size() << endl;
+	for (list<pair<Halfedge *, list<Halfedge * > > >::iterator it = hePairList.begin(); it != hePairList.end(); ++it){
+		Halfedge *parent = (*it).first;
+		makeDtmp(parent, &((*it).second));
+		(*it).second.sort(compHalfedgeDtmp);
+		parent->checked = false;
+	}
+	
+	//hePairList-test
+	for (list<pair<Halfedge *, list<Halfedge * > > >::iterator it = hePairList.begin(); it != hePairList.end(); ++it){
+	
+	}
+	
+	//pairing
+	for (list<pair<Halfedge *, list<Halfedge * > > >::iterator it = hePairList.begin(); it != hePairList.end(); ++it){
+		Halfedge *parent1 = (*it).first;
+		if (parent1->pair != NULL && !parent1->checked){
+			list<Halfedge*> children1 = (*it).second;
+			if (children1.size() != 0){
+				Halfedge *parent2 = parent1->pair;
+				list<pair<Halfedge *, list<Halfedge * > > >::iterator it2;
+				for (it2 = hePairList.begin(); it2 != hePairList.end(); ++it2){
+					if ((*it2).first == parent2){
+						break;
+					}
+				}
+				
+				list<Halfedge*> children2 = (*it2).second;
+				if (children2.size()==children1.size()){
+					/*cout << endl;
+					cout << "children1.size() = " << children1.size() << endl;
+					cout << "children2.size() = " << children2.size() << endl;
+					*/
+					children2.reverse();
+					list<Halfedge*>::iterator it_h2 = children2.begin();
+					for (list<Halfedge*>::iterator it_h1 = children1.begin(); it_h1 != children1.end(); ++it_h1){
+						(*it_h1)->setPair(*it_h2);
+						(*it_h1)->checked = (*it_h2)->checked = true;
+						++it_h2;
+					}
+					parent2->checked = true;
+				}
+				
+			}
+			parent1->checked = true;
+		}
+		
+	}
 }

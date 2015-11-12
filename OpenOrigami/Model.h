@@ -87,5 +87,6 @@ public:
 	void Model::drawSubFaceGroups();
 	void Model::debugPrintSFGs();
 	void Model::makeOuterPairing();
+	void Model::makeOuterPairing2();
 };
 

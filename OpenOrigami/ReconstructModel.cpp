@@ -8,7 +8,9 @@
 
 using namespace std;
 using namespace Eigen;
-double scale = 1;
+double scale = 3;//0.5
+double d;
+
 bool compFaceItmp(Face *f1, Face *f2){
 	return f1->itmp < f2->itmp;
 }
@@ -114,7 +116,7 @@ void calcOverlapOrder2(Model *mod){
 	}
 }
 //KIKUCHI THE GOD
-void calcOverlapOrder3(Model *mod){
+void calcOverlapOrder3(Model *mod, double *a = NULL){
 	// init q
 	list<int> q;
 	for (int i = 0; i < mod->faces.size(); ++i){
@@ -238,6 +240,10 @@ void calcOverlapOrder3(Model *mod){
 	for (list<Face*>::iterator it = sortedFaces.begin(); it != sortedFaces.end(); ++it){
 		iMax = max(iMax, (*it)->itmp);
 	}
+
+	if (a != NULL){
+		*a = iMax;
+	}
 	//scale = scale / (double)iMax;
 	//cout << scale << endl;
 	//Debug
@@ -248,10 +254,14 @@ void calcOverlapOrder3(Model *mod){
 
 void relocationFaces(Model *mod)
 {
-	double d = 2 * scale;
+	//double d = 2 * scale;
+	double k1 = scale, k2 = 0.8, a;
 	//cout << d << endl;
 	//d‚È‚è‡‚ðŒˆ’è
-	calcOverlapOrder3(mod);
+	calcOverlapOrder3(mod, &a);
+
+	d = k1 * powf(a, 1 - k2);
+	cout << "d = " << d << endl;
 	//–Ê‚ð•ª—£
 	for (list<Vertex*>::iterator it_v = mod->vertices.begin(); it_v != mod->vertices.end(); ++it_v){
 		(*it_v)->halfedge = NULL;
@@ -294,8 +304,8 @@ Vector3d createVector3d(MyVector3d v){
 void createBridge(Model *mod, Halfedge *he){
 	
 	//create vertex
-	double h = 1 * scale;
-	double w = 0.6 * scale;
+	double h = 0.5 * d;
+	double w = 0.3 * h;
 	Vertex *v1, *v2, *v3, *v4;
 	v1 = he->vertex;
 	v2 = he->next->vertex;
