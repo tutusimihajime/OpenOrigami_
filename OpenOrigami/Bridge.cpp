@@ -133,6 +133,7 @@ void Bridge::normalizeFaces(){
 }
 Vertex *Bridge::createVertex(Vector3d vec){
 	Vertex *v = new Vertex(vec.x(), vec.y(), vec.z());
+	vertices.push_back(v);
 	return v;
 }
 Halfedge *Bridge::createHalfedge(Vertex *v){

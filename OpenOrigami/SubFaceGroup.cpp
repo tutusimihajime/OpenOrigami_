@@ -10,7 +10,7 @@ SubFaceGroup::SubFaceGroup(Face *_oldFace, list<Face*> _subfaces){
 		Face *sf = cpyFace(*it_f);
 		sf->id = (*it_f)->id;
 		sf->itmp = _oldFace->itmp;
-		subfaces.push_back(sf);
+		
 		if (sf->nv.dot(oldFace->nv) < 0){
 			sf->reverse();
 		}
@@ -73,6 +73,7 @@ Face *SubFaceGroup::cpyFace(Face *_f){
 }
 Vertex *SubFaceGroup::createVertex(double x, double y, double z){
 	Vertex *v = new Vertex(x, y, z);
+	subvertices.push_back(v);
 	return v;
 }
 Halfedge *SubFaceGroup::createHalfedge(Vertex *v){
@@ -86,10 +87,11 @@ Face *SubFaceGroup::createFace(Halfedge *he){
 	}catch (...){
 		cout << "new Ž¸”s\n";
 	}
+	subfaces.push_back(face);
 	return face;
 }
 Vertex *SubFaceGroup::cpyVertex(Vertex *_v){
-	return (new Vertex(_v->x, _v->y, _v->z));
+	return createVertex(_v->x, _v->y, _v->z);
 }
 float distanceVertices(Vertex *v1, Vertex *v2){
 	Vector2f dv(v1->x - v2->x, v1->y - v2->y);
@@ -103,6 +105,7 @@ void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2){
 	}*/
 	v1->itmp = (v1->itmp > v2->itmp) ? v1->itmp : v2->itmp;
 	v2->halfedge->vertex = v1;
+	subvertices.remove(v2);
 	delete v2;
 }
 void SubFaceGroup::mergeAllVertexPair(){

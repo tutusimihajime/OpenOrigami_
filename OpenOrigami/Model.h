@@ -90,5 +90,7 @@ public:
 	void Model::makeOuterPairing();
 	void Model::makeOuterPairing2(); 
 	void Model::drawSubFaceGroupBridges();
+	void Model::exportSubFaceGroupsOBJ();
+	
 };
 

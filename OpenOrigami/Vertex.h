@@ -14,7 +14,7 @@ public:
 	bool checked;
 
 	int itmp;//頂点再配置で使用
-
+	int itmp4w;//OBJ出力で使用
 	Vertex();
 	~Vertex();
 

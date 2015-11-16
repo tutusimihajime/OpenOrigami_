@@ -216,6 +216,9 @@ void key_input(unsigned char key, int x, int y)
 	case'W':
 		model->exportOBJ();
 		break;
+	case 'Q':
+		model->exportSubFaceGroupsOBJ();
+		break;
 	case 27:
 		exit(0);
 		break;

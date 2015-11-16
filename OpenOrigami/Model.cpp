@@ -471,6 +471,55 @@ void Model::exportOBJ(){
 		file << endl;
 	}
 }
+void Model::exportSubFaceGroupsOBJ(){
+	cout << "input name( ***.obj) : ";
+	string filename;
+	cin >> filename;
+	std::ofstream file(filename + ".obj");
+	std::list<SubFaceGroup*>::iterator it_sfg;
+	std::list<Bridge*>::iterator it_b;
+	std::list<Vertex*>::iterator it_v;
+	std::list<Face*>::iterator it_f;
+	//v 
+	int i = 1;
+	for (it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg){
+		for (it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+			file << "v " << (*it_v)->x << " " << (*it_v)->y << " " << (*it_v)->z << std::endl;
+			(*it_v)->itmp4w = i++;
+		}
+	}
+	for (it_b = bridges.begin(); it_b != bridges.end(); ++it_b){
+		for (it_v = (*it_b)->vertices.begin(); it_v != (*it_b)->vertices.end(); ++it_v){
+			file << "v " << (*it_v)->x << " " << (*it_v)->y << " " << (*it_v)->z << std::endl;
+			(*it_v)->itmp4w = i++;
+		}
+	}
+	//f
+	for (it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg){
+		for (it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			file << "f ";
+			Halfedge *he = (*it_f)->halfedge;
+			do{
+				file << he->vertex->itmp4w << " ";
+				he = he->next;
+			} while (he != (*it_f)->halfedge);
+			file << endl;
+		}
+	}
+
+	for (it_b = bridges.begin(); it_b != bridges.end(); ++it_b){
+		for (it_f = (*it_b)->faces.begin(); it_f != (*it_b)->faces.end(); ++it_f){
+			file << "f ";
+			Halfedge *he = (*it_f)->halfedge;
+			do{
+				file << he->vertex->itmp4w << " ";
+				he = he->next;
+			} while (he != (*it_f)->halfedge);
+			file << endl;
+		}
+	}
+	cout << "exportOBJ END\n";
+}
 //ƒTƒu`íœ
 void Model::deleteSubVertex(Vertex *garbage){
 	if (garbage == NULL){

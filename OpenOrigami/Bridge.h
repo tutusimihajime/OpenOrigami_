@@ -11,6 +11,7 @@ using namespace std;
 class Bridge{
 public:
 	list<Face*> faces;
+	list<Vertex*> vertices;
 	Bridge(Halfedge *he1, Halfedge *he2);
 	void draw();
 	void normalizeFaces();
