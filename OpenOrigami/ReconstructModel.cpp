@@ -502,9 +502,6 @@ void setIsDraw(Model *mod){
 	}*/
 }
 
-void createBridgeSFG(SubFaceGroup *sfg, Halfedge *he){
-
-}
 void bridgeSFG(Model *mod){
 	//initialize he->itmp = 0
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
@@ -534,7 +531,49 @@ void bridgeSFG(Model *mod){
 			subfaceListList.push_back(id_subfaceList);
 		}
 	}
+	//calculate he->itmp
+	for (list<list<Face*>>::iterator it = subfaceListList.begin(); it != subfaceListList.end(); ++it){
+		list<Face*> subfaceList = *it;
+		for (list<Face*>::iterator it_fi = subfaceList.begin(); it_fi != subfaceList.end(); ++it_fi){
+			Face *f1 = (*it_fi);
+			Halfedge *he_in_f = f1->halfedge;
+			do{
+				int maxHeight = 0;
+				if (he_in_f->pair != NULL){
+					Face *f2 = he_in_f->pair->face;
+					if (f1->itmp>f2->itmp){
+						for (list<Face*>::iterator it_fj = subfaceList.begin(); it_fj != subfaceList.end(); ++it_fj){
+							Face *f3 = *it_fj;
+							if (f3->itmp<f1->itmp&&f3->itmp>f2->itmp){
+								// f3 on between f1 and f2
+								Halfedge *he_in_f3 = f3->halfedge;
+								do{
+									if (he_in_f3->pair != NULL){
+										Vector2d vec1, vec2, vec3, vec4;
+										vec1 = Vector2d(he_in_f->vertex->x, he_in_f->vertex->y);
+										vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
+										vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
+										vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
+										if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
+
+											maxHeight = max(maxHeight, he_in_f3->itmp);
+										}
+									}
+									he_in_f3 = he_in_f3->next;
+								} while (he_in_f3 != f3->halfedge);
+							}
+						}
+					}
+					he_in_f->pair->itmp = maxHeight + 1;
+				}
+				he_in_f->itmp = maxHeight + 1;
+				//cout << "he_in_f->itmp = " << he_in_f->itmp << endl;
+				he_in_f = he_in_f->next;
+			} while (he_in_f != f1->halfedge);
+		}
+	}
 	//create bridge
+	//init
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
 		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
 			Halfedge *he_in_f = (*it_f)->halfedge;
@@ -544,6 +583,7 @@ void bridgeSFG(Model *mod){
 			} while (he_in_f != (*it_f)->halfedge);
 		}
 	}
+	//create
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
 		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
 			Halfedge *he_in_f = (*it_f)->halfedge;
@@ -552,7 +592,6 @@ void bridgeSFG(Model *mod){
 				if (!he_in_f->checked){
 					if (he_in_f->pair != NULL){
 						if (he_in_f->next->vertex != he_in_f->pair->vertex){
-							//createBridge(mod, he_in_f);
 							Bridge *b = new Bridge(he_in_f, he_in_f->pair);
 							mod->bridges.push_back(b);
 						}
@@ -573,7 +612,9 @@ void relocationSubFaceGroupVertices(Model *mod){
 	mod->constructSubFaceGroup();//10/21 14:23”²‚¯‚È‚¢ -> 10/21 15:53 hes‚Épush‚µ‚Ä‚È‚©‚Á‚½...
 	//mod->debugPrintSFGs();
 	bridgeSFG(mod);
-	
+	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
+		(*it_b)->normalizeFaces();
+	}
 }
 void reconstructModel(Model *mod)
 {

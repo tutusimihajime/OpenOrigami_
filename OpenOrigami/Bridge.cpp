@@ -8,7 +8,7 @@ using namespace Eigen;
 Bridge::Bridge(Halfedge *he1, Halfedge *he2){
 	//create vertex
 	double h = 0.5 * d;
-	double w = 0.3 * h;
+	double w = 0.6;
 	Vertex *v1, *v2, *v3, *v4;
 	v1 = he1->vertex;
 	v2 = he1->next->vertex;
@@ -26,8 +26,8 @@ Bridge::Bridge(Halfedge *he1, Halfedge *he2){
 	Vector3d vec_h = (vec2 - vec1).cross(normal1);
 	vec_h.normalize();
 	Vector3d vec5, vec6, vec7, vec8;
-	vec5 = (1 - w) / 2.f*(vec4 - vec1) + he1->itmp*h * vec_h + vec1;
-	vec6 = (1 - w) / 2.f*(vec3 - vec2) + he1->itmp*h * vec_h + vec2;
+	vec5 = 0.5*(1-w)*(vec4 - vec1) + he1->itmp* h * vec_h + vec1;
+	vec6 = 0.5*(1-w)*(vec3 - vec2) + he1->itmp* h * vec_h + vec2;
 	vec7 = vec5 + w*(vec4 - vec1);
 	vec8 = vec6 + w*(vec3 - vec2);
 
@@ -77,7 +77,9 @@ void Bridge::draw(){
 		Halfedge *he = (*it_f)->halfedge;
 		
 		//drawVertex
-		
+		glDisable(GL_LIGHTING);
+		glPointSize(5);
+		glColor3f(.3, .3, .3);
 		glBegin(GL_POINTS);
 		do{
 			Vertex *v = he->vertex;
@@ -87,10 +89,14 @@ void Bridge::draw(){
 		glEnd();
 
 		//drawEdge
+		glDisable(GL_LIGHTING);
+		glEnable(GL_LINE_SMOOTH);
+		glLineWidth(1);
+		glColor3f(.6, .6, .6);
 		do{
 			Vertex *v1 = he->vertex;
 			Vertex *v2 = he->next->vertex;
-			glBegin(GL_LINE);
+			glBegin(GL_LINES);
 			glVertex3d(v1->x, v1->y, v1->z);
 			glVertex3d(v2->x, v2->y, v2->z);
 			glEnd();
@@ -99,6 +105,15 @@ void Bridge::draw(){
 		} while (he != (*it_f)->halfedge);
 		
 		//drawFace
+		glEnable(GL_LIGHTING); 
+		GLfloat materialColor1[] = { 1, 0.2, 0.2, 1 };
+		glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
+		GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
+		glEnable(GL_POLYGON_OFFSET_FILL);
+		glPolygonOffset(1, 30);
+		MyVector3d nv = (*it_f)->nv;
+		glNormal3d(nv.x, nv.y, nv.z);
 		glBegin(GL_POLYGON);
 		do{
 			Vertex *v = he->vertex;
@@ -107,9 +122,14 @@ void Bridge::draw(){
 			he = he->next;
 		} while (he != (*it_f)->halfedge);
 		glEnd();
-
+		glDisable(GL_POLYGON_OFFSET_FILL);
 	}
 	
+}
+void Bridge::normalizeFaces(){
+	for (list<Face*>::iterator it_f = faces.begin(); it_f != faces.end(); ++it_f){
+		(*it_f)->normalizeNormal();
+	}
 }
 Vertex *Bridge::createVertex(Vector3d vec){
 	Vertex *v = new Vertex(vec.x(), vec.y(), vec.z());

@@ -13,6 +13,7 @@ public:
 	list<Face*> faces;
 	Bridge(Halfedge *he1, Halfedge *he2);
 	void draw();
+	void normalizeFaces();
 	Vertex *createVertex(Vector3d vec);
 	Halfedge *createHalfedge(Vertex *v);
 	Face *createFace(Halfedge *he);

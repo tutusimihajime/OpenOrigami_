@@ -209,16 +209,10 @@ void SubFaceGroup::drawEdge(GLenum mode){
 	for (list<Face*>::iterator it_f = subfaces.begin(); it_f != subfaces.end(); ++it_f){
 		Halfedge *he = (*it_f)->halfedge;
 		do{
-			if (he->pair == NULL){
-				glLineWidth(2);
-				glColor3f(.0, .0, .9);
-			}else if (he->checked == true){
-				glLineWidth(2);
-				glColor3f(0,.9,0);
-			}else{
-				glLineWidth(1);
-				glColor3f(.6, .6, .6);
-			}
+			
+			glLineWidth(1);
+			glColor3f(.6, .6, .6);
+			
 			he->draw();
 			he = he->next;
 		} while (he != (*it_f)->halfedge);
