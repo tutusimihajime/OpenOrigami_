@@ -7,7 +7,7 @@
 #include "Halfedge.h"
 #include "Vertex.h"
 #include "SubFaceGroup.h"
-
+#include "Bridge.h"
 using namespace std;
 using namespace Eigen;
 class Model
@@ -33,6 +33,7 @@ public:
 
 	//SubFaceGroup
 	list<SubFaceGroup*> subFaceGroups;
+	list<Bridge*> bridges;
 
 	//----------
 	Model();
@@ -87,6 +88,7 @@ public:
 	void Model::drawSubFaceGroups();
 	void Model::debugPrintSFGs();
 	void Model::makeOuterPairing();
-	void Model::makeOuterPairing2();
+	void Model::makeOuterPairing2(); 
+	void Model::drawSubFaceGroupBridges();
 };
 

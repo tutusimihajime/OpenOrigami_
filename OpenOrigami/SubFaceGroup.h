@@ -6,7 +6,7 @@
 #include "Face.h"
 #include "Halfedge.h"
 #include "Vertex.h"
-
+#include "Bridge.h"
 using namespace std;
 
 class SubFaceGroup{
@@ -14,7 +14,7 @@ public:
 	Face *oldFace;
 	list<Vertex*> subvertices;
 	list<Face*> subfaces;
-	
+
 	SubFaceGroup(Face *_oldFace, list<Face*> _subfaces);
 	Face *SubFaceGroup::cpyFace(Face *_f);
 	Vertex *SubFaceGroup::cpyVertex(Vertex *_v);

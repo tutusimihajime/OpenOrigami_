@@ -74,7 +74,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bridge.cpp" />
     <ClCompile Include="Face.cpp" />
+    <ClCompile Include="GeometryElement2EigenVector.cpp" />
     <ClCompile Include="glutwindow.cpp" />
     <ClCompile Include="Halfedge.cpp" />
     <ClCompile Include="main.cpp" />
@@ -89,7 +91,9 @@
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bridge.h" />
     <ClInclude Include="Face.h" />
+    <ClInclude Include="GeometryElement2EigenVector.h" />
     <ClInclude Include="glutwindow.h" />
     <ClInclude Include="Halfedge.h" />
     <ClInclude Include="Model.h" />

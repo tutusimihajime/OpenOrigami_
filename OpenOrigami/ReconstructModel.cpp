@@ -1,3 +1,4 @@
+#pragma once
 #include "ReconstructingModel.h"
 #include "SubFaceGroup.h"
 #include <list>
@@ -5,10 +6,10 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
-
+#include "GeometryElement2EigenVector.h"
 using namespace std;
 using namespace Eigen;
-double scale = 3;//0.5
+double scale = 0.5;//0.5
 double d;
 
 bool compFaceItmp(Face *f1, Face *f2){
@@ -291,16 +292,6 @@ void relocationFaces(Model *mod)
 	
 }
 
-Vector3d createVector3d(Halfedge *he){
-	return Vector3d(he->next->vertex->x - he->vertex->x, he->next->vertex->y - he->vertex->y, he->next->vertex->z - he->vertex->z);
-}
-Vector3d createVector3d(Vertex *v){
-	return Vector3d(v->x, v->y, v->z);
-}
-Vector3d createVector3d(MyVector3d v){
-	return Vector3d(v.x, v.y, v.z);
-}
-
 void createBridge(Model *mod, Halfedge *he){
 	
 	//create vertex
@@ -511,10 +502,77 @@ void setIsDraw(Model *mod){
 	}*/
 }
 
+void createBridgeSFG(SubFaceGroup *sfg, Halfedge *he){
+
+}
+void bridgeSFG(Model *mod){
+	//initialize he->itmp = 0
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+				he_in_f->itmp = 0;
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
+	//リストリスト作成 ある１つのIDのリストはサイズが0なので、除く
+	list<list<Face*> >subfaceListList;
+	for (int i = 0; i < mod->subfaceVector.size() + 1; ++i){
+
+		vector<Face*> id_subfaceVector;
+		list<Face*> id_subfaceList;
+		for (list<SubFaceGroup*>::iterator it = mod->subFaceGroups.begin(); it != mod->subFaceGroups.end(); ++it){
+			for (list<Face*>::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
+				if (i == (*it_f)->id){
+					id_subfaceList.push_back(*it_f);
+				}
+			}
+		}
+		id_subfaceList.sort(compFaceItmp);
+		if (id_subfaceList.size() != 0){
+			subfaceListList.push_back(id_subfaceList);
+		}
+	}
+	//create bridge
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+				he_in_f->checked = false;
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+
+				if (!he_in_f->checked){
+					if (he_in_f->pair != NULL){
+						if (he_in_f->next->vertex != he_in_f->pair->vertex){
+							//createBridge(mod, he_in_f);
+							Bridge *b = new Bridge(he_in_f, he_in_f->pair);
+							mod->bridges.push_back(b);
+						}
+						he_in_f->pair->checked = true;
+					}
+				}
+				he_in_f->checked = true;
+
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
+	
+
+}
 void relocationSubFaceGroupVertices(Model *mod){
 	// construct mod->subFaceGroups
 	mod->constructSubFaceGroup();//10/21 14:23抜けない -> 10/21 15:53 hesにpushしてなかった...
 	//mod->debugPrintSFGs();
+	bridgeSFG(mod);
 	
 }
 void reconstructModel(Model *mod)

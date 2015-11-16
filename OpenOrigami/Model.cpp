@@ -1,4 +1,4 @@
-
+#pragma once
 #include "Model.h"
 
 #include <fstream>
@@ -573,7 +573,7 @@ public:
 	}
 	Segment(Halfedge *he){
 		s = Vector3d(he->vertex->x, he->vertex->y, 0);
-		v = Vector3d(he->next->vertex->x, he->next->vertex->y, 0);
+		v = Vector3d(he->next->vertex->x - he->vertex->x, he->next->vertex->y - he->vertex->y, 0);
 	}
 
 	bool isParallel(Segment *seg){
@@ -699,7 +699,7 @@ void Model::constructSubFaceGroup(){
 		subFaceGroups.push_back(new SubFaceGroup(faceVector.at(j), subfaces));
 	}
 
-	//ベクタベクタ作成・・・IDによっては、サイズが0のベクタもあることに注意 → ベクタベクタの外側のベクタのサイズは存在するsubfaceID+1
+	//ベクタベクタ作成・・・IDによっては、サイズが0のベクタもあることに注意 → ベクタベクタの外側のベクタのサイズは、存在するsubfaceID+1
 	vector<vector<Face*> >id_subfaceVectorVector;
 	for (int i = 0; i < subfaceVector.size() + 1; ++i){
 		vector<Face*> id_subfaceVector;
@@ -816,7 +816,6 @@ void Model::constructSubFaceGroup(){
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->makeInnerPairing();
 	}
-
 	makeOuterPairing2();
 
 	//サブフェースの法線計算
@@ -856,6 +855,11 @@ void Model::drawSubFaceGroups(){
 	}
 
 	glDisable(GL_POLYGON_OFFSET_FILL);
+}
+void Model::drawSubFaceGroupBridges(){
+	for (list<Bridge*>::iterator it_b = bridges.begin(); it_b != bridges.end(); ++it_b){
+		(*it_b)->draw();
+	}
 }
 void Model::debugPrintSFGs(){
 	cout << "Debug SubFaceGroups:\n";
@@ -967,19 +971,19 @@ void Model::makeOuterPairing2(){
 	for (list<SubFaceGroup*>::iterator it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg){
 		Halfedge *he_parent = (*it_sfg)->oldFace->halfedge;
 		do{
-			Segment segParent(he_parent);
+			Segment segParent(he_parent); 
+			Vector3d vParent = segParent.v;
+			vParent.normalize();
 			list<Halfedge*> he_children;
 			for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f)
 			{
 				Halfedge *he_child = (*it_f)->halfedge;
 				do{
 					Segment segChild(he_child);
-					Vector3d vParent = segParent.v;
-					vParent.normalize();
 					Vector3d vChild = segChild.v;
 					vChild.normalize();
 					double dot = vParent.dot(vChild);
-					double cap = 0.00001;
+					double cap = 0.01;
 					if (segParent.isIncludingSegment(&segChild) && fabs(1 - dot)<cap){
 						he_children.push_back(he_child);
 					}
@@ -1001,9 +1005,15 @@ void Model::makeOuterPairing2(){
 	}
 	
 	//hePairList-test
+	/*cout << "test\n";
 	for (list<pair<Halfedge *, list<Halfedge * > > >::iterator it = hePairList.begin(); it != hePairList.end(); ++it){
-	
-	}
+		printf("first = %d\n", (*it).first);
+		cout << "second = {";
+		for (list < Halfedge* >::iterator it_h = (*it).second.begin(); it_h != (*it).second.end(); ++it_h){
+			printf(" %d", *it_h);
+		}
+		cout << " }\n";
+	}*/
 	
 	//pairing
 	for (list<pair<Halfedge *, list<Halfedge * > > >::iterator it = hePairList.begin(); it != hePairList.end(); ++it){

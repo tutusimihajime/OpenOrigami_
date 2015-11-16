@@ -170,6 +170,7 @@ void display(void)
 	glDisable(GL_LINE_SMOOTH);
 	if (isDrawSubFaceGroups){
 		model->drawSubFaceGroups();
+		model->drawSubFaceGroupBridges();
 	}else if (isDrawSubface){
 		model->drawSubFaces();
 	}else{
