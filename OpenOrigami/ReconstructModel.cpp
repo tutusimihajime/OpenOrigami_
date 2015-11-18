@@ -501,7 +501,51 @@ void setIsDraw(Model *mod){
 		cout << mod->faceVector.at(i)->isDrawn << " ";
 	}*/
 }
+void calculateEdgeRelocationVector4Bridge(Halfedge *he){
+	Vector3d v = createVector3d(he), vprev = createVector3d(he->prev);
+	v.z() = vprev.z() = 0;
+	v.normalize();
+	vprev.normalize();
+	Vector3d n = v.cross(-vprev);
 
+	Vector3d vhe = createVector3d(he);
+	he->vtmp = n.cross(vhe);
+	he->vtmp.normalize();
+	double distance = he->itmpMax*0.5*d + 0.1*d;
+	Vector3d vh = he->vtmp*distance;
+	Vector3d vnext2 = createVector3d(he->next), vprev2 = createVector3d(he->prev);
+	vnext2.z() = vprev2.z() = 0;
+
+	//重複移動チェック
+	const double cap = 0.01;
+	Vector3d v0, v1, v2, v3;
+	v0 = he->vertex->vtmp;
+	v1 = vprev2;
+	if (v0.norm() < cap){
+		he->vertex->vtmp = vh.dot(vh) / vh.dot(vprev2)*vprev2;
+	}else{
+		v0.normalize(); v1.normalize();
+		if (1 - fabs(v0.dot(v1)) > cap){
+			he->vertex->vtmp += vh.dot(vh) / vh.dot(vprev2)*vprev2;
+			cout << v0.dot(v1) << endl;
+		}
+	}
+	v2 = he->next->vertex->vtmp;
+	v3 = vnext2;
+	if (v2.norm() < cap){
+		he->next->vertex->vtmp = vh.dot(vh) / vh.dot(vnext2)*vnext2;
+	}else{
+		v2.normalize(); v3.normalize();
+		if (1 - fabs(v2.dot(v3)) > cap || v0.norm() < cap){
+			he->next->vertex->vtmp += vh.dot(vh) / vh.dot(vnext2)*vnext2;
+		}
+	}
+/*
+	cout << "vtmp = \n" << he->vtmp << endl;
+	cout << "vh = \n" << vh << endl;
+	cout << "v_prev = \n" << vprev << endl;
+	cout << "vd = \n" << (vh.dot(vh) / vh.dot(vprev)*vprev) << endl;*/
+}
 void bridgeSFG(Model *mod){
 	//initialize he->itmp = 0
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
@@ -509,6 +553,7 @@ void bridgeSFG(Model *mod){
 			Halfedge *he_in_f = (*it_f)->halfedge;
 			do{
 				he_in_f->itmp = 0;
+				he_in_f->itmpMax = 0;
 				he_in_f = he_in_f->next;
 			} while (he_in_f != (*it_f)->halfedge);
 		}
@@ -555,7 +600,6 @@ void bridgeSFG(Model *mod){
 										vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
 										vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
 										if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
-
 											maxHeight = max(maxHeight, he_in_f3->itmp);
 										}
 									}
@@ -564,15 +608,86 @@ void bridgeSFG(Model *mod){
 							}
 						}
 					}
-					he_in_f->pair->itmp = maxHeight + 1;
+					he_in_f->pair->itmp = he_in_f->pair->itmpMax = maxHeight + 1;
+					
 				}
-				he_in_f->itmp = maxHeight + 1;
+				he_in_f->itmp = he_in_f->itmpMax = maxHeight + 1;
+
+				//itmpMax
+				
+				if (he_in_f->pair != NULL){
+					Face *f2 = he_in_f->pair->face;
+					if (f1->itmp>f2->itmp){
+						for (list<Face*>::iterator it_fj = subfaceList.begin(); it_fj != subfaceList.end(); ++it_fj){
+							Face *f3 = *it_fj;
+							if (f3->itmp<f1->itmp&&f3->itmp>f2->itmp){
+								// f3 on between f1 and f2
+								Halfedge *he_in_f3 = f3->halfedge;
+								do{
+									if (he_in_f3->pair != NULL){
+										Vector2d vec1, vec2, vec3, vec4;
+										vec1 = Vector2d(he_in_f->vertex->x, he_in_f->vertex->y);
+										vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
+										vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
+										vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
+										if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
+											he_in_f3->itmpMax = he_in_f3->pair->itmpMax = max(he_in_f3->pair->itmpMax,max(he_in_f->itmp, he_in_f3->itmpMax));
+										}
+									}
+									he_in_f3 = he_in_f3->next;
+								} while (he_in_f3 != f3->halfedge);
+							}
+						}
+					}
+				}
+
 				//cout << "he_in_f->itmp = " << he_in_f->itmp << endl;
 				he_in_f = he_in_f->next;
 			} while (he_in_f != f1->halfedge);
 		}
 	}
-	//create bridge
+	//init
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+			(*it_v)->vtmp = Vector3d(0, 0, 0);
+		}
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+				he_in_f->checked = false;
+				he_in_f->vtmp = Vector3d();
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
+	//calculate relocating direction every edges to bridge
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+
+				if (!he_in_f->checked){
+					if (he_in_f->pair != NULL){
+						if (he_in_f->next->vertex != he_in_f->pair->vertex){
+							//bridge edges
+							calculateEdgeRelocationVector4Bridge(he_in_f);
+							calculateEdgeRelocationVector4Bridge(he_in_f->pair);
+						}
+						he_in_f->pair->checked = true;
+					}
+				}
+				he_in_f->checked = true;
+
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
+	//relocation VERTICES
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+			(*it_v)->transPosition((*it_v)->vtmp);
+		}
+	}
 	//init
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
 		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
@@ -583,7 +698,7 @@ void bridgeSFG(Model *mod){
 			} while (he_in_f != (*it_f)->halfedge);
 		}
 	}
-	//create
+	//create bridge 
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
 		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
 			Halfedge *he_in_f = (*it_f)->halfedge;

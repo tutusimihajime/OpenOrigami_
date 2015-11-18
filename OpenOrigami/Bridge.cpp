@@ -20,10 +20,11 @@ Bridge::Bridge(Halfedge *he1, Halfedge *he2){
 	vec3 = createVector3d(v3);
 	vec4 = createVector3d(v4);
 	Vector3d normal1, normal2;
-	normal1 = createVector3d(he1->face->nv);
-	normal2 = createVector3d(he2->face->nv);
+	
+	normal1 = createVector3d(he1->face->nv);//—vC³
+	normal2 = createVector3d(he2->face->nv);//—vC³
 
-	Vector3d vec_h = (vec2 - vec1).cross(normal1);
+	Vector3d vec_h = (vec2 - vec1).cross(normal1);//—vC³
 	vec_h.normalize();
 	Vector3d vec5, vec6, vec7, vec8;
 	vec5 = 0.5*(1-w)*(vec4 - vec1) + he1->itmp* h * vec_h + vec1;

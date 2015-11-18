@@ -1,6 +1,7 @@
 #pragma once
 #include "MyVector3d.h"
-
+#include <Eigen/Geometry>
+using namespace Eigen;
 class Halfedge;
 
 class Vertex
@@ -15,6 +16,7 @@ public:
 
 	int itmp;//頂点再配置で使用
 	int itmp4w;//OBJ出力で使用
+	Vector3d vtmp;//relocation bridgeで使用
 	Vertex();
 	~Vertex();
 
@@ -25,6 +27,7 @@ public:
 	inline void setPosition(MyVector3d v){ setPosition(v.x, v.y, v.z); }
 	inline void transPosition(double _x, double _y, double _z){ x += _x; y += _y; z += _z; }
 	inline void transPosition(MyVector3d v){ transPosition(v.x, v.y, v.z); }
+	inline void transPosition(Vector3d v){transPosition(v.x(), v.y(), v.z());}
 	inline void scale(const double s) { x *= s; y *= s; z *= s; }
 	void debugPrint();
 };

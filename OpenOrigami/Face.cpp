@@ -1,3 +1,4 @@
+#pragma once
 #include "Face.h"
 #include "Vertex.h"
 #include <Windows.h>
