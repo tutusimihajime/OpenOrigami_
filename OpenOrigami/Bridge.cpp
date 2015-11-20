@@ -14,23 +14,47 @@ Bridge::Bridge(Halfedge *he1, Halfedge *he2){
 	v2 = he1->next->vertex;
 	v3 = he2->vertex;
 	v4 = he2->next->vertex;
-	Vector3d vec1, vec2, vec3, vec4;
+	Vector3d vec1, vec2, vec3, vec4, vec1_5, vec3_5;
 	vec1 = createVector3d(v1);
+	vec1_5 = createVector3d(he1->prev->vertex);
 	vec2 = createVector3d(v2);
 	vec3 = createVector3d(v3);
+	vec3_5 = createVector3d(he2->prev->vertex);
 	vec4 = createVector3d(v4);
-	Vector3d normal1, normal2;
+	Vector3d normal1,normal1_tmp, normal2, normal2_tmp;
 	
-	normal1 = createVector3d(he1->face->nv);//—vC³
-	normal2 = createVector3d(he2->face->nv);//—vC³
+	//normal1 = createVector3d(he1->face->nv);//—vC³
+	normal1 = vec1_5 - vec1;
+	normal1.z() = 0;
+	normal1.normalize();
+	normal1_tmp = vec2 - vec1;
+	normal1_tmp.z() = 0;
+	normal1_tmp.normalize();
+	normal1 = normal1_tmp.cross(normal1);
 
-	Vector3d vec_h = (vec2 - vec1).cross(normal1);//—vC³
-	vec_h.normalize();
+	//normal2 = createVector3d(he2->face->nv);//—vC³
+	normal2 = vec3_5 - vec3;
+	normal2.z() = 0;
+	normal2.normalize();
+	normal2_tmp = vec4 - vec3;
+	normal2_tmp.z() = 0;
+	normal2_tmp.normalize();
+	normal2 = normal2_tmp.cross(normal2);
+
+	Vector3d vec_h1 = vec2 - vec1;
+	vec_h1.z() = 0;
+	vec_h1 = vec_h1.cross(normal1);
+	vec_h1.normalize();
+	Vector3d vec_h2 = vec4 - vec3;
+	vec_h2.z() = 0;
+	vec_h2 = vec_h2.cross(normal2);
+	vec_h2.normalize();
+
 	Vector3d vec5, vec6, vec7, vec8;
-	vec5 = 0.5*(1-w)*(vec4 - vec1) + he1->itmp* h * vec_h + vec1;
-	vec6 = 0.5*(1-w)*(vec3 - vec2) + he1->itmp* h * vec_h + vec2;
-	vec7 = vec5 + w*(vec4 - vec1);
-	vec8 = vec6 + w*(vec3 - vec2);
+	vec5 = 0.5*(1-w)*(vec4.z() - vec1.z())*Vector3d(0, 0, 1) + he1->itmp* h * vec_h1 + vec1;
+	vec6 = 0.5*(1-w)*(vec3.z() - vec2.z())*Vector3d(0, 0, 1) + he2->itmp* h * vec_h2 + vec2;
+	vec7 = vec5 + w *(vec4.z() - vec1.z())*Vector3d(0, 0, 1);
+	vec8 = vec6 + w *(vec3.z() - vec2.z())*Vector3d(0, 0, 1);
 
 	Vertex *v5, *v6, *v7, *v8;
 	v5 = createVertex(vec5);

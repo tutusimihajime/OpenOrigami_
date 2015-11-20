@@ -9,7 +9,7 @@
 #include "GeometryElement2EigenVector.h"
 using namespace std;
 using namespace Eigen;
-double scale = 0.5;//0.5
+double scale = 3;//0.5
 double d;
 
 bool compFaceItmp(Face *f1, Face *f2){
@@ -527,7 +527,7 @@ void calculateEdgeRelocationVector4Bridge(Halfedge *he){
 		v0.normalize(); v1.normalize();
 		if (1 - fabs(v0.dot(v1)) > cap){
 			he->vertex->vtmp += vh.dot(vh) / vh.dot(vprev2)*vprev2;
-			cout << v0.dot(v1) << endl;
+			//cout << v0.dot(v1) << endl;
 		}
 	}
 	v2 = he->next->vertex->vtmp;
