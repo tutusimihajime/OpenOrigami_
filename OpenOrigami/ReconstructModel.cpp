@@ -9,7 +9,7 @@
 #include "GeometryElement2EigenVector.h"
 using namespace std;
 using namespace Eigen;
-double scale = 3;//0.5
+double scale = 1;//0.5
 double d;
 
 bool compFaceItmp(Face *f1, Face *f2){

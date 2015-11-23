@@ -5,7 +5,10 @@
 extern double d;
 using namespace Eigen;
 
-Bridge::Bridge(Halfedge *he1, Halfedge *he2){
+Bridge::Bridge(Halfedge *_he1, Halfedge *_he2){
+	he1 = _he1;
+	he2 = _he2;
+
 	//create vertex
 	double h = 0.5 * d;
 	double w = 0.6;
@@ -31,7 +34,8 @@ Bridge::Bridge(Halfedge *he1, Halfedge *he2){
 	normal1_tmp.z() = 0;
 	normal1_tmp.normalize();
 	normal1 = normal1_tmp.cross(normal1);
-
+	normal1.normalize();
+	
 	//normal2 = createVector3d(he2->face->nv);//—vC³
 	normal2 = vec3_5 - vec3;
 	normal2.z() = 0;
@@ -40,19 +44,27 @@ Bridge::Bridge(Halfedge *he1, Halfedge *he2){
 	normal2_tmp.z() = 0;
 	normal2_tmp.normalize();
 	normal2 = normal2_tmp.cross(normal2);
+	normal2.normalize();
 
 	Vector3d vec_h1 = vec2 - vec1;
 	vec_h1.z() = 0;
+	vec_h1.normalize();
 	vec_h1 = vec_h1.cross(normal1);
 	vec_h1.normalize();
+
 	Vector3d vec_h2 = vec4 - vec3;
 	vec_h2.z() = 0;
+	vec_h2.normalize();
 	vec_h2 = vec_h2.cross(normal2);
 	vec_h2.normalize();
+	
+	this->h1 = 0.5*fabs(vec4.z() - vec1.z());
+	this->h2 = 0.5*fabs(vec3.z() - vec2.z());
+	//cout << "h1 = " << h1 << ", h2 = " << h2 << endl;
 
 	Vector3d vec5, vec6, vec7, vec8;
-	vec5 = 0.5*(1-w)*(vec4.z() - vec1.z())*Vector3d(0, 0, 1) + he1->itmp* h * vec_h1 + vec1;
-	vec6 = 0.5*(1-w)*(vec3.z() - vec2.z())*Vector3d(0, 0, 1) + he2->itmp* h * vec_h2 + vec2;
+	vec5 = vec1 + 0.5*(1-w)*(vec4.z() - vec1.z())*Vector3d(0, 0, 1) + h1* vec_h1;//he1->itmp*
+	vec6 = vec2 + 0.5*(1-w)*(vec3.z() - vec2.z())*Vector3d(0, 0, 1) + h2* vec_h2;//he1->itmp*
 	vec7 = vec5 + w *(vec4.z() - vec1.z())*Vector3d(0, 0, 1);
 	vec8 = vec6 + w *(vec3.z() - vec2.z())*Vector3d(0, 0, 1);
 

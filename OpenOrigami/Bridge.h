@@ -10,9 +10,11 @@ using namespace std;
 
 class Bridge{
 public:
+	Halfedge *he1, *he2;
+	double h1, h2;
 	list<Face*> faces;
 	list<Vertex*> vertices;
-	Bridge(Halfedge *he1, Halfedge *he2);
+	Bridge(Halfedge *_he1, Halfedge *_he2);
 	void draw();
 	void normalizeFaces();
 	Vertex *createVertex(Vector3d vec);
