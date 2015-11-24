@@ -61,7 +61,7 @@ Bridge::Bridge(Halfedge *_he1, Halfedge *_he2){
 	this->h1 = 0.5*fabs(vec4.z() - vec1.z());
 	this->h2 = 0.5*fabs(vec3.z() - vec2.z());
 	//cout << "h1 = " << h1 << ", h2 = " << h2 << endl;
-
+	//
 	Vector3d vec5, vec6, vec7, vec8;
 	vec5 = vec1 + 0.5*(1-w)*(vec4.z() - vec1.z())*Vector3d(0, 0, 1) + h1* vec_h1;//he1->itmp*
 	vec6 = vec2 + 0.5*(1-w)*(vec3.z() - vec2.z())*Vector3d(0, 0, 1) + h2* vec_h2;//he1->itmp*
