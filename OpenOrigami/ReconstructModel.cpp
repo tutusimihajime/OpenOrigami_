@@ -521,17 +521,45 @@ void calculateEdgeRelocationVector4Bridge(Halfedge *he){
 	Vector3d v0, v1, v2, v3;
 	v0 = he->vertex->vtmp;
 	v1 = vprev2;
-	if (v0.norm() < cap){
+	if (v0.norm() < cap){//初期値か、ほとんど動いてないなら
 		he->vertex->vtmp = vh.dot(vh) / vh.dot(vprev2)*vprev2;
 	}else{
-		v0.normalize(); v1.normalize();
+		//要修正
+		/*
 		if (1 - fabs(v0.dot(v1)) > cap){
 			he->vertex->vtmp += vh.dot(vh) / vh.dot(vprev2)*vprev2;
 			//cout << v0.dot(v1) << endl;
 		}
+		*/
+		v0.normalize(); v1.normalize();
+		Vector3d vtmp2 = vh.dot(vh) / vh.dot(vprev2)*vprev2;
+		if (fabs(v0.dot(vh))<cap){
+			//違う方向->同一フェース内で２回のとき
+			he->vertex->vtmp += vtmp2;
+		}else{
+			//同じ方向への重複移動->でかいほうを選択
+			he->vertex->vtmp = (he->vertex->vtmp.norm() > vtmp2.norm()) ? he->vertex->vtmp : vtmp2;
+		}
 	}
+
 	v2 = he->next->vertex->vtmp;
 	v3 = vnext2;
+	if (v2.norm() < cap){//初期値か、ほとんど動いてないなら
+		he->next->vertex->vtmp = vh.dot(vh) / vh.dot(vnext2)*vnext2;
+	}
+	else{
+		v2.normalize(); v3.normalize();
+		Vector3d vtmp2 = vh.dot(vh) / vh.dot(vnext2)*vnext2;
+		if (fabs(v2.dot(vh)) < cap){
+			//違う方向->同一フェース内で２回のとき
+			he->next->vertex->vtmp += vtmp2;
+		}
+		else{
+			//同じ方向への重複移動->でかいほうを選択
+			he->next->vertex->vtmp = (he->next->vertex->vtmp.norm() > vtmp2.norm()) ? he->next->vertex->vtmp : vtmp2;
+		}
+	}
+	/*
 	if (v2.norm() < cap){
 		he->next->vertex->vtmp = vh.dot(vh) / vh.dot(vnext2)*vnext2;
 	}else{
@@ -539,7 +567,7 @@ void calculateEdgeRelocationVector4Bridge(Halfedge *he){
 		if (1 - fabs(v2.dot(v3)) > cap || v0.norm() < cap){
 			he->next->vertex->vtmp += vh.dot(vh) / vh.dot(vnext2)*vnext2;
 		}
-	}
+	}*/
 /*
 	cout << "vtmp = \n" << he->vtmp << endl;
 	cout << "vh = \n" << vh << endl;
