@@ -1,4 +1,4 @@
-﻿2015/11/24 17:57:06 にビルドを開始しました。
+﻿2015/11/24 21:47:13 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib ReconstructModel.cpp
@@ -83,23 +83,23 @@
          	整列データ型はマネージ コードでサポートされていません
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(599): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(603): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(600): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(604): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(601): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(605): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(602): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(606): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(630): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(639): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(631): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(640): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(632): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(641): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(633): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(642): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(727): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(738): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
@@ -482,4 +482,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:06.37
+経過時間 00:00:05.96

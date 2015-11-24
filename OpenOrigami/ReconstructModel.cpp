@@ -508,8 +508,8 @@ void calculateEdgeRelocationVector4Bridge(Halfedge *he){
 	vprev.normalize();
 	Vector3d n = v.cross(-vprev);
 
-	Vector3d vhe = createVector3d(he);
-	he->vtmp = n.cross(vhe);
+	//Vector3d vhe = createVector3d(he);
+	he->vtmp = n.cross(v);
 	he->vtmp.normalize();
 	double distance = he->itmpMax*0.5*d + 0.1*d;
 	Vector3d vh = he->vtmp*distance;
@@ -586,39 +586,47 @@ void bridgeSFG(Model *mod){
 			do{
 				int maxHeight = 0;
 				if (he_in_f->pair != NULL){
+
 					Face *f2 = he_in_f->pair->face;
-					if (f1->itmp>f2->itmp){
+					//if (f1->itmp>f2->itmp){
+					if (he_in_f->next->vertex->z>he_in_f->pair->vertex->z){
 						for (list<Face*>::iterator it_fj = subfaceList.begin(); it_fj != subfaceList.end(); ++it_fj){
 							Face *f3 = *it_fj;
 							if (f3->itmp<f1->itmp&&f3->itmp>f2->itmp){
+								//cout << "(f1, f2, f3) = (" << f1->itmp << ", " << f2->itmp << ", " << f3->itmp << ")\n";
 								// f3 on between f1 and f2
 								Halfedge *he_in_f3 = f3->halfedge;
 								do{
 									if (he_in_f3->pair != NULL){
-										Vector2d vec1, vec2, vec3, vec4;
-										vec1 = Vector2d(he_in_f->vertex->x, he_in_f->vertex->y);
-										vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
-										vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
-										vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
-										if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
-											maxHeight = max(maxHeight, he_in_f3->itmp);
+										if (he_in_f3->vertex!=he_in_f3->next->vertex){
+											Vector2d vec1, vec2, vec3, vec4;
+											vec1 = Vector2d(he_in_f->vertex->x, he_in_f->vertex->y);
+											vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
+											vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
+											vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
+											if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
+												maxHeight = max(maxHeight, he_in_f3->itmp);
+											}
 										}
 									}
 									he_in_f3 = he_in_f3->next;
 								} while (he_in_f3 != f3->halfedge);
 							}
 						}
+						he_in_f->pair->itmp = he_in_f->pair->itmpMax = maxHeight + 1;
+						he_in_f->itmp = he_in_f->itmpMax = maxHeight + 1;
+
 					}
-					he_in_f->pair->itmp = he_in_f->pair->itmpMax = maxHeight + 1;
 					
 				}
-				he_in_f->itmp = he_in_f->itmpMax = maxHeight + 1;
+				
 
 				//itmpMax
 				
 				if (he_in_f->pair != NULL){
 					Face *f2 = he_in_f->pair->face;
-					if (f1->itmp>f2->itmp){
+					//if (f1->itmp>f2->itmp){
+					if (he_in_f->next->vertex->z>he_in_f->pair->vertex->z){
 						for (list<Face*>::iterator it_fj = subfaceList.begin(); it_fj != subfaceList.end(); ++it_fj){
 							Face *f3 = *it_fj;
 							if (f3->itmp<f1->itmp&&f3->itmp>f2->itmp){
@@ -626,13 +634,15 @@ void bridgeSFG(Model *mod){
 								Halfedge *he_in_f3 = f3->halfedge;
 								do{
 									if (he_in_f3->pair != NULL){
-										Vector2d vec1, vec2, vec3, vec4;
-										vec1 = Vector2d(he_in_f->vertex->x, he_in_f->vertex->y);
-										vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
-										vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
-										vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
-										if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
-											he_in_f3->itmpMax = he_in_f3->pair->itmpMax = max(he_in_f3->pair->itmpMax,max(he_in_f->itmp, he_in_f3->itmpMax));
+										if (he_in_f3->vertex != he_in_f3->next->vertex){
+											Vector2d vec1, vec2, vec3, vec4;
+											vec1 = Vector2d(he_in_f->vertex->x, he_in_f->vertex->y);
+											vec2 = Vector2d(he_in_f->next->vertex->x, he_in_f->next->vertex->y);
+											vec3 = Vector2d(he_in_f3->vertex->x, he_in_f3->vertex->y);
+											vec4 = Vector2d(he_in_f3->next->vertex->x, he_in_f3->next->vertex->y);
+											if (isOverlapSegment(&vec1, &vec2, &vec3, &vec4)){
+												he_in_f3->itmpMax = he_in_f3->pair->itmpMax = he_in_f->itmp;//max(he_in_f3->pair->itmpMax,max(he_in_f->itmp, he_in_f3->itmpMax));
+											}
 										}
 									}
 									he_in_f3 = he_in_f3->next;
@@ -656,6 +666,7 @@ void bridgeSFG(Model *mod){
 		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
 			Halfedge *he_in_f = (*it_f)->halfedge;
 			do{
+				//cout << "(itmp, itmpMax) = (" <<he_in_f->itmp<<", "<< he_in_f->itmpMax << ")\n";
 				he_in_f->checked = false;
 				he_in_f->vtmp = Vector3d();
 				he_in_f = he_in_f->next;
