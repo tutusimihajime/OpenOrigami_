@@ -9,7 +9,7 @@
 #include "GeometryElement2EigenVector.h"
 using namespace std;
 using namespace Eigen;
-double scale = 1;//0.5
+double scale = 0.5;//0.5
 double d;
 
 bool compFaceItmp(Face *f1, Face *f2){
@@ -547,6 +547,7 @@ void calculateEdgeRelocationVector4Bridge(Halfedge *he){
 	cout << "vd = \n" << (vh.dot(vh) / vh.dot(vprev)*vprev) << endl;*/
 }
 void bridgeSFG(Model *mod){
+	
 	//initialize he->itmp = 0
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
 		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
@@ -646,6 +647,7 @@ void bridgeSFG(Model *mod){
 			} while (he_in_f != f1->halfedge);
 		}
 	}
+	
 	//init
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
 		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
@@ -688,6 +690,7 @@ void bridgeSFG(Model *mod){
 			(*it_v)->transPosition((*it_v)->vtmp);
 		}
 	}
+	
 	//init
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
 		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
