@@ -7,6 +7,7 @@ using namespace std;
 Halfedge::Halfedge(Vertex *v) {
 	vertex = v; // Halfedge ¨ Vertex ‚ÌƒŠƒ“ƒN 
 	pair = NULL;
+	bridge = NULL;
 	if (v->halfedge == NULL) {
 		v->halfedge = this; // Vertex ¨ Halfedge ‚ÌƒŠƒ“ƒN 
 	}

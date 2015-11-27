@@ -1,4 +1,4 @@
-﻿2015/11/24 22:07:02 にビルドを開始しました。
+﻿2015/11/27 22:08:05 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib ReconstructModel.cpp
@@ -9,63 +9,30 @@
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/Quaternion.h(291): warning C4522: 'Eigen::Quaternion<double,0>' : 複数の代入演算子が指定されています。
                  c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/arch/Geometry_SSE.h(63) : コンパイルされたクラスの テンプレート のインスタンス化 'Eigen::Quaternion<double,0>' の参照を確認してください
                  c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/arch/Geometry_SSE.h(109) : コンパイルされたクラスの テンプレート のインスタンス化 'Eigen::internal::quat_product<1,Derived,OtherDerived,double,1>' の参照を確認してください
-     1>ReconstructModel.cpp(22): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(25): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(36): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(47): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(56): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(66): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(70): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(107): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(111): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(115): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(123): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(264): warning C4244: '引数' : 'double' から 'float' への変換です。データが失われる可能性があります。
-     1>ReconstructModel.cpp(270): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(286): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(474): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(478): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(24): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(27): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(38): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(49): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(58): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(68): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(72): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(109): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(113): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(117): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(125): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(266): warning C4244: '引数' : 'double' から 'float' への変換です。データが失われる可能性があります。
+     1>ReconstructModel.cpp(272): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(288): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(476): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
      1>ReconstructModel.cpp(480): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>ReconstructModel.cpp(592): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(367): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
+     1>ReconstructModel.cpp(482): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(594): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(774): warning C4244: '+=' : 'double' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(369): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(368): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(370): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(372): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(378): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(379): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(385): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(374): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
@@ -83,23 +50,57 @@
          	整列データ型はマネージ コードでサポートされていません
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(631): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(380): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(632): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(381): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(387): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(633): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(634): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(667): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(635): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(668): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(636): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(669): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(670): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(766): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(671): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(672): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(768): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
@@ -196,16 +197,16 @@
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(426): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
-         	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(427): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(428): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(429): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
-     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(467): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(430): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(431): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(469): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
          	整列データ型はマネージ コードでサポートされていません
@@ -469,6 +470,7 @@
          Release\Model.obj
          Release\Picking.obj
          Release\ReconstructModel.obj
+         Release\Segment2D.obj
          Release\SpringEdge.obj
          Release\SpringSimulator.obj
          Release\SpringVertex.obj
@@ -482,4 +484,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:06.33
+経過時間 00:00:06.42

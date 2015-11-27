@@ -8,7 +8,7 @@ class Face
 public:
 	Halfedge *halfedge;
 	MyVector3d nv;
-	int id;
+	int id;//subfaceのidは特殊
 	int itmp;//汎用tmp, 面の再配置に使用
 	int itmp2;//サブ多角形圧縮に使用
 	bool isDrawn;

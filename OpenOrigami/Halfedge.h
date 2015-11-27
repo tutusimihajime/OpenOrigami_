@@ -3,7 +3,7 @@
 #include <Eigen/Geometry>
 using namespace Eigen;
 class Face;
-
+class Bridge;
 class Halfedge
 {
 public:
@@ -20,6 +20,7 @@ public:
 	int itmpMax;//高さMAX
 	double dtmp;//OuterPairngで使用
 	Vector3d vtmp;//BridgeSFGで使用
+	Bridge *bridge;
 	Halfedge(Vertex *v);
 	~Halfedge();
 	void draw();

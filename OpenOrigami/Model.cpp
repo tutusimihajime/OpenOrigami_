@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-
+#include "Segment2D.h"
 #include <fstream>
 #include <vector>
 #include <string>
@@ -612,55 +612,8 @@ void Model::deleteGarbageSubface(){
 	delete garbage;
 }
 //重なりチェック
-class Segment{
-public:
-	Vector3d s;//始点
-	Vector3d v;//方向
-	Segment(Vector2d *_s, Vector2d *_v){
-		s = Vector3d(_s->x(), _s->y(), 0);
-		v = Vector3d(_v->x(), _v->y(), 0);
-	}
-	Segment(Halfedge *he){
-		s = Vector3d(he->vertex->x, he->vertex->y, 0);
-		v = Vector3d(he->next->vertex->x - he->vertex->x, he->next->vertex->y - he->vertex->y, 0);
-	}
 
-	bool isParallel(Segment *seg){
-		Vector3d vecA, vecB;
-		vecA = v;
-		vecB = seg->v;
-		vecA.normalize();
-		vecB.normalize();
-		return (vecA - vecB).norm() < 0.00001 || (vecA + vecB).norm()< 0.00001;
-	}
-	bool isOn(Vector3d *vec){
-		// 1-2, 3
-		if ((s - *vec).norm() < 0.00001)return true;
-
-		Vector3d vecA, vecB, vecA_, vecB_;
-		vecA_ = vecA = v;
-		vecB_ = vecB = *vec-s;
-		vecA.normalize();
-		vecB.normalize();
-		// isOn line
-		return (vecA - vecB).norm() < 0.00001 && vecA_.norm() >= vecB_.norm();
-
-	}
-	bool isOverlapSegment(Segment *seg){
-		// 1-2, 3-4
-		Vector3d s_v = s + v;
-		Vector3d seg_s_v = seg->s + seg->v;
-		return isParallel(seg) && (isOn(&seg->s) || isOn(&seg_s_v) || seg->isOn(&s) || seg->isOn(&s_v));
-	}
-	bool isIncludingSegment(Segment *seg){
-		Vector3d seg_s_v = s + v;
-		return isOn(&seg->s) && isOn(&seg_s_v);
-	}
-	void debugPrint(){
-		cout << "s :\n" << s<<"\nv :\n"<<v<<endl;
-	}
-};
-bool isCrossSegment(Segment *seg1, Segment *seg2){
+bool isCrossSegment2D(Segment2D *seg1, Segment2D *seg2){
 	
 	Vector3d v = seg2->s-seg1->s;//始点の差
 	Vector3d Crs_v1_v2 = seg1->v.cross(seg2->v);
@@ -693,13 +646,13 @@ bool isOverlap2D(Face *subface, Face *face){
 	Vector2d g(subface->g->x(), subface->g->y());
 
 	//faceがgを含むかどうか調べる
-	Segment g_halfline(&g, &Vector2d(1000,0));
+	Segment2D g_halfline(&g, &Vector2d(1000,0));
 	int cnt = 0;
 	Halfedge *he = face->halfedge;
 	do{
-		Segment edge(&Vector2d(he->vertex->x, he->vertex->y), &Vector2d(he->next->vertex->x - he->vertex->x, he->next->vertex->y - he->vertex->y));
+		Segment2D edge(&Vector2d(he->vertex->x, he->vertex->y), &Vector2d(he->next->vertex->x - he->vertex->x, he->next->vertex->y - he->vertex->y));
 		
-		if (isCrossSegment(&g_halfline, &edge)){
+		if (isCrossSegment2D(&g_halfline, &edge)){
 			cnt++;
 		}
 		he = he->next;
@@ -939,13 +892,13 @@ void Model::makeOuterPairing(){
 		
 		Halfedge *parent = (*it_sfg)->oldFace->halfedge;
 		do{
-			Segment segParent(parent);
+			Segment2D segParent(parent);
 			list<Halfedge*> children;
 			for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f)
 			{
 				Halfedge *child = (*it_f)->halfedge;
 				do{
-					Segment segChild(child);
+					Segment2D segChild(child);
 					Vector3d vParent = segParent.v;
 					vParent.normalize();
 					Vector3d vChild = segChild.v;
@@ -1020,7 +973,7 @@ void Model::makeOuterPairing2(){
 	for (list<SubFaceGroup*>::iterator it_sfg = subFaceGroups.begin(); it_sfg != subFaceGroups.end(); ++it_sfg){
 		Halfedge *he_parent = (*it_sfg)->oldFace->halfedge;
 		do{
-			Segment segParent(he_parent); 
+			Segment2D segParent(he_parent); 
 			Vector3d vParent = segParent.v;
 			vParent.normalize();
 			list<Halfedge*> he_children;
@@ -1028,7 +981,7 @@ void Model::makeOuterPairing2(){
 			{
 				Halfedge *he_child = (*it_f)->halfedge;
 				do{
-					Segment segChild(he_child);
+					Segment2D segChild(he_child);
 					Vector3d vChild = segChild.v;
 					vChild.normalize();
 					double dot = vParent.dot(vChild);

@@ -83,6 +83,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Picking.cpp" />
     <ClCompile Include="ReconstructModel.cpp" />
+    <ClCompile Include="Segment2D.cpp" />
     <ClCompile Include="SpringEdge.cpp" />
     <ClCompile Include="SpringSimulator.cpp" />
     <ClCompile Include="SpringVertex.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Picking.h" />
     <ClInclude Include="ReconstructingModel.h" />
+    <ClInclude Include="Segment2D.h" />
     <ClInclude Include="SpringEdge.h" />
     <ClInclude Include="SpringSimulator.h" />
     <ClInclude Include="SpringVertex.h" />

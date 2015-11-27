@@ -6,8 +6,10 @@ extern double d;
 using namespace Eigen;
 
 Bridge::Bridge(Halfedge *_he1, Halfedge *_he2){
+	
 	he1 = _he1;
 	he2 = _he2;
+	he1->bridge = he2->bridge = this;
 
 	//create vertex
 	double h = 0.5 * d;
@@ -199,4 +201,79 @@ Face *Bridge::addFace(list<Vertex*> vlist){
 		halfedges4pairing[i]->prev = halfedges4pairing[i_prev];
 	}
 	return createFace(halfedges4pairing[0]);
+}
+void Bridge::reCalc(){
+
+	//create vertex
+	double h = 0.5 * d;
+	double w = 0.6;
+	Vertex *v1, *v2, *v3, *v4;
+	v1 = he1->vertex;
+	v2 = he1->next->vertex;
+	v3 = he2->vertex;
+	v4 = he2->next->vertex;
+	Vector3d vec1, vec2, vec3, vec4, vec1_5, vec3_5;
+	vec1 = createVector3d(v1);
+	vec1_5 = createVector3d(he1->prev->vertex);
+	vec2 = createVector3d(v2);
+	vec3 = createVector3d(v3);
+	vec3_5 = createVector3d(he2->prev->vertex);
+	vec4 = createVector3d(v4);
+	Vector3d normal1, normal1_tmp, normal2, normal2_tmp;
+
+	normal1 = vec1_5 - vec1;
+	normal1.z() = 0;
+	normal1.normalize();
+	normal1_tmp = vec2 - vec1;
+	normal1_tmp.z() = 0;
+	normal1_tmp.normalize();
+	normal1 = normal1_tmp.cross(normal1);
+	normal1.normalize();
+
+	normal2 = vec3_5 - vec3;
+	normal2.z() = 0;
+	normal2.normalize();
+	normal2_tmp = vec4 - vec3;
+	normal2_tmp.z() = 0;
+	normal2_tmp.normalize();
+	normal2 = normal2_tmp.cross(normal2);
+	normal2.normalize();
+
+	Vector3d vec_h1 = vec2 - vec1;
+	vec_h1.z() = 0;
+	vec_h1.normalize();
+	vec_h1 = vec_h1.cross(normal1);
+	vec_h1.normalize();
+
+	Vector3d vec_h2 = vec4 - vec3;
+	vec_h2.z() = 0;
+	vec_h2.normalize();
+	vec_h2 = vec_h2.cross(normal2);
+	vec_h2.normalize();
+
+	//this->h1 = 0.5*fabs(vec4.z() - vec1.z());
+	//this->h2 = 0.5*fabs(vec3.z() - vec2.z());
+	this->h1 = this->h2 = d* 0.5*he1->itmp;
+	//cout << "(he1->itmp, he2->itmp, Max1, Max2) = (" << he1->itmp << ", " << he2->itmp <<", "<<he1->itmpMax<<", "<<he2->itmpMax << ")" << endl;
+	//cout << "h1 = " << h1 << ", h2 = " << h2 << endl;
+	//
+	Vector3d vec5, vec6, vec7, vec8;
+	vec5 = vec1 + 0.5*(1 - w)*(vec4 - vec1) + h1* vec_h1;//he1->itmp*
+	vec6 = vec2 + 0.5*(1 - w)*(vec3 - vec2) + h2* vec_h2;//he1->itmp*
+	vec7 = vec5 + w *(vec4 - vec1);//(vec4.z() - vec1.z())*Vector3d(0, 0, 1);
+	vec8 = vec6 + w *(vec3 - vec2);// (vec3.z() - vec2.z())*Vector3d(0, 0, 1);
+
+	//ここから↓が、配列使ってんのと一緒だから、リストの中身を変えちゃダメ
+	Vertex *v5, *v6, *v7, *v8;
+	v6 = he1->pair->prev->vertex;
+	v5 = he1->pair->next->next->vertex;
+	v8 = he2->pair->next->next->vertex;
+	v7 = he2->pair->prev->vertex;
+	v5->setPosition(vec5.x(), vec5.y(), vec5.z());
+	v6->setPosition(vec6.x(), vec6.y(), vec6.z());
+	v7->setPosition(vec7.x(), vec7.y(), vec7.z());
+	v8->setPosition(vec8.x(), vec8.y(), vec8.z());
+}
+void Bridge::calculateM_Z(){
+	m_z = 0.25*(he1->vertex->z +he1->next->vertex->z +he2->vertex->z + he2->next->vertex->z);
 }

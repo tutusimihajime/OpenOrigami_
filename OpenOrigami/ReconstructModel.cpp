@@ -6,10 +6,12 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
+#include <algorithm>
+#include "Segment2D.h"
 #include "GeometryElement2EigenVector.h"
 using namespace std;
 using namespace Eigen;
-double scale = 0.5;//0.5
+double scale = 1;//0.5
 double d;
 
 bool compFaceItmp(Face *f1, Face *f2){
@@ -764,6 +766,150 @@ void bridgeSFG(Model *mod){
 	
 
 }
+float calculateAverageZ(Face *f){
+	float m = 0;
+	int i = 0;
+	Halfedge *he = f->halfedge;
+	do{
+		m += he->vertex->z;
+		++i;
+		he = he->next;
+	} while (he != f->halfedge);
+	return m / (float)i;
+}
+float ListVertexMaxZ(list<Vertex*> listv){
+	float Max = 0;
+	for (list < Vertex* >::iterator it_v = listv.begin(); it_v != listv.end(); ++it_v){
+		Max = max((float)(*it_v)->z, Max);
+	}
+	return Max;
+}
+bool compListPairListVertexFloat(pair<list<Vertex*>, FLOAT> plf1, pair<list<Vertex*>, FLOAT> plf2){
+	return ListVertexMaxZ(plf1.first) < ListVertexMaxZ(plf2.first);
+}
+void compressionBridge(Model *mod){
+	// subvertices id 振りなおし
+	int id = 0;
+	for (list<SubFaceGroup* >::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list < Vertex* >::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+			(*it_v)->id = id;
+			++id;
+		}
+	}
+	for (list < Bridge* >::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
+		for (list < Vertex* >::iterator it_v = (*it_b)->vertices.begin(); it_v != (*it_b)->vertices.end(); ++it_v){
+			(*it_v)->id = id;
+			++id;
+		}
+	}
+	//Caluculate m_z
+	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
+		(*it_b)->calculateM_Z();
+	}
+
+	//Initialize Vertex check flag
+	for (list<SubFaceGroup* >::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+			(*it_v)->checked = false;
+		}
+	}
+	list<pair<list<Vertex*>, FLOAT> >listCompressionVertices;
+	//
+	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
+		if ((*it_b)->he1->itmp == (*it_b)->he1->itmpMax){
+			//最大ブリッジについて
+			float z1 = calculateAverageZ((*it_b)->he1->face), z2 = calculateAverageZ((*it_b)->he2->face);
+			
+			Face *topFace = (z1 > z2) ? (*it_b)->he1->face : (*it_b)->he2->face;//zの大きい方のフェース
+			Face *botFace = (z1 < z2) ? (*it_b)->he1->face : (*it_b)->he2->face;
+
+			
+			Segment2D seg0((*it_b)->he1);
+			list<Vertex*> compressionVertices;//圧縮対象の頂点
+			compressionVertices.push_back((*it_b)->he1->vertex);
+			compressionVertices.push_back((*it_b)->he1->next->vertex);
+			compressionVertices.push_back((*it_b)->he2->vertex);
+			compressionVertices.push_back((*it_b)->he2->next->vertex);
+			for (list<Vertex*>::iterator it_v = (*it_b)->vertices.begin(); it_v != (*it_b)->vertices.end(); ++it_v){
+				compressionVertices.push_back(*it_v);
+			}
+			// Initialize Halfedge check flag
+			for (list<SubFaceGroup* >::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+				for (list < Face* >::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+						Halfedge *he = (*it_f)->halfedge;
+						do{
+							he->checked = false;
+							he = he->next;
+						} while (he != (*it_f)->halfedge);
+				}
+				//Initialize Vertex check flag
+				for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+					(*it_v)->checked = false;
+				}
+
+			}
+			
+			
+			//重なっている面を取得
+			for (list<SubFaceGroup* >::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+				
+				for (list < Face* >::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+					
+					if ((topFace->id==(*it_f)->id)&&(*it_f)->itmp<topFace->itmp && (*it_f)->itmp>botFace->itmp){
+						//重なっている辺を取得
+						Halfedge *he = (*it_f)->halfedge;
+						do{
+							if (!he->checked){
+								Segment2D seg1(he);
+								if (seg0.isOverlapSegment(&seg1)){
+									if (he->bridge != NULL){
+										//compressionVertices.insert(compressionVertices.end(), he->bridge->vertices.begin(), he->bridge->vertices.end());
+										for (list<Vertex*>::iterator it_v = he->bridge->vertices.begin(); it_v != he->bridge->vertices.end(); ++it_v){
+											compressionVertices.push_back(*it_v);
+										}
+										compressionVertices.push_back(he->bridge->he1->vertex);
+										compressionVertices.push_back(he->bridge->he1->next->vertex);
+										compressionVertices.push_back(he->bridge->he2->vertex);
+										compressionVertices.push_back(he->bridge->he2->next->vertex);
+										he->bridge->he1->checked = he->bridge->he2->checked = true;
+
+									}else{
+
+										compressionVertices.push_back(he->vertex);
+										compressionVertices.push_back(he->next->vertex);
+										he->checked = true;
+									}
+								}
+								he->checked = true;
+							}
+							he = he->next;
+						} while (he != (*it_f)->halfedge);
+
+					}
+				}
+			}
+			listCompressionVertices.push_back(pair<list<Vertex*>, FLOAT> (compressionVertices, (*it_b)->m_z));
+			
+		}
+	}
+	//圧縮(ブリッジの頂点も圧縮されるけど、あとでreCalcされるから意味ない)
+	const float alpha = 0.5;
+	listCompressionVertices.sort(compListPairListVertexFloat);
+	listCompressionVertices.reverse();
+	for (list<pair<list<Vertex*>, FLOAT >>::iterator it_lv = listCompressionVertices.begin(); it_lv != listCompressionVertices.end(); ++it_lv){
+		list<Vertex*>compressionVertices = (*it_lv).first;
+		float m_z = (*it_lv).second;
+		for (list<Vertex*>::iterator it_v = compressionVertices.begin(); it_v != compressionVertices.end(); ++it_v){
+			if (!(*it_v)->checked){
+				(*it_v)->z = alpha*((*it_v)->z - m_z) + m_z;
+				(*it_v)->checked = true;
+			}
+		}
+	}
+	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
+		(*it_b)->reCalc();
+	}
+}
 void relocationSubFaceGroupVertices(Model *mod){
 	// construct mod->subFaceGroups
 	mod->constructSubFaceGroup();//10/21 14:23抜けない -> 10/21 15:53 hesにpushしてなかった...
@@ -772,6 +918,7 @@ void relocationSubFaceGroupVertices(Model *mod){
 	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
 		(*it_b)->normalizeFaces();
 	}
+	compressionBridge(mod);
 }
 void reconstructModel(Model *mod)
 {
