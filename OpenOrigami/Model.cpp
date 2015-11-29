@@ -279,6 +279,11 @@ void Model::drawSubFaces(){
 		float col = (float)i / subfaceVector.size();
 		glColor3d(1-col, 1-col, 1);
 		subfaceVector.at(i)->draw();
+		glColor3d(1, 1, 0);
+		glPointSize(10);
+		glBegin(GL_POINTS);
+		glVertex3d(subfaceVector.at(i)->g->x(), subfaceVector.at(i)->g->y(), subfaceVector.at(i)->g->z());
+		glEnd();
 	}
 	glDisable(GL_POLYGON_OFFSET_FILL);
 	
@@ -641,12 +646,12 @@ bool isCrossSegment2D(Segment2D *seg1, Segment2D *seg2){
 	
 }
 
-bool isOverlap2D(Face *subface, Face *face){
+bool isOverlap2D(Face *subface, Face *face){//非凸
 	//subfaceの重心(2D)を求める
 	Vector2d g(subface->g->x(), subface->g->y());
 
 	//faceがgを含むかどうか調べる
-	Segment2D g_halfline(&g, &Vector2d(1000,0));
+	Segment2D g_halfline(&g, &Vector2d(10000,0));
 	int cnt = 0;
 	Halfedge *he = face->halfedge;
 	do{
@@ -657,7 +662,7 @@ bool isOverlap2D(Face *subface, Face *face){
 		}
 		he = he->next;
 	} while (he != face->halfedge);
-	return cnt % 2 == 1;
+	return cnt>0;//非凸には対応してないです
 }
 void Model::calcAllSubfaceG(){
 	for (int i = 0; i < subfaceVector.size(); ++i){
@@ -678,6 +683,9 @@ void Model::checkOverlapSubface(){
 		}
 	}
 	//test
+	for (int i = 0; i < subfaceVector.size(); ++i){
+		cout << "G" << i << " = (" << subfaceVector.at(i)->g->x() << ", " << subfaceVector.at(i)->g->y() << ", " << subfaceVector.at(i)->g->z() << ")\n";
+	}
 	/*for (int i = 0; i < subfaceVector.size(); ++i){
 		for (int j = 0; j < faceVector.size(); ++j){
 			cout << subfaceOverlapFace[i][j]<<" ";
@@ -716,11 +724,26 @@ void Model::constructSubFaceGroup(){
 	}
 
 	//サブフェースのitmpの圧縮, itmp2は、グループ内での順位
+	int all_ave = 0;
 	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
 		int min_itmp = 0;
 		int ave_itmp = 0;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
-			id_subfaceVectorVector[i][j]->itmp2 = 0;
+			ave_itmp += id_subfaceVectorVector[i][j]->itmp;
+		}
+		if (id_subfaceVectorVector.at(i).size() == 0){
+			continue;
+		}
+		ave_itmp /= id_subfaceVectorVector.at(i).size();
+		all_ave += ave_itmp;
+	}
+	all_ave /= id_subfaceVectorVector.size();
+
+	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
+		int min_itmp = 0;
+		int ave_itmp = 0;
+		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
+			id_subfaceVectorVector[i][j]->itmp2 = 0;//itmp2初期化
 			for (int k = 0; k < id_subfaceVectorVector.at(i).size(); ++k){
 				if (id_subfaceVectorVector[i][j]->itmp > id_subfaceVectorVector[i][k]->itmp){
 					id_subfaceVectorVector[i][j]->itmp2++;
@@ -737,7 +760,7 @@ void Model::constructSubFaceGroup(){
 		//cout << "ave_itmp =" << ave_itmp << ", mid = " << mid << endl;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
 			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//底寄せ
-			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + ave_itmp -mid;//中寄せ??全体の基準を計算して、それに寄せる方法がよい?
+			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + all_ave - id_subfaceVectorVector.at(i).size()/2;//中寄せ??全体の基準を計算して、それに寄せる方法がよい?
 		}
 	}
 
@@ -777,12 +800,12 @@ void Model::constructSubFaceGroup(){
 	for (list<list<Vertex*>>::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it){
 		(*it).sort(compVertexItmp);
 	}
-
+	
 	//擬似頂点マージ（itmpだけ高いやつにそろえる）
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->unifyAllVertexItmp();
 	}
-
+	
 	//頂点のitmp再配置
 	for (list<list<Vertex*> >::iterator it = id_subVertexListList.begin(); it != id_subVertexListList.end(); ++it)
 	{
@@ -797,6 +820,7 @@ void Model::constructSubFaceGroup(){
 			}
 		}
 	}
+	
 	//v->itmpによる頂点再配置	
 	
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
@@ -808,7 +832,7 @@ void Model::constructSubFaceGroup(){
 			} while (he != (*it_f)->halfedge);
 		}
 	}
-
+	
 	//Z優先で頂点のマージ・・・deleteによってid_subVertexListListはぶっ壊れます!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->mergeAllVertexPair();
