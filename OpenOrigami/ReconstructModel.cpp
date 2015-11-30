@@ -298,7 +298,7 @@ void createBridge(Model *mod, Halfedge *he){
 	
 	//create vertex
 	double h = 0.5 * d;
-	double w = 0.3 * h;
+	double w = 0.6 * h;
 	Vertex *v1, *v2, *v3, *v4;
 	v1 = he->vertex;
 	v2 = he->next->vertex;
@@ -826,11 +826,12 @@ void compressionBridge(Model *mod){
 			
 			Segment2D seg0((*it_b)->he1);
 			list<Vertex*> compressionVertices;//ˆ³k‘ÎÛ‚Ì’¸“_
-			/*compressionVertices.push_back((*it_b)->he1->vertex);
+			compressionVertices.push_back((*it_b)->he1->vertex);
 			compressionVertices.push_back((*it_b)->he1->next->vertex);
 			compressionVertices.push_back((*it_b)->he2->vertex);
 			compressionVertices.push_back((*it_b)->he2->next->vertex);
-			*/
+			
+			/*
 			if ((*it_b)->he1->prev->pair == NULL){
 				compressionVertices.push_back((*it_b)->he1->vertex);
 			}
@@ -843,7 +844,7 @@ void compressionBridge(Model *mod){
 			if ((*it_b)->he2->next->pair == NULL){
 				compressionVertices.push_back((*it_b)->he2->next->vertex);
 			}
-			
+			*/
 			if (compressionVertices.size()!=0){
 				for (list<Vertex*>::iterator it_v = (*it_b)->vertices.begin(); it_v != (*it_b)->vertices.end(); ++it_v){
 					compressionVertices.push_back(*it_v);
@@ -931,7 +932,7 @@ void relocationSubFaceGroupVertices(Model *mod){
 	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
 		(*it_b)->normalizeFaces();
 	}
-//	compressionBridge(mod);
+	//compressionBridge(mod);
 }
 void reconstructModel(Model *mod)
 {

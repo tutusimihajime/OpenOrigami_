@@ -646,7 +646,7 @@ bool isCrossSegment2D(Segment2D *seg1, Segment2D *seg2){
 	
 }
 
-bool isOverlap2D(Face *subface, Face *face){//”ñ“Ê
+bool isOverlap2D(Face *subface, Face *face){////—vC³
 	//subface‚ÌdS(2D)‚ð‹‚ß‚é
 	Vector2d g(subface->g->x(), subface->g->y());
 
@@ -662,7 +662,7 @@ bool isOverlap2D(Face *subface, Face *face){//”ñ“Ê
 		}
 		he = he->next;
 	} while (he != face->halfedge);
-	return cnt>0;//”ñ“Ê‚É‚Í‘Î‰ž‚µ‚Ä‚È‚¢‚Å‚·
+	return cnt%2==1;
 }
 void Model::calcAllSubfaceG(){
 	for (int i = 0; i < subfaceVector.size(); ++i){
