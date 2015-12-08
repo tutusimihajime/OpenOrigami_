@@ -345,7 +345,9 @@ Face *Model::cpyFace(Face *_f){
 	return createFace(hes[0]);
 }
 Vertex *Model::cpyVertex(Vertex *_v){
-	return createVertex(_v->x, _v->y, _v->z);
+	Vertex *v = createVertex(_v->x, _v->y, _v->z);
+	v->id_origin = _v->id;
+	return v;
 }
 
 //create and push list and vertex
@@ -366,6 +368,7 @@ Halfedge *Model::createHalfedge(Vertex *v){
 Vertex *Model::createVertex(double _x, double _y, double _z){
 	Vertex *v = new Vertex(_x, _y, _z);// (2)読みこんだ x, y, z 座標に基づいて新しい Vertexを生成する
 	v->setID(vertices.size());
+	v->id_origin = -1;
 	vertices.push_back(v); // (3)生成した Vertexを Modelに追加する 
 	vertexVector.push_back(v);
 	return v;
@@ -651,7 +654,7 @@ bool isOverlap2D(Face *subface, Face *face){////要修正
 	Vector2d g(subface->g->x(), subface->g->y());
 
 	//faceがgを含むかどうか調べる
-	Segment2D g_halfline(&g, &Vector2d(10000,0));
+	Segment2D g_halfline(&g, &Vector2d(1000,0));
 	int cnt = 0;
 	Halfedge *he = face->halfedge;
 	do{
@@ -683,9 +686,9 @@ void Model::checkOverlapSubface(){
 		}
 	}
 	//test
-	for (int i = 0; i < subfaceVector.size(); ++i){
+	/*for (int i = 0; i < subfaceVector.size(); ++i){
 		cout << "G" << i << " = (" << subfaceVector.at(i)->g->x() << ", " << subfaceVector.at(i)->g->y() << ", " << subfaceVector.at(i)->g->z() << ")\n";
-	}
+	}*/
 	/*for (int i = 0; i < subfaceVector.size(); ++i){
 		for (int j = 0; j < faceVector.size(); ++j){
 			cout << subfaceOverlapFace[i][j]<<" ";
@@ -722,7 +725,8 @@ void Model::constructSubFaceGroup(){
 		}
 		id_subfaceVectorVector.push_back(id_subfaceVector);
 	}
-
+	//---サブフェース再配置開始---//
+	/*
 	//サブフェースのitmpの圧縮, itmp2は、グループ内での順位
 	int all_ave = 0;
 	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
@@ -759,11 +763,12 @@ void Model::constructSubFaceGroup(){
 		int mid = id_subfaceVectorVector.at(i).size() / 2;
 		//cout << "ave_itmp =" << ave_itmp << ", mid = " << mid << endl;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
-			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//底寄せ
-			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + all_ave - id_subfaceVectorVector.at(i).size()/2;//中寄せ??全体の基準を計算して、それに寄せる方法がよい?
+			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//底寄せ
+			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + all_ave - id_subfaceVectorVector.at(i).size()/2;//中寄せ??全体の基準を計算して、それに寄せる方法がよい?
 		}
 	}
-
+	*/
+	//---サブフェース再配置END---//
 	//頂点のitmpの初期化
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		for (list < Face* > ::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){

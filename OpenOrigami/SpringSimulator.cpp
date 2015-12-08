@@ -192,7 +192,7 @@ void SpringSimulator::draw(GLenum mode){
 				}
 
 				// Draw sphere
-/*
+				/*
 				glEnable(GL_LIGHTING);
 				GLUquadric *sphere;
 				sphere = gluNewQuadric();
@@ -202,7 +202,7 @@ void SpringSimulator::draw(GLenum mode){
 				glPopMatrix();
 				gluDeleteQuadric(sphere);
 				glDisable(GL_LIGHTING);
-*/
+				*/
 			}
 			(*it_v)->draw();
 		}

@@ -474,7 +474,7 @@ void moveOverlappedVertices(Model *mod)
 void setIsDraw(Model *mod){
 	// まず、すべてを間引くことにする
 	for (int i = 0; i < mod->faceVector.size(); ++i){
-		mod->faceVector.at(i)->type = 1;
+		mod->faceVector.at(i)->type = 0;
 	}
 	// 間引かないものを選ぶ
 	for (int i = 0; i < mod->subfaceVector.size(); ++i){
@@ -575,6 +575,60 @@ void calculateEdgeRelocationVector4Bridge(Halfedge *he){
 	cout << "vh = \n" << vh << endl;
 	cout << "v_prev = \n" << vprev << endl;
 	cout << "vd = \n" << (vh.dot(vh) / vh.dot(vprev)*vprev) << endl;*/
+}
+void relocationVerticesForBridge(Model *mod){
+
+	//init
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+			(*it_v)->vtmp = Vector3d(0, 0, 0);
+		}
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+				//cout << "(itmp, itmpMax) = (" <<he_in_f->itmp<<", "<< he_in_f->itmpMax << ")\n";
+				he_in_f->checked = false;
+				he_in_f->vtmp = Vector3d();
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
+	//calculate relocating direction every edges to bridge
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+
+				if (!he_in_f->checked){
+					/*
+					if (he_in_f->pair != NULL){
+						if (he_in_f->next->vertex != he_in_f->pair->vertex){
+							//bridge edges
+							calculateEdgeRelocationVector4Bridge(he_in_f);
+							calculateEdgeRelocationVector4Bridge(he_in_f->pair);
+						}
+						he_in_f->pair->checked = true;
+						
+					}*/
+					if (he_in_f->bridge != NULL){
+						Bridge *bridge = he_in_f->bridge;
+						calculateEdgeRelocationVector4Bridge(bridge->he1);
+						calculateEdgeRelocationVector4Bridge(bridge->he2);
+						bridge->he2->checked = true;
+					}
+				}
+				he_in_f->checked = true;
+
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
+	//relocation VERTICES
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
+			(*it_v)->transPosition((*it_v)->vtmp);
+		}
+	}
 }
 void bridgeSFG(Model *mod){
 	
@@ -688,49 +742,6 @@ void bridgeSFG(Model *mod){
 		}
 	}
 	
-	//init
-	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
-		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
-			(*it_v)->vtmp = Vector3d(0, 0, 0);
-		}
-		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
-			Halfedge *he_in_f = (*it_f)->halfedge;
-			do{
-				//cout << "(itmp, itmpMax) = (" <<he_in_f->itmp<<", "<< he_in_f->itmpMax << ")\n";
-				he_in_f->checked = false;
-				he_in_f->vtmp = Vector3d();
-				he_in_f = he_in_f->next;
-			} while (he_in_f != (*it_f)->halfedge);
-		}
-	}
-	//calculate relocating direction every edges to bridge
-	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
-		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
-			Halfedge *he_in_f = (*it_f)->halfedge;
-			do{
-
-				if (!he_in_f->checked){
-					if (he_in_f->pair != NULL){
-						if (he_in_f->next->vertex != he_in_f->pair->vertex){
-							//bridge edges
-							calculateEdgeRelocationVector4Bridge(he_in_f);
-							calculateEdgeRelocationVector4Bridge(he_in_f->pair);
-						}
-						he_in_f->pair->checked = true;
-					}
-				}
-				he_in_f->checked = true;
-
-				he_in_f = he_in_f->next;
-			} while (he_in_f != (*it_f)->halfedge);
-		}
-	}
-	//relocation VERTICES
-	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
-		for (list<Vertex*>::iterator it_v = (*it_sfg)->subvertices.begin(); it_v != (*it_sfg)->subvertices.end(); ++it_v){
-			(*it_v)->transPosition((*it_v)->vtmp);
-		}
-	}
 	
 	//init
 	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
@@ -787,7 +798,7 @@ float ListVertexMaxZ(list<Vertex*> listv){
 bool compListPairListVertexFloat(pair<list<Vertex*>, FLOAT> plf1, pair<list<Vertex*>, FLOAT> plf2){
 	return ListVertexMaxZ(plf1.first) < ListVertexMaxZ(plf2.first);
 }
-void compressionBridge(Model *mod){
+void resetID(Model *mod){
 	// subvertices id 振りなおし
 	int id = 0;
 	for (list<SubFaceGroup* >::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
@@ -802,6 +813,9 @@ void compressionBridge(Model *mod){
 			++id;
 		}
 	}
+}
+void compressionBridge(Model *mod){
+
 	//Caluculate m_z
 	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
 		(*it_b)->calculateM_Z();
@@ -831,20 +845,6 @@ void compressionBridge(Model *mod){
 			compressionVertices.push_back((*it_b)->he2->vertex);
 			compressionVertices.push_back((*it_b)->he2->next->vertex);
 			
-			/*
-			if ((*it_b)->he1->prev->pair == NULL){
-				compressionVertices.push_back((*it_b)->he1->vertex);
-			}
-			if ((*it_b)->he1->next->pair == NULL){
-				compressionVertices.push_back((*it_b)->he1->next->vertex);
-			}
-			if ((*it_b)->he2->prev->pair == NULL){
-				compressionVertices.push_back((*it_b)->he2->vertex);
-			}
-			if ((*it_b)->he2->next->pair == NULL){
-				compressionVertices.push_back((*it_b)->he2->next->vertex);
-			}
-			*/
 			if (compressionVertices.size()!=0){
 				for (list<Vertex*>::iterator it_v = (*it_b)->vertices.begin(); it_v != (*it_b)->vertices.end(); ++it_v){
 					compressionVertices.push_back(*it_v);
@@ -907,7 +907,7 @@ void compressionBridge(Model *mod){
 	}
 	
 	//圧縮(ブリッジ内の頂点はあとでreCalcする)
-	const float alpha = 0.5;
+	const float alpha = 0.0;
 	listCompressionVertices.sort(compListPairListVertexFloat);
 	listCompressionVertices.reverse();
 	for (list<pair<list<Vertex*>, FLOAT >>::iterator it_lv = listCompressionVertices.begin(); it_lv != listCompressionVertices.end(); ++it_lv){
@@ -916,23 +916,35 @@ void compressionBridge(Model *mod){
 		for (list<Vertex*>::iterator it_v = compressionVertices.begin(); it_v != compressionVertices.end(); ++it_v){
 			if (!(*it_v)->checked){
 				(*it_v)->z = alpha*((*it_v)->z - m_z) + m_z;
+				
 				//(*it_v)->checked = true;
 			}
 		}
 	}
+}
+void compressionBridge2(Model *mod){
+	
+}
+void relocationSubFaceGroupVertices(Model *mod){
+	// subdivison Model
+	mod->constructSubFaceGroup();//10/21 14:23抜けない -> 10/21 15:53 hesにpushしてなかった...
+	//mod->debugPrintSFGs();
+	cout << "create bridge sub-model\n";
+	bridgeSFG(mod);
+	cout << "reset ID\n";
+	resetID(mod);
+	cout << "compressionBridge\n";
+	//compressionBridge(mod);
+	cout << "relocationVerticesForBridge\n";
+	relocationVerticesForBridge(mod);
+	cout << "Re-Calculate Bridge\n";
 	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
 		(*it_b)->reCalc();
 	}
-}
-void relocationSubFaceGroupVertices(Model *mod){
-	// construct mod->subFaceGroups
-	mod->constructSubFaceGroup();//10/21 14:23抜けない -> 10/21 15:53 hesにpushしてなかった...
-	//mod->debugPrintSFGs();
-	bridgeSFG(mod);
+	cout << "normalize Normal\n";
 	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
 		(*it_b)->normalizeFaces();
 	}
-	//compressionBridge(mod);
 }
 void reconstructModel(Model *mod)
 {
@@ -942,9 +954,15 @@ void reconstructModel(Model *mod)
 	// SFG
 	cout << "relocationFaceGroupVertices\n";
 	relocationSubFaceGroupVertices(mod);
+	
+	
 	// set isDraw
 	cout << "setIsDraw\n";
-	setIsDraw(mod);
+	//setIsDraw(mod);
+
+	for (int i = 0; i < mod->faceVector.size(); ++i){
+		mod->faceVector.at(i)->type = 0;
+	}
 	// bridge edges
 	cout << "bridgeEdges\n";
 	bridgeEdges(mod);

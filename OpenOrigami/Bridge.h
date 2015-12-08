@@ -10,7 +10,7 @@ using namespace std;
 
 class Bridge{
 public:
-	Halfedge *he1, *he2;
+	Halfedge *he1, *he2;//bridge‚ÆÚ‘±‚·‚é‘Šè‘¤‚ÌHalfedge
 	double h1, h2;
 	float m_z;
 	list<Face*> faces;//•Ï‚¦‚¿‚áƒ_ƒ
