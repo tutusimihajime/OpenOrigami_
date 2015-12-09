@@ -27,7 +27,7 @@ bool sim_flag = false;
 //test用
 bool isDrawSubface = false;
 bool isDrawSubFaceGroups = false;
-
+bool IsEnableIsDraw = true;
 //-------------------------
 
 // クォータニオンの積 r <- p x q
@@ -169,8 +169,8 @@ void display(void)
 	DrawMeasure(16, 40);
 	glDisable(GL_LINE_SMOOTH);
 	if (isDrawSubFaceGroups){
-		model->drawSubFaceGroups();
-		model->drawSubFaceGroupBridges();
+		model->drawSubFaceGroups(IsEnableIsDraw);
+		model->drawSubFaceGroupBridges(IsEnableIsDraw);
 	}else if (isDrawSubface){
 		model->drawSubFaces();
 	}else{
@@ -213,6 +213,9 @@ void key_input(unsigned char key, int x, int y)
 	case 'g':
 		isDrawSubFaceGroups = !isDrawSubFaceGroups;
 		break;
+	case 'h':
+		IsEnableIsDraw = !IsEnableIsDraw;
+		break;
 	case'W':
 		model->exportOBJ();
 		break;
@@ -241,7 +244,6 @@ void special_input(int key, int x, int y)
 		break;
 	}
 }
-
 MyVector3d rotateMyVector3d(MyVector3d vec){
 	return MyVector3d(rt[0] * vec.x + rt[1] * vec.y + rt[2] * vec.z,
 		rt[4] * vec.x + rt[5] * vec.y + rt[6] * vec.z,
@@ -285,7 +287,6 @@ void mouse_motion_right(int x, int y)
 	}
 	glutPostRedisplay(); //再描画
 }
-
 void mouse(int button, int state, int x, int y)
 {
 	switch (button) {
@@ -347,14 +348,12 @@ void mouse(int button, int state, int x, int y)
 	}
 
 }
-
 void Idle(){
 	if(sim_flag)spring_sim->simulate(0.5);
 	model->calcNormal();
 	Sleep(0.001);
 	glutPostRedisplay();
 }
-
 void MouseWheel(int wheel_number, int direction, int x, int y){
 	if (direction == 1){
 		zoom += MyVector3d(0,0,10);

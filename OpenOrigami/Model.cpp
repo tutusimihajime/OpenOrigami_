@@ -140,6 +140,38 @@ Model::Model(const char *filename)
 	normalizeVertices();
 	setAllHalfedgePair_hash();
 
+	//---Debug---//
+	/*for (list<Face*>::iterator it_f = faces.begin(); it_f != faces.end();  ++it_f){
+		Face *f = *it_f;
+		cout << "f(" << f->id << ") :  ";
+		Halfedge *he = (*it_f)->halfedge;
+		do{
+			Vertex *v = he->vertex;
+			cout << v->id << " ";
+			he = he->next;
+		} while (he != (*it_f)->halfedge);
+		cout << endl;
+	}*/
+	for (list<Vertex*>::iterator it_v = vertices.begin(); it_v != vertices.end(); ++it_v){
+		Vertex *v = *it_v;
+		//cout << "v(" << v->id << ") = (" << v->x << ", " << v->y << ", " << v->z << ")\n";
+	}
+	int cnt = 0;
+	for (int i = 0; i < subvertexVector.size(); ++i){
+		Vertex *v = subvertexVector.at(i);
+		for (list<Vertex*>::iterator it_v = vertices.begin(); it_v != vertices.end(); ++it_v){
+			Vertex *v2 = *it_v;
+			if (fabs(v->x - v2->x) + fabs(v->y - v2->y) < 0.01){
+
+				//cout << "v(" << v->id << ") = (" << v->x << ", " << v->y << ", " << v->z << "), " << "v2(" << v2->id << ") = (" << v2->x << ", " << v2->y << ", " << v2->z << ")\n ";
+				cnt++;
+				break;
+			}
+		}
+	}
+	//cout << "cnt = " << cnt << endl;
+	//---END---Debug---END---//
+
 	//cout << overlapRelation;
 }
 Model::~Model()
@@ -479,7 +511,7 @@ void Model::exportOBJ(){
 		file << endl;
 	}
 }
-void Model::exportSubFaceGroupsOBJ(){
+void Model::exportSubFaceGroupsOBJ(bool isEnableVisibleFlag){
 	cout << "input name( ***.obj) : ";
 	string filename;
 	cin >> filename;
@@ -726,7 +758,7 @@ void Model::constructSubFaceGroup(){
 		id_subfaceVectorVector.push_back(id_subfaceVector);
 	}
 	//---サブフェース再配置開始---//
-	/*
+	
 	//サブフェースのitmpの圧縮, itmp2は、グループ内での順位
 	int all_ave = 0;
 	for (int i = 0; i < id_subfaceVectorVector.size(); ++i){
@@ -763,18 +795,19 @@ void Model::constructSubFaceGroup(){
 		int mid = id_subfaceVectorVector.at(i).size() / 2;
 		//cout << "ave_itmp =" << ave_itmp << ", mid = " << mid << endl;
 		for (int j = 0; j < id_subfaceVectorVector.at(i).size(); ++j){
-			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//底寄せ
-			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + all_ave - id_subfaceVectorVector.at(i).size()/2;//中寄せ??全体の基準を計算して、それに寄せる方法がよい?
+			id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + min_itmp;//底寄せ
+			//id_subfaceVectorVector[i][j]->itmp = id_subfaceVectorVector[i][j]->itmp2 + all_ave - id_subfaceVectorVector.at(i).size()/2;//中寄せ??全体の基準を計算して、それに寄せる方法がよい?
 		}
 	}
-	*/
+	
 	//---サブフェース再配置END---//
-	//頂点のitmpの初期化
+
+	//頂点のitmp, itmp_faceの初期化
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		for (list < Face* > ::iterator it_f = (*it)->subfaces.begin(); it_f != (*it)->subfaces.end(); ++it_f){
 			Halfedge *he = (*it_f)->halfedge;
 			do{
-				he->vertex->itmp = (*it_f)->itmp;
+				he->vertex->itmp = he->vertex->itmp_face = (*it_f)->itmp;
 				he = he->next;
 			} while (he != (*it_f)->halfedge);
 		}
@@ -807,6 +840,10 @@ void Model::constructSubFaceGroup(){
 	}
 	
 	//擬似頂点マージ（itmpだけ高いやつにそろえる）
+	/*for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
+		(*it)->unifyAllVertexItmp();
+	}*/
+	//擬似頂点マージ(itmpをitmp_faceを元にそろえる)
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
 		(*it)->unifyAllVertexItmp();
 	}
@@ -824,6 +861,11 @@ void Model::constructSubFaceGroup(){
 				}
 			}
 		}
+		for (list<Vertex*>::iterator it_v = (*it).begin(); it_v != (*it).end(); ++it_v)
+		{
+			cout << (*it_v)->itmp << " ";
+		}
+		cout << endl;
 	}
 	
 	//v->itmpによる頂点再配置	
@@ -855,41 +897,18 @@ void Model::constructSubFaceGroup(){
 	}
 
 }
-void Model::drawSubFaceGroups(){
+void Model::drawSubFaceGroups(bool isEnableVisibleFlag){
 	if (subFaceGroups.empty()){
 		return;
 	}
-	//vertex
-	glDisable(GL_LIGHTING);
-	glPointSize(5);
-	glColor3f(.3,.3,.3);
 	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
-		(*it)->drawVertex();
-	}
-	//edge
-	glDisable(GL_LIGHTING);
-	glEnable(GL_LINE_SMOOTH);
-	glColor3f(.6, .6, .6);
-	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){
-		(*it)->drawEdge();
-	}
-	//face
-	glEnable(GL_LIGHTING);
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(1, 30);
-	GLfloat materialColor1[] = { 1, 0.2, 0.2, 1 };
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
-	GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
-	for (list<SubFaceGroup*>::iterator it = subFaceGroups.begin(); it != subFaceGroups.end(); ++it){	
-		(*it)->drawFace();
+		(*it)->draw(isEnableVisibleFlag);
 	}
 
-	glDisable(GL_POLYGON_OFFSET_FILL);
 }
-void Model::drawSubFaceGroupBridges(){
+void Model::drawSubFaceGroupBridges(bool isEnableVisibleFlag){
 	for (list<Bridge*>::iterator it_b = bridges.begin(); it_b != bridges.end(); ++it_b){
-		(*it_b)->draw();
+		(*it_b)->draw(isEnableVisibleFlag);
 	}
 }
 void Model::debugPrintSFGs(){

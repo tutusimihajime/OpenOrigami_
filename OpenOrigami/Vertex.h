@@ -15,6 +15,7 @@ public:
 	bool checked;
 
 	int itmp;//頂点再配置で使用
+	int itmp_face;//頂点再配置で使用, マージの際の優先度に用いる
 	int itmp4w;//OBJ出力で使用
 	int id_origin;//一番最初の状態での頂点のID, cpyVertexで設定, createVertexでは-1に初期化
 	Vector3d vtmp;//relocation bridgeで使用

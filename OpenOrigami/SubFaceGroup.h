@@ -21,7 +21,9 @@ public:
 	void SubFaceGroup::mergeVertexPair(Vertex *v1, Vertex *v2);
 	void SubFaceGroup::mergeAllVertexPair();
 	void SubFaceGroup::unifyVertexItmp(Vertex *v1, Vertex *v2);
+	void SubFaceGroup::unifyVertexItmp2(Vertex *v1, Vertex *v2);
 	void SubFaceGroup::unifyAllVertexItmp();
+	void SubFaceGroup::unifyAllVertexItmp2();
 	Vertex *SubFaceGroup::createVertex(double x, double y, double z);
 	Halfedge *SubFaceGroup::createHalfedge(Vertex *v);
 	Face *SubFaceGroup::createFace(Halfedge *he);
@@ -30,6 +32,7 @@ public:
 	void calcSubFacesNormal();
 	void drawVertex(GLenum mode = GL_RENDER);
 	void drawEdge(GLenum mode = GL_RENDER);
-	void drawFace(GLenum mode = GL_RENDER);
+	void drawFace(GLenum mode = GL_RENDER, bool isEnableVisibleFlag = false);
+	void draw(bool isEnableVisibleFlag = false);
 	void debugPrint();
 };

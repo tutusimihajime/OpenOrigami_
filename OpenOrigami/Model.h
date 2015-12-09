@@ -85,12 +85,12 @@ public:
 
 	//SubFaceGroup
 	void Model::constructSubFaceGroup();
-	void Model::drawSubFaceGroups();
+	void Model::drawSubFaceGroups(bool isEnableVisibleFlag = false);
 	void Model::debugPrintSFGs();
 	void Model::makeOuterPairing();
 	void Model::makeOuterPairing2(); 
-	void Model::drawSubFaceGroupBridges();
-	void Model::exportSubFaceGroupsOBJ();
+	void Model::drawSubFaceGroupBridges(bool isEnableVisibleFlag = false);
+	void Model::exportSubFaceGroupsOBJ(bool isEnableVisibleFlag = false);
 	
 };
 

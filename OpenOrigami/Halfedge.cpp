@@ -8,6 +8,8 @@ Halfedge::Halfedge(Vertex *v) {
 	vertex = v; // Halfedge ¨ Vertex ‚ÌƒŠƒ“ƒN 
 	pair = NULL;
 	bridge = NULL;
+	itmp = -1;
+	itmpMax = -2;
 	if (v->halfedge == NULL) {
 		v->halfedge = this; // Vertex ¨ Halfedge ‚ÌƒŠƒ“ƒN 
 	}

@@ -13,10 +13,11 @@ public:
 	Halfedge *he1, *he2;//bridge‚ÆÚ‘±‚·‚é‘Šè‘¤‚ÌHalfedge
 	double h1, h2;
 	float m_z;
+	bool isDrawn;
 	list<Face*> faces;//•Ï‚¦‚¿‚áƒ_ƒ
 	list<Vertex*> vertices;//•Ï‚¦‚¿‚áƒ_ƒ
 	Bridge(Halfedge *_he1, Halfedge *_he2);
-	void draw();
+	void draw(bool isEnableVisibleFlag = false);
 	void normalizeFaces();
 	Vertex *createVertex(Vector3d vec);
 	Halfedge *createHalfedge(Vertex *v);
@@ -24,4 +25,7 @@ public:
 	Face *addFace(list<Vertex*>);
 	void calculateM_Z();
 	void reCalc();
+	void setInvisible();
+	void setVisible();
+
 };

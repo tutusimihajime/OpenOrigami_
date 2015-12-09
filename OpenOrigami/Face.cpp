@@ -29,16 +29,18 @@ void Face::normalizeNormal(){
 	nv = v1*v2;
 	nv.normalize();
 }
-void Face::draw(){
-	glNormal3d(nv.x, nv.y, nv.z);
-	glBegin(GL_POLYGON);
+void Face::draw(bool isEnableVisibleFlag){
+	if (isDrawn || !isEnableVisibleFlag){
+		glNormal3d(nv.x, nv.y, nv.z);
+		glBegin(GL_POLYGON);
 
-	Halfedge *halfedge_in_face = this->halfedge;
-	do{
-		glVertex3d(halfedge_in_face->vertex->x, halfedge_in_face->vertex->y, halfedge_in_face->vertex->z);
-		halfedge_in_face = halfedge_in_face->next;
-	} while (halfedge_in_face!= this->halfedge);
-	glEnd();
+		Halfedge *halfedge_in_face = this->halfedge;
+		do{
+			glVertex3d(halfedge_in_face->vertex->x, halfedge_in_face->vertex->y, halfedge_in_face->vertex->z);
+			halfedge_in_face = halfedge_in_face->next;
+		} while (halfedge_in_face != this->halfedge);
+		glEnd();
+	}
 }
 void Face::drawBack(){
 	glNormal3d(-nv.x, -nv.y, -nv.z);
@@ -111,4 +113,10 @@ void Face::reverse(){
 		vList.at(i)->halfedge = (i == 0) ? hList.at(vList.size() - 1) : hList.at(i - 1);
 	}
 	normalizeNormal();
+}
+void Face::setInvisible(){
+	this->isDrawn = false;
+}
+void Face::setVisible(){
+	this->isDrawn = true;
 }

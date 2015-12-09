@@ -12,11 +12,14 @@ Vertex::Vertex(double _x, double _y, double _z) {
 	x = _x;
 	y = _y;
 	z = _z;
+	id = -1;
+	id_origin = -1;
 	halfedge = NULL;
 	//id = num_of_vertex + 1;
 }
 void Vertex::setID(int n){
 	id = n;
+	id_origin = id;
 }
 void Vertex::draw(){
 	glBegin(GL_POINTS);

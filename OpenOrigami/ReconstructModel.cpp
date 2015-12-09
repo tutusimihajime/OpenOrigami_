@@ -907,7 +907,7 @@ void compressionBridge(Model *mod){
 	}
 	
 	//圧縮(ブリッジ内の頂点はあとでreCalcする)
-	const float alpha = 0.0;
+	const float alpha = 0.3;
 	listCompressionVertices.sort(compListPairListVertexFloat);
 	listCompressionVertices.reverse();
 	for (list<pair<list<Vertex*>, FLOAT >>::iterator it_lv = listCompressionVertices.begin(); it_lv != listCompressionVertices.end(); ++it_lv){
@@ -923,7 +923,102 @@ void compressionBridge(Model *mod){
 	}
 }
 void compressionBridge2(Model *mod){
+	//---test---//
+	for (list < SubFaceGroup* >::iterator it = mod->subFaceGroups.begin(); it != mod->subFaceGroups.end(); ++it){
+		for (list<Vertex*>::iterator it_v = (*it)->subvertices.begin(); it_v != (*it)->subvertices.end(); ++it_v){
+		//cout << "id_origin = " << (*it_v)->id_origin << endl;
+		}
+	}
+	//---END---test---END---//
 	
+	//頂点圧縮リストリストを宣言
+	list<list<Vertex*>> listListCompressionVertices;
+
+	//---サブフェース分割前からあった頂点について---//
+
+	//id_originのMaxを求める
+	int id_origin_Max = 0;
+	for (list < SubFaceGroup* >::iterator it = mod->subFaceGroups.begin(); it != mod->subFaceGroups.end(); ++it){
+		for (list<Vertex*>::iterator it_v = (*it)->subvertices.begin(); it_v != (*it)->subvertices.end(); ++it_v){
+			id_origin_Max = max(id_origin_Max, (*it_v)->id_origin);
+		}
+	}
+	//id_originごとの頂点のリストを作成し、頂点圧縮リストリストに追加
+	for (int id = 0; id <= id_origin_Max; ++id){
+		list < Vertex* > listCompressionVertices;
+		for (list < SubFaceGroup* >::iterator it = mod->subFaceGroups.begin(); it != mod->subFaceGroups.end(); ++it){
+			for (list<Vertex*>::iterator it_v = (*it)->subvertices.begin(); it_v != (*it)->subvertices.end(); ++it_v){
+				Vertex *v = (*it_v);
+				if (v->id_origin == id){
+					//cout << v->id_origin << endl;
+
+					listCompressionVertices.push_back(v);
+				}
+			}
+		}
+		if (listCompressionVertices.size() != 0){
+			listListCompressionVertices.push_back(listCompressionVertices);
+		}
+	}
+
+	//---END---サブフェース分割前からあった頂点について---END---//
+	
+	//---圧縮---//
+	const float alpha = 0;
+	for (list<list<Vertex*>>::iterator it_lv = listListCompressionVertices.begin(); it_lv != listListCompressionVertices.end(); ++it_lv){
+		list<Vertex*> listCompressionVertices = (*it_lv);
+		float z_average = 0;
+		float z_Max=0, z_min=1000;
+		for (list < Vertex* >::iterator it_v = listCompressionVertices.begin(); it_v != listCompressionVertices.end(); ++it_v){
+			z_average += (*it_v)->z;
+			z_Max = max(z_Max, (float)(*it_v)->z);
+			z_min = min(z_min, (float)(*it_v)->z);
+		}
+		z_average /= (float)listCompressionVertices.size();
+		float z_mid = 0.5*(z_Max + z_min);
+		
+		for (list < Vertex* >::iterator it_v = listCompressionVertices.begin(); it_v != listCompressionVertices.end(); ++it_v){
+			Vertex *v = *it_v;
+			//cout << v->z<<", "<<z_Max<<", "<<z_mid<<", "<<z_min ;
+			v->z = alpha*((*it_v)->z - z_mid) + z_mid;
+			//cout << ", " << v->z << endl;
+		}
+	}
+	//---END---圧縮---END---//
+
+	//---サブフェース分割で生まれた頂点について---//
+	
+	//---END---サブフェース分割で生まれた頂点について---END---//
+
+}
+void compressionBridge3(Model *mod){
+	for (list<Bridge*>::iterator it_b = mod->bridges.begin(); it_b != mod->bridges.end(); ++it_b){
+		Bridge *bridge = *it_b;
+		if (bridge->he1->itmp == bridge->he1->itmpMax){
+
+		}
+
+	}
+}
+void invisiblizeFaces(Model *mod){
+	for (list<SubFaceGroup*>::iterator it_sfg = mod->subFaceGroups.begin(); it_sfg != mod->subFaceGroups.end(); ++it_sfg){
+		for (list<Face*>::iterator it_f = (*it_sfg)->subfaces.begin(); it_f != (*it_sfg)->subfaces.end(); ++it_f){
+			Halfedge *he_in_f = (*it_f)->halfedge;
+			do{
+				//すべてのheを巡回
+				if (he_in_f->bridge!=NULL){
+					if (he_in_f->itmp != he_in_f->itmpMax){
+						he_in_f->bridge->setInvisible();
+						he_in_f->face->setInvisible();
+					}else{
+
+					}
+				}
+
+				he_in_f = he_in_f->next;
+			} while (he_in_f != (*it_f)->halfedge);
+		}
+	}
 }
 void relocationSubFaceGroupVertices(Model *mod){
 	// subdivison Model
@@ -931,10 +1026,12 @@ void relocationSubFaceGroupVertices(Model *mod){
 	//mod->debugPrintSFGs();
 	cout << "create bridge sub-model\n";
 	bridgeSFG(mod);
+	cout << "invisiblizeFaces\n";
+	invisiblizeFaces(mod);
 	cout << "reset ID\n";
 	resetID(mod);
 	cout << "compressionBridge\n";
-	//compressionBridge(mod);
+	//compressionBridge2(mod);
 	cout << "relocationVerticesForBridge\n";
 	relocationVerticesForBridge(mod);
 	cout << "Re-Calculate Bridge\n";

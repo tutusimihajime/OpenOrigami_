@@ -6,7 +6,7 @@ extern double d;
 using namespace Eigen;
 
 Bridge::Bridge(Halfedge *_he1, Halfedge *_he2){
-	
+	this->setVisible();
 	he1 = _he1;
 	he2 = _he2;
 	he1->bridge = he2->bridge = this;
@@ -113,57 +113,60 @@ Bridge::Bridge(Halfedge *_he1, Halfedge *_he2){
 	f[1]->halfedge->next->setPair(f[2]->halfedge->prev);
 	f[2]->halfedge->next->setPair(he_p);
 }
-void Bridge::draw(){
-	for (list<Face*>::iterator it_f = faces.begin(); it_f != faces.end(); ++it_f){
-		Halfedge *he = (*it_f)->halfedge;
-		
-		//drawVertex
-		glDisable(GL_LIGHTING);
-		glPointSize(5);
-		glColor3f(.3, .3, .3);
-		glBegin(GL_POINTS);
-		do{
-			Vertex *v = he->vertex;
-			glVertex3d(v->x, v->y, v->z);
-			he = he->next;
-		} while (he != (*it_f)->halfedge);
-		glEnd();
+void Bridge::draw(bool isEnableVisibleFlag){
+	if (this->isDrawn||!isEnableVisibleFlag){
+		for (list<Face*>::iterator it_f = faces.begin(); it_f != faces.end(); ++it_f){
 
-		//drawEdge
-		glDisable(GL_LIGHTING);
-		glEnable(GL_LINE_SMOOTH);
-		glLineWidth(1);
-		glColor3f(.6, .6, .6);
-		do{
-			Vertex *v1 = he->vertex;
-			Vertex *v2 = he->next->vertex;
-			glBegin(GL_LINES);
-			glVertex3d(v1->x, v1->y, v1->z);
-			glVertex3d(v2->x, v2->y, v2->z);
+			Halfedge *he = (*it_f)->halfedge;
+
+			//drawVertex
+			glDisable(GL_LIGHTING);
+			glPointSize(5);
+			glColor3f(.3, .3, .3);
+			glBegin(GL_POINTS);
+			do{
+				Vertex *v = he->vertex;
+				glVertex3d(v->x, v->y, v->z);
+				he = he->next;
+			} while (he != (*it_f)->halfedge);
 			glEnd();
 
-			he = he->next;
-		} while (he != (*it_f)->halfedge);
-		
-		//drawFace
-		glEnable(GL_LIGHTING); 
-		GLfloat materialColor1[] = { 1, 0.2, 0.2, 1 };
-		glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
-		GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
-		glEnable(GL_POLYGON_OFFSET_FILL);
-		glPolygonOffset(1, 30);
-		MyVector3d nv = (*it_f)->nv;
-		glNormal3d(nv.x, nv.y, nv.z);
-		glBegin(GL_POLYGON);
-		do{
-			Vertex *v = he->vertex;
-			glVertex3d(v->x, v->y, v->z);
-			
-			he = he->next;
-		} while (he != (*it_f)->halfedge);
-		glEnd();
-		glDisable(GL_POLYGON_OFFSET_FILL);
+			//drawEdge
+			glDisable(GL_LIGHTING);
+			glEnable(GL_LINE_SMOOTH);
+			glLineWidth(1);
+			glColor3f(.6, .6, .6);
+			do{
+				Vertex *v1 = he->vertex;
+				Vertex *v2 = he->next->vertex;
+				glBegin(GL_LINES);
+				glVertex3d(v1->x, v1->y, v1->z);
+				glVertex3d(v2->x, v2->y, v2->z);
+				glEnd();
+
+				he = he->next;
+			} while (he != (*it_f)->halfedge);
+
+			//drawFace
+			glEnable(GL_LIGHTING);
+			GLfloat materialColor1[] = { 1, 0.2, 0.2, 1 };
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialColor1);
+			GLfloat materialColor2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+			glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor2);
+			glEnable(GL_POLYGON_OFFSET_FILL);
+			glPolygonOffset(1, 30);
+			MyVector3d nv = (*it_f)->nv;
+			glNormal3d(nv.x, nv.y, nv.z);
+			glBegin(GL_POLYGON);
+			do{
+				Vertex *v = he->vertex;
+				glVertex3d(v->x, v->y, v->z);
+
+				he = he->next;
+			} while (he != (*it_f)->halfedge);
+			glEnd();
+			glDisable(GL_POLYGON_OFFSET_FILL);
+		}
 	}
 	
 }
@@ -276,4 +279,10 @@ void Bridge::reCalc(){
 }
 void Bridge::calculateM_Z(){
 	m_z = 0.25*(he1->vertex->z +he1->next->vertex->z +he2->vertex->z + he2->next->vertex->z);
+}
+void Bridge::setInvisible(){
+	this->isDrawn = false;
+}
+void Bridge::setVisible(){
+	this->isDrawn = true;
 }

@@ -17,7 +17,7 @@ public:
 	Face(Halfedge *he);
 	~Face();
 	void normalizeNormal();
-	void draw();
+	void draw(bool isEnableVisibleFlag = false);
 	void drawBack();
 	void debugPrint();
 	void transPosition(MyVector3d vec);
@@ -27,5 +27,7 @@ public:
 	void calcCenterOfGravity();
 	void setZ(double z);
 	void reverse();
+	void setInvisible();
+	void setVisible();
 };
 
