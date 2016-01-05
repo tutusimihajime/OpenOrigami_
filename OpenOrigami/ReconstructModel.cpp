@@ -11,7 +11,7 @@
 #include "GeometryElement2EigenVector.h"
 using namespace std;
 using namespace Eigen;
-double scale = 0.5;//0.5
+double scale = 1;//0.5
 double d;
 
 bool compFaceItmp(Face *f1, Face *f2){
@@ -263,7 +263,7 @@ void relocationFaces(Model *mod)
 	//d‚È‚è‡‚ğŒˆ’è
 	calcOverlapOrder3(mod, &a);
 
-	d = k1 * powf(a, 1 - k2);
+	d = k1 * powf(a, k2-1);
 	cout << "d = " << d << endl;
 	//–Ê‚ğ•ª—£
 	for (list<Vertex*>::iterator it_v = mod->vertices.begin(); it_v != mod->vertices.end(); ++it_v){

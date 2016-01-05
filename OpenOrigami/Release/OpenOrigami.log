@@ -1,23 +1,469 @@
-﻿2015/12/09 18:28:29 にビルドを開始しました。
+﻿2016/01/05 17:55:28 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\OpenOrigami\OpenOrigami.vcxproj" (Build ターゲット)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib SubFaceGroup.cpp
-         SubFaceGroup.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib ReconstructModel.cpp
+         ReconstructModel.cpp
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/Quaternion.h(291): warning C4522: 'Eigen::Quaternion<float,0>' : 複数の代入演算子が指定されています。
                  c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/arch/Geometry_SSE.h(22) : コンパイルされたクラスの テンプレート のインスタンス化 'Eigen::Quaternion<float,0>' の参照を確認してください
                  c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/arch/Geometry_SSE.h(38) : コンパイルされたクラスの テンプレート のインスタンス化 'Eigen::internal::quat_product<1,Derived,OtherDerived,float,1>' の参照を確認してください
      1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/Quaternion.h(291): warning C4522: 'Eigen::Quaternion<double,0>' : 複数の代入演算子が指定されています。
                  c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/arch/Geometry_SSE.h(63) : コンパイルされたクラスの テンプレート のインスタンス化 'Eigen::Quaternion<double,0>' の参照を確認してください
                  c:\program files (x86)\windows kits\8.1\include\um\eigen\src/Geometry/arch/Geometry_SSE.h(109) : コンパイルされたクラスの テンプレート のインスタンス化 'Eigen::internal::quat_product<1,Derived,OtherDerived,double,1>' の参照を確認してください
-     1>SubFaceGroup.cpp(8): warning C4305: '初期化中' : 'double' から 'float' へ切り詰めます。
-     1>SubFaceGroup.cpp(82): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>SubFaceGroup.cpp(131): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
-     1>SubFaceGroup.cpp(182): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
-     1>SubFaceGroup.cpp(225): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
-     1>SubFaceGroup.cpp(283): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SubFaceGroup.cpp(303): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SubFaceGroup.cpp(309): warning C4305: '引数' : 'double' から 'GLfloat' へ切り詰めます。
-     1>SubFaceGroup.cpp(317): warning C4305: '初期化中' : 'double' から 'GLfloat' へ切り詰めます。
+     1>ReconstructModel.cpp(24): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(27): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(38): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(49): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(58): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(68): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(72): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(109): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(113): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(117): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(125): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(266): warning C4244: '引数' : 'double' から 'float' への変換です。データが失われる可能性があります。
+     1>ReconstructModel.cpp(272): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(288): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(476): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(480): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(482): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(648): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>ReconstructModel.cpp(785): warning C4244: '+=' : 'double' から 'float' への変換です。データが失われる可能性があります。
+     1>ReconstructModel.cpp(910): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>ReconstructModel.cpp(973): warning C4244: '+=' : 'double' から 'float' への変換です。データが失われる可能性があります。
+     1>ReconstructModel.cpp(978): warning C4244: '初期化中' : 'double' から 'float' への変換です。データが失われる可能性があります。
+     1>ReconstructModel.cpp(1060): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(369): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(370): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(374): warning C4793: isParallel': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(380): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(381): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(387): warning C4793: isOnSegment': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\dot.h(156): warning C4793: Eigen::MatrixBase<Eigen::Matrix<double,2,1,0,2,1> >::normalize': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(687): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(688): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(689): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(690): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(723): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(724): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(725): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(726): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(779): warning C4793: bridgeSFG': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(428): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(429): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(430): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(431): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\users\tanaka\documents\visual studio 2013\projects\openorigami\openorigami\reconstructmodel.cpp(469): warning C4793: bridgeEdges': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(204): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\matrix.h(232): warning C4793: Eigen::Matrix<double,2,1,0,2,1>::Matrix<double,2,1,0,2,1><double,double>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(425): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densestorage.h(125): warning C4793: Eigen::DenseStorage<double,2,2,1,0>::DenseStorage<double,2,2,1,0>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(608): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::_set_selector<Eigen::Matrix<double,2,1,0,2,1> >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(608): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::_set_selector<Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > >': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\redux.h(302): warning C4793: Eigen::internal::redux_impl<Eigen::internal::scalar_sum_op<double>,Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::Matrix<double,2,1,0,2,1> const >,3,2>::run': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\redux.h(154): warning C4793: Eigen::internal::redux_vec_unroller<Eigen::internal::scalar_sum_op<double>,Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::Matrix<double,2,1,0,2,1> const >,0,1>::run': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(221): warning C4793: Eigen::DenseCoeffsBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::Matrix<double,2,1,0,2,1> const >,0>::packetByOuterInner<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(212): warning C4793: Eigen::DenseCoeffsBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::Matrix<double,2,1,0,2,1> const >,0>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\cwiseunaryop.h(109): warning C4793: Eigen::CwiseUnaryOpImpl<Eigen::internal::scalar_abs2_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Dense>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\functors.h(356): warning C4793: Eigen::internal::scalar_abs2_op<double>::packetOp<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(150): warning C4793: Eigen::internal::pmul<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(150): warning C4793: Eigen::internal::pmul<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\redux.h(302): warning C4793: Eigen::internal::redux_impl<Eigen::internal::scalar_sum_op<double>,Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,3,2>::run': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\redux.h(154): warning C4793: Eigen::internal::redux_vec_unroller<Eigen::internal::scalar_sum_op<double>,Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,0,1>::run': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(221): warning C4793: Eigen::DenseCoeffsBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,0>::packetByOuterInner<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(212): warning C4793: Eigen::DenseCoeffsBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,0>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\cwiseunaryop.h(109): warning C4793: Eigen::CwiseUnaryOpImpl<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const ,Eigen::Dense>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\cwisebinaryop.h(182): warning C4793: Eigen::CwiseBinaryOpImpl<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Dense>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\functors.h(192): warning C4793: Eigen::internal::scalar_difference_op<double>::packetOp<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(127): warning C4793: Eigen::internal::psub<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(127): warning C4793: Eigen::internal::psub<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\functors.h(356): warning C4793: Eigen::internal::scalar_abs2_op<double>::packetOp<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(150): warning C4793: Eigen::internal::pmul<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(150): warning C4793: Eigen::internal::pmul<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\redux.h(302): warning C4793: Eigen::internal::redux_impl<Eigen::internal::scalar_sum_op<double>,Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_sum_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,3,2>::run': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\redux.h(154): warning C4793: Eigen::internal::redux_vec_unroller<Eigen::internal::scalar_sum_op<double>,Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_sum_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,0,1>::run': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(221): warning C4793: Eigen::DenseCoeffsBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_sum_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,0>::packetByOuterInner<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(212): warning C4793: Eigen::DenseCoeffsBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_sum_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const >,0>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\cwiseunaryop.h(109): warning C4793: Eigen::CwiseUnaryOpImpl<Eigen::internal::scalar_abs2_op<double>,Eigen::CwiseBinaryOp<Eigen::internal::scalar_sum_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const > const ,Eigen::Dense>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\cwisebinaryop.h(182): warning C4793: Eigen::CwiseBinaryOpImpl<Eigen::internal::scalar_sum_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Dense>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\functors.h(28): warning C4793: Eigen::internal::scalar_sum_op<double>::packetOp<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(123): warning C4793: Eigen::internal::padd<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(123): warning C4793: Eigen::internal::padd<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\functors.h(356): warning C4793: Eigen::internal::scalar_abs2_op<double>::packetOp<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(150): warning C4793: Eigen::internal::pmul<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(150): warning C4793: Eigen::internal::pmul<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(522): warning C4793: Eigen::DenseCoeffsBase<Eigen::Matrix<double,2,1,0,2,1>,1>::copyPacket<Eigen::Matrix<double,2,1,0,2,1>,1,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\densecoeffsbase.h(522): warning C4793: Eigen::DenseCoeffsBase<Eigen::Matrix<double,2,1,0,2,1>,1>::copyPacket<Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const >,1,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\cwisebinaryop.h(182): warning C4793: Eigen::CwiseBinaryOpImpl<Eigen::internal::scalar_difference_op<double>,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Matrix<double,2,1,0,2,1> const ,Eigen::Dense>::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\plainobjectbase.h(184): warning C4793: Eigen::PlainObjectBase<Eigen::Matrix<double,2,1,0,2,1> >::packet<1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(290): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\genericpacketmath.h(292): warning C4793: Eigen::internal::ploadt<__m128d,1>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(220): warning C4793: Eigen::internal::pload<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(238): warning C4793: Eigen::internal::ploadu<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\functors.h(192): warning C4793: Eigen::internal::scalar_difference_op<double>::packetOp<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(127): warning C4793: Eigen::internal::psub<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(127): warning C4793: Eigen::internal::psub<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(430): warning C4793: Eigen::internal::predux<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(430): warning C4793: Eigen::internal::predux<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(347): warning C4793: Eigen::internal::pfirst<__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(347): warning C4793: Eigen::internal::pfirst<__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(310): warning C4793: Eigen::internal::pstore<double,__m128d>': ネイティブ関数としてコンパイルされました:
+         	マネージ コードでサポートされていない組み込み型が見つかりました
+     1>c:\program files (x86)\windows kits\8.1\include\um\eigen\src\core\arch\sse\packetmath.h(310): warning C4793: Eigen::internal::pstore<double,__m128d>': ネイティブ関数としてコンパイルされました:
+         	整列データ型はマネージ コードでサポートされていません
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tanaka\Documents\Visual Studio 2013\Projects\OpenOrigami\Release\OpenOrigami.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Release\Bridge.obj
          Release\Face.obj
@@ -42,4 +488,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:03.33
+経過時間 00:00:06.47
