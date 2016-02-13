@@ -11,7 +11,7 @@
 #include "GeometryElement2EigenVector.h"
 using namespace std;
 using namespace Eigen;
-double scale = 1;//0.5
+double scale = 0.5;//0.5
 double d;
 
 bool compFaceItmp(Face *f1, Face *f2){
@@ -1027,7 +1027,7 @@ void relocationSubFaceGroupVertices(Model *mod){
 	cout << "create bridge sub-model\n";
 	bridgeSFG(mod);
 	cout << "invisiblizeFaces\n";
-	invisiblizeFaces(mod);
+	//invisiblizeFaces(mod);
 	cout << "reset ID\n";
 	resetID(mod);
 	cout << "compressionBridge\n";
