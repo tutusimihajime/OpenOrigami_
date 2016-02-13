@@ -23,8 +23,9 @@ public:
 	bool f_flag;
 	int f_type;//0:í èÌ, 1:ä‘à¯Ç≠, 2:êFï™ÇØ
 	bool xray_flag;
-
+	SpringSimulator();
 	SpringSimulator(Model *model);
+	SpringSimulator *subfaceSpring(Model *model);
 	void generateSpringEdges();
 	void simulate(double dt);
 	void draw(GLenum mode = GL_RENDER);

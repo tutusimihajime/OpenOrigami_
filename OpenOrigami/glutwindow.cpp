@@ -191,7 +191,9 @@ void key_input(unsigned char key, int x, int y)
 	case 's':
 		if (spring_sim == NULL){
 			reconstructModel(model);
-			spring_sim = new SpringSimulator(model);
+			//spring_sim = new SpringSimulator(model);
+			spring_sim = new SpringSimulator();
+			spring_sim = spring_sim->subfaceSpring(model);
 		}
 		break;
 	case 'v':
@@ -258,7 +260,8 @@ void mouse_motion_left(int x, int y){
 		dv.scale(fabs(zoom.z));
 		dv.y *= -1;
 		dv = rotateMyVector3d(dv);		
-		model->vertexVector[select]->transPosition(dv);
+		//model->vertexVector[select]->transPosition(dv);
+		spring_sim->svertexVector[select]->transPosition(dv.x, dv.y,dv.z);
 		cv.set(x, y, 0);
 	}
 }
